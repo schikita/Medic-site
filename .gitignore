@@ -1,0 +1,5 @@
+config.local.php
+data/site.sqlite
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/.htaccess

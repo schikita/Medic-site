@@ -1,0 +1,39 @@
+Имена файлов без расширения. Положите экспорт из Figma как .webp (предпочтительно), .jpg, .jpeg или .png.
+
+--- home/ ---
+home-block-1-1-poster
+home-a  home-b  home-c
+home-d  home-e  home-f
+home-g  home-h
+home-i  home-j  home-k
+
+--- professionals/ ---
+pro-1  pro-2  pro-3
+pro-4a  pro-4b  pro-4c  pro-4d
+pro-9a  pro-9b  pro-9c
+pro-11a  pro-11b  pro-11c
+pro-16
+
+--- institutions/ ---
+inst-31a  inst-31b
+inst-32
+inst-35a  inst-35b  inst-35c
+inst-36a  inst-36b
+inst-315a  inst-315b  inst-315c  inst-315d  inst-315e
+inst-320a  inst-320b  inst-320c
+inst-321a  inst-321b  inst-321c
+
+--- blog/ ---
+blog-41
+blog-42pin
+blog-42a  blog-42b  blog-42c  blog-42d  blog-42e
+blog-43full
+blog-44a  blog-44b  blog-44c
+
+--- partners/ ---
+part-51
+part-54
+part-56a  part-56b  part-56c
+part-58
+part-59v  part-59c
+part-510a  part-510b  part-510c
