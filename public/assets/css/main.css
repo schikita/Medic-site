@@ -18,7 +18,13 @@
         rgb(186, 76, 250) 97%
     );
     --max-w: 1440px;
+    /* Сетка 12 колонок (поля + промежутки между колонками) */
+    --grid-columns: 12;
+    --grid-padding: 24px;
+    --grid-gutter: 24px;
     --header-h: 60px;
+    /* ≤ — бургер; ≥ — полная навигация. В @media ниже — литералы (var() в media поддерживается не везде). */
+    --nav-burger-max: 1310px;
 }
 
 *,
@@ -91,12 +97,34 @@ a {
     top: 1rem;
 }
 
+/* Контент по сетке 12 колонок в пределах --max-w, поля слева/справа как у шапки */
+.xr-page-grid {
+    width: 100%;
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: max(var(--grid-padding), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--grid-padding), env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    row-gap: 0;
+    align-content: start;
+}
+
+.xr-page-grid > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+}
+
 /* Header */
 .site-header {
     position: sticky;
     top: 0;
     z-index: 50;
     background: var(--bg-dark);
+    overflow: visible;
 }
 
 .site-header--glass {
@@ -120,6 +148,7 @@ a {
     align-items: center;
     gap: 16px;
     min-height: var(--header-h);
+    overflow: visible;
 }
 
 .site-logo {
@@ -160,25 +189,11 @@ a {
 
 .site-nav__link:hover,
 .site-nav__link:focus-visible {
-    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .site-nav__link.is-active {
     font-weight: 500;
-}
-
-.site-nav__underline {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -8px;
-    width: 152px;
-    pointer-events: none;
-}
-
-.site-nav__underline img {
-    width: 100%;
-    height: auto;
 }
 
 .site-nav__cta {
@@ -236,12 +251,73 @@ a.btn {
     box-shadow: 0 4px 24px rgba(152, 127, 252, 0.35);
 }
 
-.site-header__accent {
-    height: 4px;
-    max-width: 151px;
-    margin: 0 auto 0;
-    background: var(--gradient-accent);
-    border-radius: 2px;
+/* Desktop: одна строка навигации, шрифт подстраивается под ширину блока nav (1311px = --nav-burger-max + 1) */
+@media (min-width: 1311px) {
+    .site-header__inner {
+        padding-bottom: 16px;
+    }
+
+    .site-nav {
+        container-type: inline-size;
+        container-name: site-nav;
+        flex-wrap: nowrap;
+        min-width: 0;
+        gap: clamp(12px, 2cqi, 24px);
+    }
+
+    .site-nav__links {
+        flex-wrap: nowrap;
+        min-width: 0;
+        gap: 8px clamp(6px, 2cqi, 32px);
+    }
+
+    .site-nav__cta {
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+        gap: 12px clamp(8px, 1.5cqi, 16px);
+    }
+
+    .site-nav__link {
+        display: inline-block;
+        font-size: clamp(11px, 2.35cqi, 20px);
+        position: relative;
+    }
+
+    .site-nav__link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        transform: translateX(-50%);
+        width: 151px;
+        max-width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--gradient-accent);
+        opacity: 0;
+        transition: opacity 0.18s ease;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .site-nav__link:hover::after,
+    .site-nav__link:focus-visible::after {
+        opacity: 1;
+    }
+
+    .site-nav__cta .btn {
+        font-size: clamp(11px, 2.35cqi, 20px);
+        padding: 0.35em 1.15em;
+        min-height: 2.2em;
+    }
+
+    .site-nav__cta .btn--outline {
+        border-radius: 30px;
+    }
+
+    .site-nav__cta .btn--gradient {
+        min-width: 9.85em;
+    }
 }
 
 .nav-toggle {
@@ -252,7 +328,7 @@ a.btn {
     background: none;
     border: none;
     padding: 10px;
-    margin-left: -6px;
+    margin-right: -6px;
     min-width: 44px;
     min-height: 44px;
     cursor: pointer;
@@ -545,8 +621,8 @@ a.btn {
     padding: 4px 2px;
 }
 
-/* Mobile */
-@media (max-width: 1024px) {
+/* Mobile / бургер */
+@media (max-width: 1310px) {
     .nav-toggle {
         display: flex;
     }
@@ -554,6 +630,7 @@ a.btn {
     .site-header__inner {
         position: relative;
         flex-wrap: wrap;
+        justify-content: space-between;
     }
 
     .site-nav {
@@ -596,7 +673,7 @@ a.btn {
         padding: 14px 0;
     }
 
-    .site-nav__underline {
+    .site-nav__link::after {
         display: none;
     }
 
@@ -624,7 +701,7 @@ a.btn {
 }
 
 @supports (height: 100dvh) {
-    @media (max-width: 1024px) {
+    @media (max-width: 1310px) {
         .site-nav {
             max-height: min(78dvh, calc(100dvh - var(--header-h)));
         }

@@ -95,7 +95,7 @@ function build_legacy_home_blocks(array $m): array
             'props' => [
                 'headline_line1' => (string) ($intro['headline_line1'] ?? ''),
                 'headline_line2' => (string) ($intro['headline_line2'] ?? ''),
-                'tagline' => (string) ($intro['tagline'] ?? ''),
+                'body' => (string) ($intro['body'] ?? $intro['tagline'] ?? ''),
             ],
         ],
         [

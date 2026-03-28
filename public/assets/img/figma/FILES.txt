@@ -1,7 +1,9 @@
 Имена файлов без расширения. Положите экспорт из Figma как .webp (предпочтительно), .jpg, .jpeg или .png.
 
 --- home/ ---
+oculus
 home-block-1-1-poster
+home_a  home_b  home_c
 home-a  home-b  home-c
 home-d  home-e  home-f
 home-g  home-h

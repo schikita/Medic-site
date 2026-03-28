@@ -181,9 +181,17 @@ function admin_i18n_strings_ru(): array
         'hero.overlay_lines' => 'Жёлтые строки (каждая с новой строки)',
 
         'intro.legend' => 'Градиентный заголовок (блок 1.2)',
+        'intro.eyebrow' => 'Верхняя строка',
         'intro.line1' => 'Строка 1',
         'intro.line2' => 'Строка 2',
+        'intro.body' => 'Текст (абзац)',
         'intro.tagline' => 'Подзаголовок',
+
+        'oculus.legend' => 'Очки · три вкладки YouTube (блок 1.4–1.5)',
+        'oculus.hint' => 'Для каждой кнопки — постер и ID ролика YouTube (без youtube.com). Тексты вкладок задаются в JSON блока, если нужно.',
+        'oculus.tab_n' => 'Вкладка {n}',
+        'oculus.poster' => 'Путь к постеру',
+        'oculus.youtube_id' => 'ID YouTube',
 
         'assistant.legend' => 'Продукт · вкладки (блоки 1.7–1.8)',
         'assistant.tabs' => 'Названия вкладок (каждая с новой строки)',
@@ -348,9 +356,17 @@ function admin_i18n_strings_en(): array
         'hero.overlay_lines' => 'Yellow lines (one per line)',
 
         'intro.legend' => 'Gradient headline (block 1.2)',
+        'intro.eyebrow' => 'Eyebrow line',
         'intro.line1' => 'Line 1',
         'intro.line2' => 'Line 2',
+        'intro.body' => 'Body paragraph',
         'intro.tagline' => 'Tagline',
+
+        'oculus.legend' => 'Headset · three YouTube tabs (block 1.4–1.5)',
+        'oculus.hint' => 'Per tab: poster image path and YouTube video ID (not the full youtube.com URL). Tab labels are edited in the block JSON if needed.',
+        'oculus.tab_n' => 'Tab {n}',
+        'oculus.poster' => 'Poster path',
+        'oculus.youtube_id' => 'YouTube ID',
 
         'assistant.legend' => 'Product tabs (blocks 1.7–1.8)',
         'assistant.tabs' => 'Tab labels (one per line)',

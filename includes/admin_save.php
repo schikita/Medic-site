@@ -98,9 +98,27 @@ function merge_site_from_post(array $current): array
         }
 
         if ($type === 'intro_gradient') {
+            $p['eyebrow'] = trim((string) ($_POST['intro_eyebrow'] ?? ''));
             $p['headline_line1'] = trim((string) ($_POST['intro_headline_line1'] ?? '')) ?: (string) ($p['headline_line1'] ?? '');
             $p['headline_line2'] = trim((string) ($_POST['intro_headline_line2'] ?? '')) ?: (string) ($p['headline_line2'] ?? '');
-            $p['tagline'] = trim((string) ($_POST['intro_tagline'] ?? ''));
+            $p['body'] = trim((string) ($_POST['intro_body'] ?? ''));
+            unset($p['tagline']);
+        }
+
+        if ($type === 'tabs_youtube_loop' && (($b['id'] ?? '') === 'block-1-4-5')) {
+            $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+            for ($ti = 0; $ti < 3; $ti++) {
+                if (!isset($tabs[$ti]) || !is_array($tabs[$ti])) {
+                    $tabs[$ti] = [];
+                }
+                $tabs[$ti]['poster'] = trim((string) ($_POST['oculus_tab_poster_' . $ti] ?? ''));
+                $tabs[$ti]['youtube_id'] = trim((string) ($_POST['oculus_tab_youtube_' . $ti] ?? ''));
+                $tabs[$ti]['mode'] = 'youtube_click';
+                if (!isset($tabs[$ti]['play_label'])) {
+                    $tabs[$ti]['play_label'] = '';
+                }
+            }
+            $p['tabs'] = $tabs;
         }
 
         if ($type === 'product_tabs') {

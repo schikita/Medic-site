@@ -20,6 +20,29 @@
                 qsa('[data-xr-panel="' + group + '"]', scope).forEach(function (p) {
                     p.classList.toggle("is-active", p.getAttribute("data-index") === idx);
                 });
+                qsa("[data-oculus-slot]", scope).forEach(function (slot) {
+                    var slotIdx = slot.getAttribute("data-oculus-slot");
+                    var isActive = slotIdx === idx;
+                    slot.classList.toggle("is-active", isActive);
+                    if (!isActive) {
+                        var v = qs("video.xr-oculus-video", slot);
+                        if (v) {
+                            v.pause();
+                            try {
+                                v.currentTime = 0;
+                            } catch (e) {}
+                        }
+                        var oLay = qs("[data-oculus-overlay]", slot);
+                        if (oLay) oLay.hidden = false;
+                        var ytFrame = qs("[data-youtube-frame]", slot);
+                        if (ytFrame && !ytFrame.hidden) {
+                            ytFrame.innerHTML = "";
+                            ytFrame.hidden = true;
+                            var mask = qs(".xr-yt-mask", slot);
+                            if (mask) mask.style.display = "";
+                        }
+                    }
+                });
                 document.dispatchEvent(new CustomEvent("xr-tabs-changed"));
             });
         });
@@ -196,12 +219,34 @@
         });
     }
 
+    function initOculusMp4Play() {
+        qsa("[data-oculus-play]").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                var slot = btn.closest(".xr-tabs-media__oculus-slot");
+                var screen = slot ? qs(".xr-tabs-media__vision-screen", slot) : null;
+                var v = screen ? qs("video", screen) : null;
+                var o = btn.closest("[data-oculus-overlay]");
+                if (v) {
+                    v.play().catch(function () {});
+                }
+                if (o) {
+                    o.hidden = true;
+                }
+            });
+        });
+    }
+
     function initYoutubeLoad() {
         qsa("[data-youtube-load]").forEach(function (btn) {
             btn.addEventListener("click", function () {
                 var id = btn.getAttribute("data-youtube-load");
                 if (!id) return;
-                var stage = btn.closest(".xr-tabs-media__stage");
+                var stage =
+                    btn.closest(".xr-tabs-media__vision-screen") ||
+                    btn.closest(".xr-headset-fo-body") ||
+                    btn.closest(".xr-product-tabs__stage") ||
+                    btn.closest(".xr-pt-slider__video-stage") ||
+                    btn.closest(".xr-tabs-media__stage");
                 if (!stage) return;
                 var mask = qs(".xr-yt-mask", stage);
                 var frame = qs("[data-youtube-frame]", stage);
@@ -505,11 +550,128 @@
         });
     }
 
+    function initDetailSubNav() {
+        qsa("[data-sub-items]").forEach(function (wrap) {
+            var items;
+            try { items = JSON.parse(wrap.getAttribute("data-sub-items") || "[]"); } catch (e) { items = []; }
+            var btns    = qsa("[data-sub-idx]", wrap);
+            var content = qs(".xr-dtabs__subcontent", wrap);
+            if (!content || btns.length === 0) return;
+            btns.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    btns.forEach(function (b) {
+                        b.classList.remove("is-active");
+                        b.setAttribute("aria-selected", "false");
+                    });
+                    btn.classList.add("is-active");
+                    btn.setAttribute("aria-selected", "true");
+                    var idx = parseInt(btn.getAttribute("data-sub-idx"), 10);
+                    if (items[idx] !== undefined) {
+                        content.textContent = items[idx];
+                    }
+                });
+            });
+        });
+    }
+
+    function initProductSlider() {
+        qsa("[data-pt-slider]").forEach(function (root) {
+            var track    = qs("[data-pt-track]", root);
+            var dots     = qsa("[data-pt-dot]", root);
+            var navLinks = qsa("[data-pt-nav]", root);
+            var prevBtn  = qs("[data-pt-prev]", root);
+            var nextBtn  = qs("[data-pt-next]", root);
+            var total    = Math.max(dots.length, 3);
+            var current  = 0;
+            var timer;
+
+            function goTo(idx) {
+                current = (idx + total) % total;
+                if (track) track.style.transform = "translateX(-" + (current * 100) + "%)";
+                dots.forEach(function (d, i) { d.classList.toggle("is-active", i === current); });
+                navLinks.forEach(function (n) {
+                    n.classList.toggle("is-active", parseInt(n.getAttribute("data-pt-nav"), 10) === current);
+                });
+            }
+
+            function resetTimer() {
+                clearInterval(timer);
+                timer = setInterval(function () { goTo(current + 1); }, 5000);
+            }
+
+            if (prevBtn) prevBtn.addEventListener("click", function () { goTo(current - 1); resetTimer(); });
+            if (nextBtn) nextBtn.addEventListener("click", function () { goTo(current + 1); resetTimer(); });
+            dots.forEach(function (d) {
+                d.addEventListener("click", function () { goTo(parseInt(d.getAttribute("data-pt-dot"), 10)); resetTimer(); });
+            });
+            navLinks.forEach(function (n) {
+                n.addEventListener("click", function () { goTo(parseInt(n.getAttribute("data-pt-nav"), 10)); resetTimer(); });
+            });
+
+            root.addEventListener("mouseenter", function () { clearInterval(timer); });
+            root.addEventListener("mouseleave", resetTimer);
+
+            resetTimer();
+        });
+    }
+
+    function initShowcaseTabs() {
+        qsa("[data-showcase-tabs]").forEach(function (root) {
+            var tabs       = qsa("[data-xr-tab='product-sc']", root);
+            var cards      = qsa("[data-sc-card]", root);
+            var cardsWrap  = qs("[data-sc-cards]", root);
+            var featPanels = qsa("[data-sc-feature-panel]", root);
+            var n          = cards.length;
+            if (tabs.length === 0) return;
+
+            function activate(i) {
+                var isFeature = tabs[i] && tabs[i].getAttribute("data-sc-feature") === "1";
+
+                /* Update tab active state */
+                tabs.forEach(function (t, ti) {
+                    t.classList.toggle("is-active", ti === i);
+                    t.setAttribute("aria-selected", ti === i ? "true" : "false");
+                });
+
+                if (isFeature) {
+                    /* Hide photo-card pair, show the matching feature panel */
+                    if (cardsWrap) cardsWrap.hidden = true;
+                    featPanels.forEach(function (fp) {
+                        var idx = parseInt(fp.getAttribute("data-sc-feature-panel"), 10);
+                        fp.hidden = idx !== i;
+                    });
+                } else {
+                    /* Show photo-card pair, hide all feature panels */
+                    if (cardsWrap) cardsWrap.hidden = false;
+                    featPanels.forEach(function (fp) { fp.hidden = true; });
+
+                    /* Pair visibility: tab 0 → [0,1]; else → [i-1, i] */
+                    var left  = i === 0 ? 0 : i - 1;
+                    var right = i === 0 ? Math.min(n - 1, 1) : Math.min(n - 1, i);
+                    cards.forEach(function (c) {
+                        var ci = parseInt(c.getAttribute("data-sc-card"), 10);
+                        var vis = ci === left || ci === right;
+                        c.classList.toggle("is-visible", vis);
+                        c.classList.toggle("is-active", ci === i);
+                    });
+                }
+            }
+
+            tabs.forEach(function (t, i) {
+                t.addEventListener("click", function () { activate(i); });
+            });
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         initTabs();
+        initDetailSubNav();
+        initProductSlider();
+        initShowcaseTabs();
         initCarousels();
         initVideoFreeze();
         initYoutubeLoad();
+        initOculusMp4Play();
         initStarfields();
         initTwinkle();
         initFloatPlank();

@@ -16,6 +16,7 @@ $navItems = $site['nav']['items'];
 $hero = xr_find_block_props($site['home']['blocks'] ?? [], 'hero_fullscreen');
 $intro = xr_find_block_props($site['home']['blocks'] ?? [], 'intro_gradient');
 $assistant = xr_product_tabs_state($site);
+$oculusTabs = xr_oculus_tabs_home_state($site);
 $closing = xr_find_block_props($site['home']['blocks'] ?? [], 'closing_block');
 $hub = $site['hubspot'] ?? [];
 $seo = is_array($site['seo'] ?? null) ? $site['seo'] : xr_site_seo_defaults();
@@ -250,12 +251,26 @@ $token = csrf_token();
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend><?= h(admin_t('intro.legend')) ?></legend>
+                    <label class="admin-label"><?= h(admin_t('intro.eyebrow')) ?></label>
+                    <input class="admin-input" name="intro_eyebrow" value="<?= h((string) ($intro['eyebrow'] ?? '')) ?>">
                     <label class="admin-label"><?= h(admin_t('intro.line1')) ?></label>
                     <input class="admin-input" name="intro_headline_line1" value="<?= h((string) ($intro['headline_line1'] ?? '')) ?>">
                     <label class="admin-label"><?= h(admin_t('intro.line2')) ?></label>
                     <input class="admin-input" name="intro_headline_line2" value="<?= h((string) ($intro['headline_line2'] ?? '')) ?>">
-                    <label class="admin-label"><?= h(admin_t('intro.tagline')) ?></label>
-                    <textarea class="admin-textarea" name="intro_tagline" rows="2"><?= h((string) ($intro['tagline'] ?? '')) ?></textarea>
+                    <label class="admin-label"><?= h(admin_t('intro.body')) ?></label>
+                    <textarea class="admin-textarea" name="intro_body" rows="5"><?= h((string) ($intro['body'] ?? $intro['tagline'] ?? '')) ?></textarea>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat" id="section-oculus">
+                    <legend><?= h(admin_t('oculus.legend')) ?></legend>
+                    <p class="admin-hint"><?= h(admin_t('oculus.hint')) ?></p>
+                    <?php foreach ($oculusTabs['tabs'] as $oi => $ot): ?>
+                        <p class="admin-hint"><strong><?= h(admin_t('oculus.tab_n', ['n' => (string) ($oi + 1)])) ?></strong><?php if ($ot['label'] !== ''): ?>: <?= h($ot['label']) ?><?php endif; ?></p>
+                        <label class="admin-label"><?= h(admin_t('oculus.poster')) ?></label>
+                        <input class="admin-input" name="oculus_tab_poster_<?= (int) $oi ?>" value="<?= h($ot['poster']) ?>" placeholder="/assets/img/...">
+                        <label class="admin-label"><?= h(admin_t('oculus.youtube_id')) ?></label>
+                        <input class="admin-input" name="oculus_tab_youtube_<?= (int) $oi ?>" value="<?= h($ot['youtube_id']) ?>" placeholder="dQw4w9WgXcQ">
+                    <?php endforeach; ?>
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">

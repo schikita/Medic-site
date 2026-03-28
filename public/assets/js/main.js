@@ -33,7 +33,8 @@
     window.addEventListener(
         "resize",
         function () {
-            if (window.matchMedia("(min-width: 1025px)").matches) {
+            /* Порог как в main.css: --nav-burger-max + 1px */
+            if (window.matchMedia("(min-width: 1311px)").matches) {
                 setNavOpen(false);
             }
         },

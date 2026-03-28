@@ -63,13 +63,32 @@ function xr_block_hero_fullscreen(array $p, string $blockId = ''): void
 
 function xr_block_intro_gradient(array $p, string $blockId = ''): void
 {
+    $eyebrow = trim((string) ($p['eyebrow'] ?? ''));
+    $body = trim((string) ($p['body'] ?? ''));
+    if ($body === '') {
+        $body = trim((string) ($p['tagline'] ?? ''));
+    }
+    $headline = trim((string) ($p['headline'] ?? ''));
+    if ($headline === '') {
+        $headline = trim(
+            trim((string) ($p['headline_line1'] ?? '')) . ' ' . trim((string) ($p['headline_line2'] ?? ''))
+        );
+    }
     ?>
     <div class="xr-intro-gradient">
-        <h2 class="xr-intro-gradient__headline">
-            <span class="xr-intro-gradient__line xr-reveal"><?= h((string) ($p['headline_line1'] ?? '')) ?></span>
-            <span class="xr-intro-gradient__line xr-reveal"><?= h((string) ($p['headline_line2'] ?? '')) ?></span>
-        </h2>
-        <p class="xr-intro-gradient__tagline xr-reveal"><?= h((string) ($p['tagline'] ?? '')) ?></p>
+        <div class="xr-page-grid xr-intro-gradient__grid">
+            <?php if ($eyebrow !== ''): ?>
+                <p class="xr-intro-gradient__eyebrow xr-reveal"><?= h($eyebrow) ?></p>
+            <?php endif; ?>
+            <?php if ($headline !== ''): ?>
+                <h2 class="xr-intro-gradient__headline">
+                    <span class="xr-intro-gradient__line xr-reveal"><?= h($headline) ?></span>
+                </h2>
+            <?php endif; ?>
+            <?php if ($body !== ''): ?>
+                <p class="xr-intro-gradient__body xr-reveal"><?= h($body) ?></p>
+            <?php endif; ?>
+        </div>
     </div>
     <?php
 }
@@ -81,23 +100,59 @@ function xr_block_wave_slider(array $p, string $blockId = ''): void
     if ($slides === []) {
         return;
     }
+    $defaultHeadline = trim((string) ($p['headline'] ?? ''));
+    $defaultBadges = is_array($p['badges'] ?? null) ? $p['badges'] : [];
     ?>
     <div class="xr-wave-slider" data-carousel data-interval="<?= (int) $interval ?>">
-        <div class="xr-wave-slider__wave" aria-hidden="true"></div>
+        <div class="xr-wave-slider__wave" aria-hidden="true">
+            <img src="/assets/img/figma/home/up-wave.png" alt="" width="1340" height="72" loading="lazy" decoding="async">
+        </div>
         <div class="xr-wave-slider__viewport">
             <?php foreach ($slides as $i => $s): ?>
                 <?php if (!is_array($s)) {
                     continue;
                 } ?>
+                <?php
+                $slideBadges = is_array($s['badges'] ?? null) ? $s['badges'] : $defaultBadges;
+                $slideHeadline = trim((string) ($s['headline'] ?? ''));
+                if ($slideHeadline === '') {
+                    $slideHeadline = $defaultHeadline;
+                }
+                $sub = trim((string) ($s['subheadline'] ?? ''));
+                if ($sub === '') {
+                    $sub = trim((string) ($s['caption'] ?? ''));
+                }
+                ?>
                 <figure class="xr-wave-slider__slide<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-slide>
-                    <img src="<?= h((string) ($s['image'] ?? '')) ?>" alt="">
-                    <figcaption class="xr-wave-slider__caption"><?= h((string) ($s['caption'] ?? '')) ?></figcaption>
+                    <div class="xr-wave-slider__slide-inner">
+                        <?php if ($slideHeadline !== '' || $sub !== '' || $slideBadges !== []): ?>
+                            <div class="xr-wave-slider__slide-top">
+                                <?php if ($slideBadges !== []): ?>
+                                    <div class="xr-wave-slider__badges" role="group" aria-label="Tags">
+                                        <?php foreach ($slideBadges as $badge): ?>
+                                            <?php
+                                            $badge = trim((string) $badge);
+                                            if ($badge === '') {
+                                                continue;
+                                            }
+                                            ?>
+                                            <span class="xr-wave-slider__badge"><?= h($badge) ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($slideHeadline !== ''): ?>
+                                    <h3 class="xr-wave-slider__slide-title"><?= h($slideHeadline) ?></h3>
+                                <?php endif; ?>
+                                <?php if ($sub !== ''): ?>
+                                    <p class="xr-wave-slider__slide-sub"><?= h($sub) ?></p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="xr-wave-slider__slide-media">
+                            <img src="<?= h((string) ($s['image'] ?? '')) ?>" alt="">
+                        </div>
+                    </div>
                 </figure>
-            <?php endforeach; ?>
-        </div>
-        <div class="xr-wave-slider__dots" role="tablist">
-            <?php foreach ($slides as $i => $_): ?>
-                <button type="button" class="xr-wave-slider__dot<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-dot aria-label="Slide <?= (int) ($i + 1) ?>"></button>
             <?php endforeach; ?>
         </div>
     </div>
@@ -107,30 +162,85 @@ function xr_block_wave_slider(array $p, string $blockId = ''): void
 function xr_block_layered_star(array $p, string $blockId = ''): void
 {
     $title = (string) ($p['title'] ?? '');
+    $titleLine2 = trim((string) ($p['title_line2'] ?? ''));
     $subtitle = (string) ($p['subtitle'] ?? '');
     $base = (string) ($p['base_color'] ?? '#151a22');
+    $showDownWave = !isset($p['down_wave']) || (bool) $p['down_wave'];
     ?>
     <div class="xr-layered-star" style="--xr-layer-base: <?= h($base) ?>">
         <div class="xr-layered-star__bg" aria-hidden="true"></div>
         <canvas class="xr-layered-star__canvas" data-starfield width="800" height="500" aria-hidden="true"></canvas>
         <div class="xr-layered-star__gradient" aria-hidden="true"></div>
+        <?php if ($showDownWave): ?>
+        <div class="xr-layered-star__wave" aria-hidden="true">
+            <img src="/assets/img/figma/home/down-wave.png" alt="" width="1340" height="72" loading="lazy" decoding="async">
+        </div>
+        <?php endif; ?>
+        <div class="xr-layered-star__edge-glow" aria-hidden="true"></div>
         <div class="xr-layered-star__content">
-            <h2 class="xr-layered-star__title xr-burst-text"><?= h($title) ?></h2>
+            <h2 class="xr-layered-star__title xr-burst-text">
+                <span class="xr-layered-star__title-line"><?= h($title) ?></span>
+                <?php if ($titleLine2 !== ''): ?>
+                    <span class="xr-layered-star__title-line"><?= h($titleLine2) ?></span>
+                <?php endif; ?>
+            </h2>
             <p class="xr-layered-star__subtitle xr-burst-text"><?= h($subtitle) ?></p>
         </div>
     </div>
     <?php
 }
 
+/**
+ * Текст и Play в «линзе» Oculus: SEE + Your Edge Appear (побуквенно) + треугольник без круга.
+ */
+
+/** Путь шлема (коорд. SVG; viewBox обрезан ~по bbox контура) — совпадает с clipPath */
+function xr_oculus_headset_path_d(): string
+{
+    return 'M 148 182 Q 138 108, 204 88 Q 263 70, 340 73 Q 417 70, 476 88 Q 542 108, 532 182 Q 542 256, 484 284 Q 456 298, 428 291 Q 408 285, 398 272 Q 376 253, 340 251 Q 304 253, 282 272 Q 272 285, 252 291 Q 224 298, 196 284 Q 138 256, 148 182 Z';
+}
+
+function xr_oculus_lens_overlay_play(string $playAria, bool $isMp4, string $youtubeId = ''): void
+{
+    ?>
+    <p class="xr-tabs-media__overlay-line1 xr-tabs-media__overlay-line1--oculus">SEE</p>
+    <p class="xr-tabs-media__overlay-line2 xr-tabs-media__overlay-line2--oculus">
+        <span class="xr-tabs-media__och xr-tabs-media__och--cyan">Y</span><span class="xr-tabs-media__och xr-tabs-media__och--white">our</span>&nbsp;<span class="xr-tabs-media__och xr-tabs-media__och--pink">E</span><span class="xr-tabs-media__och xr-tabs-media__och--white">dge</span>&nbsp;<span class="xr-tabs-media__och xr-tabs-media__och--pink">A</span><span class="xr-tabs-media__och xr-tabs-media__och--white">ppear</span>
+    </p>
+    <?php if ($isMp4): ?>
+        <button type="button" class="xr-tabs-media__play-plain" data-oculus-play=""
+                aria-label="<?= h($playAria) ?>">
+            <span class="xr-tabs-media__play-plain-icon" aria-hidden="true"></span>
+        </button>
+    <?php else: ?>
+        <button type="button" class="xr-tabs-media__play-plain" data-youtube-load="<?= h($youtubeId) ?>"
+                aria-label="<?= h($playAria) ?>">
+            <span class="xr-tabs-media__play-plain-icon" aria-hidden="true"></span>
+        </button>
+    <?php endif; ?>
+    <?php
+}
+
 function xr_block_tabs_youtube_loop(array $p, string $blockId = ''): void
 {
     $heading = (string) ($p['heading'] ?? '');
+    $subheading = trim((string) ($p['subheading'] ?? ''));
     $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
     $headingLg = ((string) ($p['heading_size'] ?? '')) === 'lg';
-    $rootClass = 'xr-tabs-media' . ($headingLg ? ' xr-tabs-media--heading-lg' : '');
+    $splitLayout = (string) ($p['layout'] ?? '') === 'split';
+    $rootClass = 'xr-tabs-media' . ($headingLg ? ' xr-tabs-media--heading-lg' : '') . ($splitLayout ? ' xr-tabs-media--split' : '');
     ?>
-    <div class="<?= h($rootClass) ?>">
-        <?php if ($heading !== ''): ?>
+    <div class="<?= h($rootClass) ?>"<?= $splitLayout ? ' data-xr-tabs-oculus="1"' : '' ?>>
+        <?php if ($splitLayout && ($heading !== '' || $subheading !== '')): ?>
+            <div class="xr-tabs-media__intro">
+                <?php if ($heading !== ''): ?>
+                    <h2 class="xr-tabs-media__heading xr-tabs-media__heading--gradient"><?= h($heading) ?></h2>
+                <?php endif; ?>
+                <?php if ($subheading !== ''): ?>
+                    <p class="xr-tabs-media__sub"><?= h($subheading) ?></p>
+                <?php endif; ?>
+            </div>
+        <?php elseif ($heading !== ''): ?>
             <h2 class="xr-tabs-media__heading"><?= h($heading) ?></h2>
         <?php endif; ?>
         <div class="xr-tabs-media__bar" role="tablist">
@@ -146,36 +256,149 @@ function xr_block_tabs_youtube_loop(array $p, string $blockId = ''): void
                         data-index="<?= (int) $i ?>"><?= h((string) ($t['label'] ?? '')) ?></button>
             <?php endforeach; ?>
         </div>
-        <?php foreach ($tabs as $i => $t): ?>
-            <?php if (!is_array($t)) {
-                continue;
-            } ?>
-            <?php
-            $mode = (string) ($t['mode'] ?? 'youtube_click');
-            $poster = (string) ($t['poster'] ?? '');
-            $yt = (string) ($t['youtube_id'] ?? '');
-            $mp4 = (string) ($t['mp4'] ?? '');
-            ?>
-            <div class="xr-tabs-media__panel<?= $i === 0 ? ' is-active' : '' ?>" role="tabpanel"
-                 id="xr-tm-panel-<?= (int) $i ?>"
-                 aria-labelledby="xr-tm-tab-<?= (int) $i ?>"
-                 data-xr-panel="media"
-                 data-index="<?= (int) $i ?>">
-                <div class="xr-tabs-media__stage xr-tabs-media__stage--<?= h(in_array($mode, ['youtube_click', 'video_loop'], true) ? $mode : 'youtube_click') ?>">
-                    <?php if ($mode === 'youtube_click'): ?>
-                        <div class="xr-yt-mask">
-                            <img src="<?= h($poster) ?>" alt="">
-                            <button type="button" class="xr-yt-play btn btn--gradient" data-youtube-load="<?= h($yt) ?>"><?= h((string) ($t['play_label'] ?? 'Play')) ?></button>
+        <?php if ($splitLayout): ?>
+            <div class="xr-tabs-media__split xr-tabs-media__split--oculus">
+                <div class="xr-tabs-media__split-grid">
+                    <div class="xr-tabs-media__split-col xr-tabs-media__split-col--copy">
+                        <?php foreach ($tabs as $i => $t): ?>
+                            <?php if (!is_array($t)) {
+                                continue;
+                            } ?>
+                            <?php
+                            $badge = trim((string) ($t['badge'] ?? ''));
+                            $panelTitle = trim((string) ($t['panel_title'] ?? ''));
+                            $body = trim((string) ($t['body'] ?? ''));
+                            ?>
+                            <div class="xr-tabs-media__panel<?= $i === 0 ? ' is-active' : '' ?>" role="tabpanel"
+                                 id="xr-tm-panel-<?= (int) $i ?>"
+                                 aria-labelledby="xr-tm-tab-<?= (int) $i ?>"
+                                 data-xr-panel="media"
+                                 data-index="<?= (int) $i ?>">
+                                <div class="xr-tabs-media__copy">
+                                    <?php if ($badge !== ''): ?>
+                                        <span class="xr-tabs-media__badge"><?= h($badge) ?></span>
+                                    <?php endif; ?>
+                                    <?php if ($panelTitle !== ''): ?>
+                                        <h3 class="xr-tabs-media__panel-title"><?= h($panelTitle) ?></h3>
+                                    <?php endif; ?>
+                                    <?php if ($body !== ''): ?>
+                                        <p class="xr-tabs-media__body"><?= h($body) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-tabs-media__split-col xr-tabs-media__split-col--device">
+                        <div class="xr-tabs-media__oculus">
+                            <div class="xr-tabs-media__oculus-inner">
+                                <?php foreach ($tabs as $i => $t): ?>
+                                    <?php if (!is_array($t)) {
+                                        continue;
+                                    } ?>
+                                    <?php
+                                    $mode = (string) ($t['mode'] ?? 'youtube_click');
+                                    $poster = (string) ($t['poster'] ?? '');
+                                    $yt = (string) ($t['youtube_id'] ?? '');
+                                    $mp4 = (string) ($t['mp4'] ?? '');
+                                    $playLabel = (string) ($t['play_label'] ?? 'Play');
+                                    $playAria = $playLabel !== '' ? $playLabel : 'Play video';
+                                    ?>
+                                    <?php
+                                    $bidSafe = preg_replace('/[^a-zA-Z0-9_-]/', '', $blockId);
+                                    if ($bidSafe === '') {
+                                        $bidSafe = 'media';
+                                    }
+                                    $clipId = 'xr-headset-clip-' . $bidSafe . '-' . (int) $i;
+                                    $headsetD = h(xr_oculus_headset_path_d());
+                                    ?>
+                                    <div class="xr-tabs-media__oculus-slot<?= $i === 0 ? ' is-active' : '' ?>"
+                                         data-oculus-slot="<?= (int) $i ?>"
+                                         data-index="<?= (int) $i ?>">
+                                        <svg class="xr-headset-slot-svg" viewBox="133 63 414 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true">
+                                            <defs>
+                                                <clipPath id="<?= h($clipId) ?>">
+                                                    <path d="<?= $headsetD ?>"/>
+                                                </clipPath>
+                                            </defs>
+                                            <g clip-path="url(#<?= h($clipId) ?>)">
+                                                <foreignObject x="148" y="70" width="384" height="232">
+                                                    <div xmlns="http://www.w3.org/1999/xhtml" class="xr-headset-fo">
+                                                        <div class="xr-headset-fo-body">
+                                                            <?php if ($mode === 'youtube_click'): ?>
+                                                                <div class="xr-tabs-media__vision-screen">
+                                                                    <div class="xr-yt-mask">
+                                                                        <img src="<?= h($poster) ?>" alt="">
+                                                                        <div class="xr-tabs-media__poster-overlay xr-tabs-media__poster-overlay--oculus">
+                                                                            <?php xr_oculus_lens_overlay_play($playAria, false, $yt); ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="xr-yt-frame" hidden data-youtube-frame></div>
+                                                                </div>
+                                                            <?php elseif ($mode === 'video_loop'): ?>
+                                                                <div class="xr-tabs-media__vision-screen">
+                                                                    <video class="xr-oculus-video" muted playsinline loop preload="metadata" poster="<?= h($poster) ?>">
+                                                                        <?php if ($mp4 !== ''): ?><source src="<?= h($mp4) ?>" type="video/mp4"><?php endif; ?>
+                                                                    </video>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                </foreignObject>
+                                            </g>
+                                            <path class="xr-headset-chrome" d="<?= $headsetD ?>" fill="none" stroke="#4a6db5" stroke-width="2.5"/>
+                                            <path class="xr-headset-chrome xr-headset-chrome--highlight" d="M 210 84 Q 340 68, 470 84" fill="none" stroke="#6080c0" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+                                        </svg>
+                                        <?php if ($mode === 'video_loop'): ?>
+                                            <div class="xr-tabs-media__vision-overlay xr-tabs-media__poster-overlay--oculus" data-oculus-overlay>
+                                                <?php xr_oculus_lens_overlay_play($playAria, true); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-                        <div class="xr-yt-frame" hidden data-youtube-frame></div>
-                    <?php elseif ($mode === 'video_loop'): ?>
-                        <video class="xr-loop-video" data-video-loop muted playsinline autoplay loop poster="<?= h($poster) ?>">
-                            <?php if ($mp4 !== ''): ?><source src="<?= h($mp4) ?>" type="video/mp4"><?php endif; ?>
-                        </video>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php else: ?>
+            <?php foreach ($tabs as $i => $t): ?>
+                <?php if (!is_array($t)) {
+                    continue;
+                } ?>
+                <?php
+                $mode = (string) ($t['mode'] ?? 'youtube_click');
+                $poster = (string) ($t['poster'] ?? '');
+                $yt = (string) ($t['youtube_id'] ?? '');
+                $mp4 = (string) ($t['mp4'] ?? '');
+                $badge = trim((string) ($t['badge'] ?? ''));
+                $panelTitle = trim((string) ($t['panel_title'] ?? ''));
+                $body = trim((string) ($t['body'] ?? ''));
+                $ol1 = trim((string) ($t['overlay_line1'] ?? ''));
+                $ol2 = trim((string) ($t['overlay_line2'] ?? ''));
+                $playLabel = (string) ($t['play_label'] ?? 'Play');
+                $playAria = $playLabel !== '' ? $playLabel : 'Play video';
+                ?>
+                <div class="xr-tabs-media__panel<?= $i === 0 ? ' is-active' : '' ?>" role="tabpanel"
+                     id="xr-tm-panel-<?= (int) $i ?>"
+                     aria-labelledby="xr-tm-tab-<?= (int) $i ?>"
+                     data-xr-panel="media"
+                     data-index="<?= (int) $i ?>">
+                    <div class="xr-tabs-media__stage xr-tabs-media__stage--<?= h(in_array($mode, ['youtube_click', 'video_loop'], true) ? $mode : 'youtube_click') ?>">
+                        <?php if ($mode === 'youtube_click'): ?>
+                            <div class="xr-yt-mask">
+                                <img src="<?= h($poster) ?>" alt="">
+                                <button type="button" class="xr-yt-play btn btn--gradient" data-youtube-load="<?= h($yt) ?>"><?= h($playLabel !== '' ? $playLabel : 'Play') ?></button>
+                            </div>
+                            <div class="xr-yt-frame" hidden data-youtube-frame></div>
+                        <?php elseif ($mode === 'video_loop'): ?>
+                            <video class="xr-loop-video" data-video-loop muted playsinline autoplay loop poster="<?= h($poster) ?>">
+                                <?php if ($mp4 !== ''): ?><source src="<?= h($mp4) ?>" type="video/mp4"><?php endif; ?>
+                            </video>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
     <?php
 }
@@ -185,11 +408,31 @@ function xr_block_video_freeze_section(array $p, string $blockId = ''): void
     $mp4 = (string) ($p['mp4'] ?? '');
     $poster = (string) ($p['poster'] ?? '');
     $caption = (string) ($p['caption'] ?? '');
+    $heading = trim((string) ($p['heading'] ?? ''));
+    $headingLine2 = trim((string) ($p['heading_line2'] ?? ''));
+    $intro = trim((string) ($p['intro'] ?? ''));
     if ($mp4 === '') {
         return;
     }
     ?>
     <div class="xr-video-freeze">
+        <?php if ($heading !== '' || $headingLine2 !== '' || $intro !== ''): ?>
+            <header class="xr-video-freeze__head">
+                <?php if ($heading !== '' || $headingLine2 !== ''): ?>
+                    <h2 class="xr-video-freeze__title">
+                        <?php if ($heading !== ''): ?>
+                            <span class="xr-video-freeze__title-line"><?= h($heading) ?></span>
+                        <?php endif; ?>
+                        <?php if ($headingLine2 !== ''): ?>
+                            <span class="xr-video-freeze__title-line"><?= h($headingLine2) ?></span>
+                        <?php endif; ?>
+                    </h2>
+                <?php endif; ?>
+                <?php if ($intro !== ''): ?>
+                    <p class="xr-video-freeze__intro"><?= h($intro) ?></p>
+                <?php endif; ?>
+            </header>
+        <?php endif; ?>
         <video class="xr-video-freeze__video" muted playsinline data-video-freeze poster="<?= h($poster) ?>">
             <source src="<?= h($mp4) ?>" type="video/mp4">
         </video>
@@ -231,9 +474,298 @@ function xr_block_video_freeze_center_image(array $p, string $blockId = ''): voi
 
 function xr_block_product_tabs(array $p, string $blockId = ''): void
 {
-    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $tabs   = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
     $panels = is_array($p['panels'] ?? null) ? $p['panels'] : [];
     $active = (int) ($p['active_tab'] ?? 0);
+    $layout = (string) ($p['layout'] ?? '');
+
+    /* ——— Slider layout ——— */
+    if ($layout === 'slider') {
+        $panel0   = is_array($panels[0] ?? null) ? $panels[0] : [];
+        $panel1   = is_array($panels[1] ?? null) ? $panels[1] : [];
+        $panel2   = is_array($panels[2] ?? null) ? $panels[2] : [];
+        $scBadge  = trim((string) ($p['showcase_badge'] ?? ''));
+        $scHead   = trim((string) ($p['showcase_heading'] ?? ''));
+        $scItems  = is_array($p['showcase_items'] ?? null) ? $p['showcase_items'] : [];
+        $vidPoster = trim((string) ($panel0['poster'] ?? ''));
+        $vidYtId  = trim((string) ($panel0['youtube_id'] ?? ''));
+        $vidLabel = trim((string) ($panel0['video_label'] ?? "See\nXR Doctor Platform\nin Action"));
+        $slideCards = [];
+        foreach ([$panel0, $panel1] as $pnl) {
+            $slideCards[] = [
+                'title'    => trim((string) ($pnl['title'] ?? '')),
+                'image'    => trim((string) ($pnl['card_image'] ?? $pnl['poster'] ?? '')),
+                'features' => is_array($pnl['card_features'] ?? null) ? $pnl['card_features'] : (is_array($pnl['features'] ?? null) ? $pnl['features'] : []),
+            ];
+        }
+        $fg = is_array($panel2['feature_grid'] ?? null) ? $panel2['feature_grid'] : [];
+        ?>
+        <div class="xr-pt-slider" data-pt-slider>
+            <div class="xr-pt-slider__body">
+                <!-- Left column -->
+                <div class="xr-pt-slider__left">
+                    <?php if ($scBadge !== ''): ?>
+                        <span class="xr-pt-slider__badge"><?= h($scBadge) ?></span>
+                    <?php endif; ?>
+                    <?php if ($scHead !== ''): ?>
+                        <h2 class="xr-pt-slider__heading">
+                            <?php foreach (explode("\n", $scHead) as $hl): ?>
+                                <span><?= h(trim($hl)) ?></span>
+                            <?php endforeach; ?>
+                        </h2>
+                    <?php endif; ?>
+                    <?php if ($scItems !== []): ?>
+                        <ul class="xr-pt-slider__nav" role="list">
+                            <?php foreach ($scItems as $si => $sit): ?>
+                                <?php if (!is_array($sit)) {
+                                    continue;
+                                } ?>
+                                <li>
+                                    <button type="button"
+                                            class="xr-pt-slider__nav-link<?= $si === 0 ? ' is-active' : '' ?>"
+                                            data-pt-nav="<?= (int) $si ?>"><?= h((string) ($sit['label'] ?? '')) ?></button>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Right: slides -->
+                <div class="xr-pt-slider__right">
+                    <div class="xr-pt-slider__viewport">
+                        <div class="xr-pt-slider__track" data-pt-track>
+
+                            <!-- Slide 0: video -->
+                            <div class="xr-pt-slider__slide xr-pt-slider__slide--video">
+                                <div class="xr-pt-slider__video-stage">
+                                    <div class="xr-yt-mask">
+                                        <?php if ($vidPoster !== ''): ?>
+                                            <img src="<?= h($vidPoster) ?>" alt="">
+                                        <?php endif; ?>
+                                        <div class="xr-pt-slider__video-overlay">
+                                            <?php if ($vidLabel !== ''): ?>
+                                                <p class="xr-pt-slider__video-label"><?= nl2br(h($vidLabel)) ?></p>
+                                            <?php endif; ?>
+                                            <?php if ($vidYtId !== ''): ?>
+                                                <button type="button" class="xr-pt-slider__play-btn"
+                                                        data-youtube-load="<?= h($vidYtId) ?>"
+                                                        aria-label="Play video">
+                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2L12 7L4 12V2Z" fill="white"/></svg>
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="xr-yt-frame" hidden data-youtube-frame></div>
+                                </div>
+                            </div>
+
+                            <!-- Slide 1: two product cards -->
+                            <div class="xr-pt-slider__slide xr-pt-slider__slide--cards">
+                                <div class="xr-pt-slider__cards">
+                                    <?php foreach ($slideCards as $sc): ?>
+                                        <div class="xr-pt-slider__card">
+                                            <?php if ($sc['image'] !== ''): ?>
+                                                <div class="xr-pt-slider__card-img">
+                                                    <img src="<?= h($sc['image']) ?>" alt="">
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="xr-pt-slider__card-body">
+                                                <h3 class="xr-pt-slider__card-title"><?= h($sc['title']) ?></h3>
+                                                <?php if ($sc['features'] !== []): ?>
+                                                    <ul class="xr-pt-slider__card-list">
+                                                        <?php foreach ($sc['features'] as $f): ?>
+                                                            <li><?= h((string) (is_array($f) ? ($f['label'] ?? '') : $f)) ?></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- Slide 2: AI feature grid -->
+                            <div class="xr-pt-slider__slide xr-pt-slider__slide--grid">
+                                <div class="xr-pt-slider__grid">
+                                    <?php foreach ($fg as $fi): ?>
+                                        <?php if (!is_array($fi)) {
+                                            continue;
+                                        } ?>
+                                        <?php $fcolor = h((string) ($fi['icon_color'] ?? 'cyan')); ?>
+                                        <div class="xr-pt-slider__grid-item">
+                                            <div class="xr-pt-slider__grid-hd">
+                                                <span class="xr-pt-slider__grid-icon xr-pt-slider__grid-icon--<?= $fcolor ?>">
+                                                    <?php $iimg = trim((string) ($fi['icon_img'] ?? '')); ?>
+                                                    <?php if ($iimg !== ''): ?>
+                                                        <img src="<?= h($iimg) ?>" alt="">
+                                                    <?php else: ?>
+                                                        <?= h((string) ($fi['icon_emoji'] ?? '◉')) ?>
+                                                    <?php endif; ?>
+                                                </span>
+                                                <strong class="xr-pt-slider__grid-title"><?= h((string) ($fi['title'] ?? '')) ?></strong>
+                                            </div>
+                                            <p class="xr-pt-slider__grid-desc"><?= h((string) ($fi['body'] ?? '')) ?></p>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Arrows -->
+                    <button type="button" class="xr-pt-slider__arrow xr-pt-slider__arrow--prev" data-pt-prev aria-label="Previous slide">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8L10 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button type="button" class="xr-pt-slider__arrow xr-pt-slider__arrow--next" data-pt-next aria-label="Next slide">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4L10 8L6 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dots -->
+            <div class="xr-pt-slider__dots">
+                <?php for ($di = 0; $di < 3; $di++): ?>
+                    <button type="button"
+                            class="xr-pt-slider__dot<?= $di === 0 ? ' is-active' : '' ?>"
+                            data-pt-dot="<?= $di ?>"
+                            aria-label="Slide <?= $di + 1 ?>"></button>
+                <?php endfor; ?>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
+    /* ——— Showcase layout ——— */
+    if ($layout === 'showcase') {
+        $badge   = trim((string) ($p['showcase_badge'] ?? ''));
+        $heading = trim((string) ($p['showcase_heading'] ?? ''));
+        $items   = is_array($p['showcase_items'] ?? null) ? $p['showcase_items'] : [];
+        $n       = count($panels);
+        ?>
+        <div class="xr-product-tabs xr-product-tabs--showcase" data-showcase-tabs>
+            <div class="xr-product-tabs__bar" role="tablist">
+                <?php foreach ($tabs as $i => $label): ?>
+                    <?php $hasGrid = is_array($panels[$i]['feature_grid'] ?? null) && $panels[$i]['feature_grid'] !== []; ?>
+                    <button type="button" role="tab"
+                            class="xr-product-tabs__tab<?= $i === $active ? ' is-active' : '' ?>"
+                            data-xr-tab="product-sc" data-index="<?= (int) $i ?>"
+                            <?= $hasGrid ? 'data-sc-feature="1"' : '' ?>
+                            aria-selected="<?= $i === $active ? 'true' : 'false' ?>"><?= h((string) $label) ?></button>
+                <?php endforeach; ?>
+            </div>
+            <div class="xr-product-tabs__sc-wrap">
+                <div class="xr-product-tabs__sc-intro">
+                    <?php if ($badge !== ''): ?>
+                        <span class="xr-product-tabs__sc-badge"><?= h($badge) ?></span>
+                    <?php endif; ?>
+                    <?php if ($heading !== ''): ?>
+                        <h2 class="xr-product-tabs__sc-heading">
+                            <?php foreach (explode("\n", $heading) as $line): ?>
+                                <span><?= h(trim($line)) ?></span>
+                            <?php endforeach; ?>
+                        </h2>
+                    <?php endif; ?>
+                    <?php if ($items !== []): ?>
+                        <ul class="xr-product-tabs__sc-items">
+                            <?php foreach ($items as $it): ?>
+                                <?php if (!is_array($it)) {
+                                    continue;
+                                } ?>
+                                <li class="xr-product-tabs__sc-item<?= !empty($it['underline']) ? ' xr-product-tabs__sc-item--ul' : '' ?>">
+                                    <?= h((string) ($it['label'] ?? '')) ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+
+                <?php
+                /* Does the INITIAL active tab have a feature_grid? */
+                $activeHasGrid = is_array($panels[$active]['feature_grid'] ?? null) && $panels[$active]['feature_grid'] !== [];
+                ?>
+
+                <!-- Photo-card pair (hidden when active tab has feature_grid) -->
+                <div class="xr-product-tabs__sc-cards" data-sc-cards data-sc-total="<?= (int) $n ?>"
+                     <?= $activeHasGrid ? 'hidden' : '' ?>>
+                    <?php foreach ($panels as $i => $panel): ?>
+                        <?php if (!is_array($panel)) {
+                            continue;
+                        } ?>
+                        <?php
+                        $leftIdx  = 0;
+                        $rightIdx = min($n - 1, 1);
+                        $visible  = $i === $leftIdx || $i === $rightIdx;
+                        ?>
+                        <div class="xr-product-tabs__sc-card<?= $visible ? ' is-visible' : '' ?><?= $i === $active ? ' is-active' : '' ?>"
+                             data-sc-card="<?= (int) $i ?>">
+                            <div class="xr-product-tabs__sc-card-img">
+                                <?php $ci = trim((string) ($panel['card_image'] ?? $panel['poster'] ?? '')); ?>
+                                <?php if ($ci !== ''): ?>
+                                    <img src="<?= h($ci) ?>" alt="">
+                                <?php endif; ?>
+                            </div>
+                            <div class="xr-product-tabs__sc-card-body">
+                                <h3 class="xr-product-tabs__sc-card-title"><?= h((string) ($panel['title'] ?? '')) ?></h3>
+                                <?php
+                                $cf = is_array($panel['card_features'] ?? null) ? $panel['card_features'] : (is_array($panel['features'] ?? null) ? $panel['features'] : []);
+                                if ($cf !== []):
+                                ?>
+                                <ul class="xr-product-tabs__sc-card-feats">
+                                    <?php foreach ($cf as $f): ?>
+                                        <li><?= h((string) (is_array($f) ? ($f['label'] ?? '') : $f)) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Feature-grid panels (one per tab that has feature_grid, hidden unless active) -->
+                <?php foreach ($panels as $i => $panel): ?>
+                    <?php if (!is_array($panel)) {
+                        continue;
+                    } ?>
+                    <?php $fg = is_array($panel['feature_grid'] ?? null) ? $panel['feature_grid'] : []; ?>
+                    <?php if ($fg === []) {
+                        continue;
+                    } ?>
+                    <div class="xr-product-tabs__sc-feature-panel" data-sc-feature-panel="<?= (int) $i ?>"
+                         <?= $i !== $active ? 'hidden' : '' ?>>
+                        <div class="xr-product-tabs__sc-grid">
+                            <?php foreach ($fg as $fc): ?>
+                                <?php if (!is_array($fc)) {
+                                    continue;
+                                } ?>
+                                <?php $color = (string) ($fc['icon_color'] ?? 'cyan'); ?>
+                                <div class="xr-product-tabs__sc-fcard">
+                                    <div class="xr-product-tabs__sc-fcard-icon xr-product-tabs__sc-fcard-icon--<?= h($color) ?>">
+                                        <?php $iconImg = trim((string) ($fc['icon_img'] ?? '')); ?>
+                                        <?php if ($iconImg !== ''): ?>
+                                            <img src="<?= h($iconImg) ?>" alt="">
+                                        <?php else: ?>
+                                            <span aria-hidden="true">◉</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="xr-product-tabs__sc-fcard-text">
+                                        <h4 class="xr-product-tabs__sc-fcard-title"><?= h((string) ($fc['title'] ?? '')) ?></h4>
+                                        <p class="xr-product-tabs__sc-fcard-body"><?= h((string) ($fc['body'] ?? '')) ?></p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
+    /* ——— Default / split-video layout ——— */
     ?>
     <div class="xr-product-tabs">
         <div class="xr-product-tabs__bar" role="tablist">
@@ -247,30 +779,58 @@ function xr_block_product_tabs(array $p, string $blockId = ''): void
             <?php if (!is_array($panel)) {
                 continue;
             } ?>
-            <div class="xr-product-tabs__panel<?= $i === $active ? ' is-active' : '' ?>" data-xr-panel="product" data-index="<?= (int) $i ?>">
-                <h3 class="xr-product-tabs__title"><?= h((string) ($panel['title'] ?? '')) ?></h3>
-                <p class="xr-product-tabs__lead"><?= h((string) ($panel['lead'] ?? '')) ?></p>
-                <p class="xr-product-tabs__body"><?= h((string) ($panel['body'] ?? '')) ?></p>
-                <p class="xr-product-tabs__emph"><?= h((string) ($panel['emphasis'] ?? '')) ?></p>
-                <div class="xr-product-tabs__split">
-                    <div class="xr-product-tabs__feats">
-                        <?php
-                        $feats = is_array($panel['features'] ?? null) ? $panel['features'] : [];
-                        foreach ($feats as $f) {
-                            $lab = is_array($f) ? ($f['label'] ?? '') : '';
-                            echo '<div class="xr-product-tabs__feat"><span class="xr-dot"></span>' . h((string) $lab) . '</div>';
-                        }
-                        ?>
+            <?php
+            $ytId     = trim((string) ($panel['youtube_id'] ?? ''));
+            $poster   = trim((string) ($panel['poster'] ?? ''));
+            $vidLabel = trim((string) ($panel['video_label'] ?? ''));
+            $hasVideo = $ytId !== '' || $poster !== '';
+            ?>
+            <div class="xr-product-tabs__panel<?= $i === $active ? ' is-active' : '' ?><?= $hasVideo ? ' xr-product-tabs__panel--with-video' : '' ?>" data-xr-panel="product" data-index="<?= (int) $i ?>">
+                <div class="xr-product-tabs__text">
+                    <h3 class="xr-product-tabs__title"><?= h((string) ($panel['title'] ?? '')) ?></h3>
+                    <p class="xr-product-tabs__lead"><?= h((string) ($panel['lead'] ?? '')) ?></p>
+                    <p class="xr-product-tabs__body"><?= h((string) ($panel['body'] ?? '')) ?></p>
+                    <p class="xr-product-tabs__emph"><?= h((string) ($panel['emphasis'] ?? '')) ?></p>
+                    <div class="xr-product-tabs__split">
+                        <div class="xr-product-tabs__feats">
+                            <?php
+                            $feats = is_array($panel['features'] ?? null) ? $panel['features'] : [];
+                            foreach ($feats as $f) {
+                                $lab = is_array($f) ? ($f['label'] ?? '') : '';
+                                echo '<div class="xr-product-tabs__feat"><span class="xr-dot"></span>' . h((string) $lab) . '</div>';
+                            }
+                            ?>
+                        </div>
+                        <p class="xr-product-tabs__side"><?= h((string) ($panel['sidebar'] ?? '')) ?></p>
                     </div>
-                    <p class="xr-product-tabs__side"><?= h((string) ($panel['sidebar'] ?? '')) ?></p>
+                    <div class="xr-product-tabs__bottom">
+                        <p><?= h((string) ($panel['bottom_title'] ?? '')) ?></p>
+                        <?php
+                        $lnk = is_array($panel['bottom_link'] ?? null) ? $panel['bottom_link'] : [];
+                        ?>
+                        <a class="xr-product-tabs__link" href="<?= h((string) ($lnk['href'] ?? '#')) ?>"><?= h((string) ($lnk['label'] ?? '')) ?> →</a>
+                    </div>
                 </div>
-                <div class="xr-product-tabs__bottom">
-                    <p><?= h((string) ($panel['bottom_title'] ?? '')) ?></p>
-                    <?php
-                    $lnk = is_array($panel['bottom_link'] ?? null) ? $panel['bottom_link'] : [];
-                    ?>
-                    <a class="xr-product-tabs__link" href="<?= h((string) ($lnk['href'] ?? '#')) ?>"><?= h((string) ($lnk['label'] ?? '')) ?> →</a>
+                <?php if ($hasVideo): ?>
+                <div class="xr-product-tabs__stage">
+                    <div class="xr-yt-mask">
+                        <?php if ($poster !== ''): ?>
+                            <img src="<?= h($poster) ?>" alt="">
+                        <?php endif; ?>
+                        <div class="xr-product-tabs__play-overlay">
+                            <?php if ($vidLabel !== ''): ?>
+                                <p class="xr-product-tabs__play-label"><?= nl2br(h($vidLabel)) ?></p>
+                            <?php endif; ?>
+                            <?php if ($ytId !== ''): ?>
+                                <button type="button" class="xr-product-tabs__play-btn" data-youtube-load="<?= h($ytId) ?>" aria-label="Play video">
+                                    <span class="xr-product-tabs__play-icon" aria-hidden="true"></span>
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="xr-yt-frame" hidden data-youtube-frame></div>
                 </div>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
     </div>
@@ -449,6 +1009,108 @@ function xr_block_closing_block(array $p, string $blockId = ''): void
     <div class="xr-closing">
         <p class="xr-closing__small xr-reveal"><?= h((string) ($p['line1'] ?? '')) ?></p>
         <p class="xr-closing__big xr-reveal"><?= h((string) ($p['line2'] ?? '')) ?></p>
+    </div>
+    <?php
+}
+
+/**
+ * Renders a paragraph that may contain **bold** and *italic* markers.
+ * Input is plain text; markers are converted to <strong>/<em> after escaping.
+ */
+function xr_inline_markup(string $raw): string
+{
+    $s = htmlspecialchars($raw, ENT_QUOTES, 'UTF-8');
+    $s = (string) preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $s);
+    $s = (string) preg_replace('/\*(.+?)\*/s', '<em>$1</em>', $s);
+
+    return $s;
+}
+
+function xr_block_product_detail_tabs(array $p, string $blockId = ''): void
+{
+    $tabs     = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $ctaTitle = trim((string) ($p['cta_title'] ?? ''));
+    $ctaSub   = trim((string) ($p['cta_sub'] ?? ''));
+    $ctaHref  = trim((string) ($p['cta_href'] ?? '#'));
+    if ($tabs === []) {
+        return;
+    }
+    ?>
+    <div class="xr-dtabs">
+        <div class="xr-dtabs__bar" role="tablist">
+            <?php foreach ($tabs as $i => $t): ?>
+                <?php if (!is_array($t)) {
+                    continue;
+                } ?>
+                <button type="button" role="tab"
+                        class="xr-dtabs__btn<?= $i === 0 ? ' is-active' : '' ?>"
+                        data-xr-tab="dtab" data-index="<?= (int) $i ?>"
+                        aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"><?= h((string) ($t['label'] ?? '')) ?></button>
+            <?php endforeach; ?>
+        </div>
+
+        <?php foreach ($tabs as $i => $t): ?>
+            <?php if (!is_array($t)) {
+                continue;
+            } ?>
+            <?php
+            $title    = trim((string) ($t['title'] ?? ''));
+            $body     = is_array($t['body'] ?? null) ? $t['body'] : [];
+            $subItems = is_array($t['sub_items'] ?? null) ? $t['sub_items'] : [];
+            $subConts = array_values(array_map(static fn($s) => (string) (is_array($s) ? ($s['content'] ?? '') : ''), $subItems));
+            ?>
+            <div class="xr-dtabs__panel<?= $i === 0 ? ' is-active' : '' ?>"
+                 data-xr-panel="dtab" data-index="<?= (int) $i ?>">
+                <?php if ($title !== ''): ?>
+                    <h2 class="xr-dtabs__title"><?= h($title) ?></h2>
+                <?php endif; ?>
+                <div class="xr-dtabs__body">
+                    <?php foreach ($body as $para): ?>
+                        <?php $text = is_array($para) ? (string) ($para['text'] ?? '') : (string) $para; ?>
+                        <?php if (trim($text) !== ''): ?>
+                            <p class="xr-dtabs__para"><?= xr_inline_markup($text) ?></p>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+                <?php if ($subItems !== []): ?>
+                    <div class="xr-dtabs__sub"
+                         data-sub-items="<?= h((string) json_encode($subConts, JSON_UNESCAPED_UNICODE)) ?>">
+                        <nav class="xr-dtabs__subnav" role="tablist" aria-label="Sub-navigation">
+                            <?php foreach ($subItems as $si => $s): ?>
+                                <?php if (!is_array($s)) {
+                                    continue;
+                                } ?>
+                                <button type="button" role="tab"
+                                        class="xr-dtabs__subitem<?= $si === 0 ? ' is-active' : '' ?>"
+                                        data-sub-idx="<?= (int) $si ?>"
+                                        aria-selected="<?= $si === 0 ? 'true' : 'false' ?>">
+                                    <?php $icon = trim((string) ($s['icon'] ?? '')); ?>
+                                    <?php if ($icon !== ''): ?>
+                                        <span class="xr-dtabs__sub-icon" aria-hidden="true"><?= h($icon) ?></span>
+                                    <?php endif; ?>
+                                    <?= h((string) ($s['label'] ?? '')) ?>
+                                </button>
+                            <?php endforeach; ?>
+                        </nav>
+                        <div class="xr-dtabs__subcontent"><?= h($subConts[0] ?? '') ?></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if ($ctaTitle !== '' || $ctaSub !== ''): ?>
+            <div class="xr-dtabs__cta">
+                <?php if ($ctaTitle !== ''): ?>
+                    <p class="xr-dtabs__cta-title"><?= h($ctaTitle) ?></p>
+                <?php endif; ?>
+                <?php if ($ctaSub !== ''): ?>
+                    <div class="xr-dtabs__cta-sub">
+                        <?= h($ctaSub) ?>
+                        <a class="xr-dtabs__cta-arrow" href="<?= h($ctaHref) ?>" aria-label="Go">→</a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>
     <?php
 }
