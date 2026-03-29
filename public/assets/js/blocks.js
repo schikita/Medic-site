@@ -550,6 +550,117 @@
         });
     }
 
+    function initHologramStories() {
+        qsa("[data-stories-root]").forEach(function (root) {
+            var jsonEl = qs("[data-stories-json]", root);
+            if (!jsonEl) return;
+            var stories;
+            try { stories = JSON.parse(jsonEl.textContent || "[]"); } catch (e) { return; }
+            if (!stories.length) return;
+
+            var carousel  = qs("[data-stories-carousel]", root);
+            var track     = qs("[data-stories-track]", root);
+            var modal     = qs("[data-stories-modal]", root);
+            var mIcon     = qs("[data-m-icon]", root);
+            var mTag      = qs("[data-m-tag]", root);
+            var mTitle    = qs("[data-m-title]", root);
+            var mBody     = qs("[data-m-body]", root);
+            var mFooter   = qs("[data-m-footer]", root);
+            var offset = 0, openIdx = -1, autoTimer = null;
+            var CLONE = 3;
+
+            function buildCards() {
+                track.innerHTML = "";
+                stories.concat(stories.slice(0, CLONE)).forEach(function (s, i) {
+                    var ri = i % stories.length;
+                    var card = document.createElement("div");
+                    card.className = "xr-stories__card";
+                    var tagsHtml = Array.isArray(s.tags) ? s.tags.join("<br>") : "";
+                    card.innerHTML =
+                        '<div class="xr-stories__card-icon">' + (s.icon || "") + "</div>" +
+                        '<div class="xr-stories__card-text">' + (s.summary || "") + "</div>" +
+                        '<button type="button" class="xr-stories__readmore" data-ridx="' + ri + '">Read More</button>' +
+                        '<div class="xr-stories__card-tags">' + tagsHtml + "</div>" +
+                        '<div class="xr-stories__card-stars" aria-hidden="true">★★★★★</div>';
+                    track.appendChild(card);
+                });
+                qsa("[data-ridx]", track).forEach(function (btn) {
+                    btn.addEventListener("click", function () { openModal(parseInt(btn.getAttribute("data-ridx"), 10)); });
+                });
+            }
+
+            function cardW() {
+                var c = qs(".xr-stories__card", track);
+                return c ? c.offsetWidth + 16 : 260;
+            }
+
+            function moveTo(idx, animate) {
+                track.style.transition = animate ? "transform 0.65s cubic-bezier(0.4,0,0.2,1)" : "none";
+                track.style.transform  = "translateX(-" + (idx * cardW()) + "px)";
+            }
+
+            function startAuto() {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(function () {
+                    offset++;
+                    if (offset >= stories.length) {
+                        moveTo(offset, true);
+                        setTimeout(function () { offset = 0; moveTo(0, false); }, 680);
+                    } else {
+                        moveTo(offset, true);
+                    }
+                }, 3200);
+            }
+
+            function openModal(idx) {
+                openIdx = idx;
+                fillModal(idx);
+                if (carousel) carousel.hidden = true;
+                if (modal)    modal.hidden    = false;
+                clearInterval(autoTimer);
+            }
+
+            function closeModal() {
+                if (modal)    modal.hidden    = true;
+                if (carousel) carousel.hidden = false;
+                openIdx = -1;
+                startAuto();
+            }
+
+            function fillModal(idx) {
+                var s = stories[idx];
+                if (!s) return;
+                if (mIcon)   mIcon.textContent = s.icon || "";
+                if (mTag)    mTag.innerHTML    = Array.isArray(s.tags) ? s.tags.join("<br>") : "";
+                if (mTitle)  mTitle.textContent = s.title || "";
+                if (mBody) {
+                    mBody.innerHTML = "";
+                    var body = Array.isArray(s.body) ? s.body : [s.body || ""];
+                    body.forEach(function (para) {
+                        if (!para) return;
+                        var p = document.createElement("p");
+                        p.textContent = para;
+                        mBody.appendChild(p);
+                    });
+                }
+                if (mFooter) mFooter.textContent = s.footer || "";
+            }
+
+            var closeBtn = qs("[data-stories-close]", root);
+            var prevBtn  = qs("[data-stories-prev]",  root);
+            var nextBtn  = qs("[data-stories-next]",  root);
+            if (closeBtn) closeBtn.addEventListener("click", closeModal);
+            if (prevBtn)  prevBtn.addEventListener("click",  function () { openIdx = (openIdx - 1 + stories.length) % stories.length; fillModal(openIdx); });
+            if (nextBtn)  nextBtn.addEventListener("click",  function () { openIdx = (openIdx + 1) % stories.length; fillModal(openIdx); });
+
+            root.addEventListener("mouseenter", function () { if (openIdx === -1) clearInterval(autoTimer); });
+            root.addEventListener("mouseleave", function () { if (openIdx === -1) startAuto(); });
+
+            buildCards();
+            setTimeout(function () { moveTo(0, false); startAuto(); }, 60);
+        });
+    }
+
     function initDetailSubNav() {
         qsa("[data-sub-items]").forEach(function (wrap) {
             var items;
@@ -567,7 +678,11 @@
                     btn.setAttribute("aria-selected", "true");
                     var idx = parseInt(btn.getAttribute("data-sub-idx"), 10);
                     if (items[idx] !== undefined) {
-                        content.textContent = items[idx];
+                        content.style.opacity = "0";
+                        setTimeout(function () {
+                            content.textContent = items[idx];
+                            content.style.opacity = "1";
+                        }, 130);
                     }
                 });
             });
@@ -666,6 +781,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         initTabs();
         initDetailSubNav();
+        initHologramStories();
         initProductSlider();
         initShowcaseTabs();
         initCarousels();

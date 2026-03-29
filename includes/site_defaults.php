@@ -280,8 +280,8 @@ function xr_default_home_blocks(): array
                         ],
                         'sub_items' => [
                             ['icon' => '⊙', 'label' => 'Patient Care', 'content' => 'XR Doctor sets a new clinical standard for diagnostics and treatment — with interactive, scalable, mapped and shared holograms across all medical specializations.'],
-                            ['icon' => '⚙', 'label' => 'Team Work', 'content' => 'Work together from any location — share the same holographic environment with colleagues in real time, as if everyone were in the same room.'],
-                            ['icon' => '🌐', 'label' => 'Telementoring', 'content' => 'Mentor and supervise remotely with full holographic presence — guiding trainees or colleagues across distances with interactive shared views.'],
+                            ['icon' => '⚙', 'label' => 'Team Work', 'content' => 'Work together seamlessly — in perfect sync — through XR Doctor spatial collaboration and global access, as if in the same room, even when not.'],
+                            ['icon' => '🌐', 'label' => 'Telementoring', 'content' => 'XR Doctor Tele-Mentoring takes telemedicine beyond screens — into shared holographic presence with real-time case interaction and guided precision, used from OR to classroom.'],
                         ],
                     ],
                     [
@@ -295,8 +295,8 @@ function xr_default_home_blocks(): array
                         ],
                         'sub_items' => [
                             ['icon' => '⊙', 'label' => 'Hologram Library', 'content' => 'XR Doctor Hologram Library gives instant access to holographic medical environments aligned with real-world space — ready to deploy in any location, at any scale.'],
-                            ['icon' => '⚙', 'label' => 'Case Simulation', 'content' => 'Run realistic case simulations with anonymized patient data, protocol-based scenarios, and interactive holographic patients to build clinical decision-making.'],
-                            ['icon' => '🌐', 'label' => 'Test and Master Skills', 'content' => 'Practice, test, and master clinical skills at your own pace — repeat procedures until confident, with immediate feedback in a lifelike holographic environment.'],
+                            ['icon' => '⚙', 'label' => 'Case Simulation', 'content' => 'XR Doctor Case Simulation delivers hands-on Medical XR Training to any place in the world — instantly, at full scale, with no physical setup and no instructors.'],
+                            ['icon' => '🌐', 'label' => 'Test and Master Skills', 'content' => 'XR Doctor Inside-View Testing and Skill Mastery adds a new layer of clinical immersion — clearly demonstrating how each chosen answer or performed action affects the visible response on the digital manikin.'],
                         ],
                     ],
                     [
@@ -310,8 +310,8 @@ function xr_default_home_blocks(): array
                         ],
                         'sub_items' => [
                             ['icon' => '⊙', 'label' => 'AI Clinical Assistant', 'content' => 'AI Clinical Assistant is an on-demand proactive clinical co-pilot that makes every case review in XR Doctor smarter and more efficient — through AI pre-case brief and intelligent real-time voice support.'],
-                            ['icon' => '⚙', 'label' => 'AI Training Coach', 'content' => 'AI Training Coach guides learners step-by-step through holographic XR training scenarios — correcting mistakes and adapting to each learner\'s pace in real time.'],
-                            ['icon' => '🌐', 'label' => 'AI Teamwork Mentor', 'content' => 'AI Teamwork Mentor enables shared understanding across teams — gathering group insights and guiding collaborative decisions before, during and after sessions.'],
+                            ['icon' => '⚙', 'label' => 'AI Training Coach', 'content' => 'AI Training Coach — your personal intelligence tutor inside XR Doctor — is the Next-Gen Medical Standard for self-guided XR training powered by AI precision.'],
+                            ['icon' => '🌐', 'label' => 'AI Teamwork Mentor', 'content' => 'AI Teamwork Mentor brings intelligent coordination and insight to XR Doctor group sessions and turns an XR meeting into a living knowledge document.'],
                         ],
                     ],
                 ],
@@ -321,18 +321,117 @@ function xr_default_home_blocks(): array
             ],
         ],
         [
-            'type' => 'testimonials_marquee',
+            'type' => 'hologram_stories',
             'id' => 'block-1-9-10',
             'props' => [
-                'speed' => 42,
-                'cross_link' => [
-                    'label' => 'Pinned story on the Blog (cross-link with block 4.3)',
-                    'href' => '/blog.php#block-4-3',
+                'badge'      => 'Star Stories',
+                'heading'    => 'Embrace Epic Hologram Stories',
+                'subheading' => 'Saving Patients and Empowering Doctors',
+                'stories' => [
+                    [
+                        'icon'    => "\xF0\x9F\xA6\xB4",
+                        'tags'    => ['Traumatology Orthopaedics', 'Endoprosthesis'],
+                        'summary' => 'Patient back to vital functionality after 10 years of deep suffering. Surgeons got revolutionary tool for interactive visualisation & measurement on operation area.',
+                        'title'   => 'Patient restored full function after a decade of suffering',
+                        'body'    => [
+                            'After 10 years of deep suffering, a patient was able to return to vital functionality thanks to holographic technology. Surgeons received a revolutionary tool for uncovering interactive visualisation and measurement on the operation area.',
+                            'The hologram enabled precise spatial understanding of the anatomy, allowing the surgical team to plan and execute the procedure with unprecedented accuracy.',
+                        ],
+                        'footer'  => 'Interactive holographic measurement changed the outcome of the surgery',
+                    ],
+                    [
+                        'icon'    => "\xF0\x9F\x92\x80",
+                        'tags'    => ['Maxillofacial Otolaryngology', 'Plastic Surgery'],
+                        'summary' => 'Patient Avoided rib removal. Surgeons got new diagnostic and planning tools. Surgery plan completely turned out — surgery completed a few hours faster.',
+                        'title'   => 'A 17-year-old girl from an orphanage with severe congenital maxillofacial and ENT pathology',
+                        'body'    => [
+                            'Young lady had difficulty breathing and her appearance caused constant ridicule from her peers. Long-term preparation was carried out for a complex interdisciplinary operation by a team of 3 PhDs — maxillofacial, ENT, plastic surgeon. The original plan was to remove the rib and form a nasal septum from it. After using the hologram for diagnosis, they found out that the girl had enough cartilage tissue, which all traditional medical studies did not show.',
+                            'Almost immediately after using the hologram, it was decided to change the operation plan — not to remove the rib and thereby not cause significant damage to the health of the young girl. Holograms were also used for precise planning — doctors were able to form a nasal septum from their own cartilage for free breathing and restore the beauty of the face. A few months later the girl was adopted.',
+                        ],
+                        'footer'  => 'First in the world maxillofacial surgery with using holograms on an open skull!',
+                    ],
+                    [
+                        'icon'    => "\xF0\x9F\xA6\xB7",
+                        'tags'    => ['Dentistry', 'Mental Health'],
+                        'summary' => 'Patient Education with holograms helped reduce patient anxiety. Dentist fascinated by hologram tool for daily practice and joined the XR Doctor collaboration team.',
+                        'title'   => '32-year old product manager from XR Doctor team with an unexpectedly dental problem',
+                        'body'    => [
+                            'Our healthy and active employee discovered that she had problems while eating. She was diagnosed with a complex problem with her jaw and had to undergo long-term treatment in several stages. She was very afraid of the upcoming procedures and tried to understand what and how she would do.',
+                            'Taking care of the physical and mental health of our employees, we decided to help her and made a set of holograms based on 3D models from the doctor. The doctor, using holograms, explained to her the entire course of treatment, after which she went to the procedures completely calm and worked successfully, without being distracted by mental problems.',
+                        ],
+                        'footer'  => 'Dentist Fascinated By Using Holograms During Treatment And Joined XR DOCTOR Team',
+                    ],
+                    [
+                        'icon'    => "\xF0\x9F\x8E\xAF",
+                        'tags'    => ['Oncology', 'Traumatology'],
+                        'summary' => 'Surgery planning with holograms in complicated oncology cases helps experienced surgeons. Surgery time reduced 6 times. No vital vessels or nerves damaged.',
+                        'title'   => 'A 20-year-old successful student with a malignant tumor on the bone of the forearm',
+                        'body'    => [
+                            'This girl\'s attending physician accidentally heard from a traumatologist from a neighbouring hospital department about an ongoing innovative project with holograms. He was very worried about the difficult access to the tumour and asked to make a hologram for placement on the body during surgery for this patient.',
+                            'An experienced doctor, for the first time in his life, put on AR glasses to plan a complex operation. Within a few minutes, under the guidance of a doctor from an innovative project, he learned to work with glasses — in minutes he saw how to bypass the areas most dangerous for damage during surgery. A few days later, instead of the 3 hours initially planned, he gained access to the tumour in 30 minutes, using glasses and holograms on his own.',
+                        ],
+                        'footer'  => 'Surgeons gained access to the tumour in 30 minutes instead of the 3 hours initially planned',
+                    ],
+                    [
+                        'icon'    => "\xE2\x9D\xA4\xEF\xB8\x8F",
+                        'tags'    => ['Pediatric', 'Cardiac Surgery'],
+                        'summary' => 'Enlarged interactive holograms helped discover a new surgery method for pediatric cardiac pathology without stopping the heart during high-risk surgery.',
+                        'title'   => 'A 5-year-old boy with a complex congenital heart defect',
+                        'body'    => [
+                            'For every 1000 births — 15 children have a heart defect. 25% die in early infancy, 50% within the first year of life. Technology allows 80% to reach middle age. A serious treatment challenge is the small size of the heart and vital structures in the surgical field. Stopping the heart in open surgery puts the child\'s life and health at risk.',
+                            'After discussions with pediatric surgeons, a hologram of a 5-year-old boy\'s heart scheduled for surgery was created. During the consultation, doctors, for the first time using glasses and seeing holograms, saw how it is possible to perform surgery for this heart defect without stopping the heart. With such a high-tech tool and interactive advanced visualization, new, less harmful and more successful surgical techniques can be created, saving the lives of young patients.',
+                        ],
+                        'footer'  => 'Hologram is the tool for interactive advanced visualization and discovering new methods',
+                    ],
                 ],
-                'items' => [
-                    ['quote' => 'XR Doctor changed how we review imaging with the surgical team.', 'author' => 'Dr. A. N.', 'role' => 'Chief of Surgery'],
-                    ['quote' => 'Students grasp anatomy faster with holographic cases.', 'author' => 'Prof. M. K.', 'role' => 'Medical University'],
-                    ['quote' => 'Remote rounds feel present — we align on the same 3D model.', 'author' => 'Dr. L. P.', 'role' => 'Radiology'],
+            ],
+        ],
+        [
+            'type' => 'impact_stats',
+            'id' => 'block-1-10-impact',
+            'props' => [
+                'heading'  => "Join XR Doctor. A New Leap\nin Healthcare Industry",
+                'subtitle' => 'Medical doctor need 10 years to master skills. XR Doctor bridges the gap to accelerate the expertise.',
+                'stats' => [
+                    [
+                        'value' => '+60%',
+                        'label' => 'Improve treatment outcomes',
+                        'note'  => '*Built on doctors\' expertise with holograms',
+                    ],
+                    [
+                        'value' => '+275%',
+                        'label' => 'Increase skills confidence',
+                        'note'  => '*Proven through large-scale studies',
+                    ],
+                    [
+                        'value' => '+400%',
+                        'label' => 'Faster education process',
+                        'note'  => '*Validated through scientific research',
+                    ],
+                ],
+            ],
+        ],
+        [
+            'type' => 'clinical_circles',
+            'id' => 'block-1-10-clinic',
+            'props' => [
+                'label'   => 'XR Doctor Platform. Made by XR Doctor team \xe2\x80\x93 from real operations to daily work',
+                'heading' => 'Born in Real Clinical Practice',
+                'subhead' => 'Build together with Real Doctors & Patients',
+                'tagline' => "From OR to Classroom \xe2\x80\x93 we\xe2\x80\x99ve been there. Every feature answers a Real Need.",
+                'circles' => [
+                    [
+                        'src' => 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=400&fit=crop',
+                        'alt' => 'Surgery with AR glasses',
+                    ],
+                    [
+                        'src' => 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop',
+                        'alt' => 'Doctor using hologram with patient',
+                    ],
+                    [
+                        'src' => 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop',
+                        'alt' => 'Medical team with holograms',
+                    ],
                 ],
             ],
         ],
@@ -344,6 +443,62 @@ function xr_default_home_blocks(): array
                     ['value' => '120+', 'label' => 'Clinical sites'],
                     ['value' => '48', 'label' => 'Countries'],
                     ['value' => '3M+', 'label' => 'Training minutes'],
+                ],
+            ],
+        ],
+        [
+            'type' => 'team_visioners',
+            'id' => 'block-1-11-team',
+            'props' => [
+                'card_title'    => 'Visioners',
+                'card_subtitle' => 'behind XR Doctor',
+                'achievements' => [
+                    [
+                        'title' => 'Pioneered',
+                        'items' => [
+                            'AR tech, 2.8B+ users',
+                            'Holograms in real surgery',
+                            'Product with built-in AI in 2008',
+                        ],
+                    ],
+                    [
+                        'title' => 'Shaped',
+                        'items' => [
+                            'top geo app, 140M+ users',
+                            'top global messenger, 1.3B+ users',
+                        ],
+                    ],
+                    [
+                        'title' => 'Brought to Market',
+                        'items' => [
+                            "world\xe2\x80\x99s 1st haptic-feedback VR suit",
+                            'ground-breaking haptic gloves',
+                        ],
+                    ],
+                    [
+                        'title' => 'Awarded',
+                        'items' => [
+                            'Red Dot, Future Unicorn',
+                            'CES Innovation, World Summit',
+                        ],
+                    ],
+                    [
+                        'title' => 'Collaborated',
+                        'items' => [
+                            'NASA, Boeing, Verizon, Vodafone',
+                            'Formula 1, Accenture, Sanofi',
+                        ],
+                    ],
+                ],
+                'photos' => [
+                    ['src' => $img('i', 580, 430), 'alt' => 'XR Doctor in clinical setting'],
+                    ['src' => $img('j', 580, 430), 'alt' => 'XR Doctor surgical team'],
+                ],
+                'heading' => "Next-GeN Minds\nCode the Leap",
+                'body'    => 'We are pioneers of XR/AI and global innovators. Our multidisciplinary team brings together deep scientific and practice expertise in medicine and cutting-edge technologies. Doctors of Science, skilled PhD researchers in Medicine & Computer Science, top-level developers and bioengineers, talented 3D artists have been building next-gen solution for daily medical life.',
+                'stats' => [
+                    ['value' => '5+',  'label' => 'years of R&D'],
+                    ['value' => '20+', 'label' => 'engaged countries'],
                 ],
             ],
         ],

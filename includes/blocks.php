@@ -1115,6 +1115,239 @@ function xr_block_product_detail_tabs(array $p, string $blockId = ''): void
     <?php
 }
 
+function xr_block_hologram_stories(array $p, string $blockId = ''): void
+{
+    $badge    = trim((string) ($p['badge'] ?? ''));
+    $heading  = trim((string) ($p['heading'] ?? ''));
+    $subhead  = trim((string) ($p['subheading'] ?? ''));
+    $stories  = is_array($p['stories'] ?? null) ? $p['stories'] : [];
+    if ($stories === []) {
+        return;
+    }
+    $jsonData = array_values(array_filter(array_map(static function ($s) {
+        if (!is_array($s)) {
+            return null;
+        }
+
+        return [
+            'icon'    => (string) ($s['icon'] ?? ''),
+            'tags'    => is_array($s['tags'] ?? null) ? array_map('strval', $s['tags']) : [],
+            'summary' => (string) ($s['summary'] ?? ''),
+            'title'   => (string) ($s['title'] ?? ''),
+            'body'    => is_array($s['body'] ?? null) ? array_map('strval', $s['body']) : [(string) ($s['body'] ?? '')],
+            'footer'  => (string) ($s['footer'] ?? ''),
+        ];
+    }, $stories)));
+    ?>
+    <div class="xr-stories" data-stories-root>
+        <div class="xr-stories__head">
+            <?php if ($badge !== ''): ?>
+                <span class="xr-stories__badge"><?= h($badge) ?></span>
+            <?php endif; ?>
+            <div class="xr-stories__stars" aria-hidden="true">★★★★★</div>
+            <?php if ($heading !== ''): ?>
+                <h2 class="xr-stories__title"><?= h($heading) ?></h2>
+            <?php endif; ?>
+            <?php if ($subhead !== ''): ?>
+                <p class="xr-stories__sub"><?= h($subhead) ?></p>
+            <?php endif; ?>
+        </div>
+        <div class="xr-stories__carousel" data-stories-carousel>
+            <div class="xr-stories__track" data-stories-track></div>
+        </div>
+        <div class="xr-stories__modal" data-stories-modal hidden>
+            <div class="xr-stories__modal-box">
+                <button type="button" class="xr-stories__mclose" data-stories-close aria-label="Close">✕</button>
+                <button type="button" class="xr-stories__mnav xr-stories__mnav--prev" data-stories-prev aria-label="Previous">‹</button>
+                <button type="button" class="xr-stories__mnav xr-stories__mnav--next" data-stories-next aria-label="Next">›</button>
+                <div class="xr-stories__mhead">
+                    <div class="xr-stories__micon" data-m-icon></div>
+                    <div class="xr-stories__mtag" data-m-tag></div>
+                </div>
+                <div class="xr-stories__mtitle" data-m-title></div>
+                <div class="xr-stories__mbody" data-m-body></div>
+                <div class="xr-stories__mfooter" data-m-footer></div>
+            </div>
+        </div>
+        <script type="application/json" data-stories-json><?= json_encode($jsonData, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?></script>
+    </div>
+    <?php
+}
+
+function xr_block_impact_stats(array $p, string $blockId = ''): void
+{
+    $heading  = trim((string) ($p['heading'] ?? ''));
+    $subtitle = trim((string) ($p['subtitle'] ?? ''));
+    $stats    = is_array($p['stats'] ?? null) ? $p['stats'] : [];
+    ?>
+    <div class="xr-impact">
+        <div class="xr-impact__inner">
+            <?php if ($heading !== ''): ?>
+                <h2 class="xr-impact__heading"><?= h($heading) ?></h2>
+            <?php endif; ?>
+            <?php if ($subtitle !== ''): ?>
+                <p class="xr-impact__subtitle"><?= h($subtitle) ?></p>
+            <?php endif; ?>
+            <?php if ($stats !== []): ?>
+                <div class="xr-impact__stats">
+                    <?php foreach ($stats as $s):
+                        if (!is_array($s)) {
+                            continue;
+                        }
+                        $val   = trim((string) ($s['value'] ?? ''));
+                        $label = trim((string) ($s['label'] ?? ''));
+                        $note  = trim((string) ($s['note'] ?? ''));
+                    ?>
+                        <div class="xr-impact__stat">
+                            <div class="xr-impact__value" aria-label="<?= h($val) ?>"><?= h($val) ?></div>
+                            <?php if ($label !== ''): ?>
+                                <div class="xr-impact__label"><?= h($label) ?></div>
+                            <?php endif; ?>
+                            <?php if ($note !== ''): ?>
+                                <div class="xr-impact__note"><?= h($note) ?></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_clinical_circles(array $p, string $blockId = ''): void
+{
+    $label    = trim((string) ($p['label'] ?? ''));
+    $heading  = trim((string) ($p['heading'] ?? ''));
+    $subhead  = trim((string) ($p['subhead'] ?? ''));
+    $tagline  = trim((string) ($p['tagline'] ?? ''));
+    $circles  = is_array($p['circles'] ?? null) ? $p['circles'] : [];
+    ?>
+    <div class="xr-clinical">
+        <div class="xr-clinical__inner">
+            <?php if ($label !== ''): ?>
+                <p class="xr-clinical__label"><?= h($label) ?></p>
+            <?php endif; ?>
+            <?php if ($heading !== ''): ?>
+                <h2 class="xr-clinical__heading"><?= h($heading) ?></h2>
+            <?php endif; ?>
+            <?php if ($subhead !== ''): ?>
+                <h3 class="xr-clinical__subhead"><?= h($subhead) ?></h3>
+            <?php endif; ?>
+            <?php if ($circles !== []): ?>
+                <div class="xr-clinical__circles">
+                    <?php foreach ($circles as $c):
+                        if (!is_array($c)) {
+                            continue;
+                        }
+                        $src = trim((string) ($c['src'] ?? ''));
+                        $alt = trim((string) ($c['alt'] ?? ''));
+                    ?>
+                        <div class="xr-clinical__circle-wrap">
+                            <?php if ($src !== ''): ?>
+                                <img src="<?= h($src) ?>" alt="<?= h($alt) ?>" width="290" height="290" loading="lazy" decoding="async">
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($tagline !== ''): ?>
+                <p class="xr-clinical__tagline"><?= h($tagline) ?></p>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_team_visioners(array $p, string $blockId = ''): void
+{
+    $cardTitle    = trim((string) ($p['card_title'] ?? ''));
+    $cardSub      = trim((string) ($p['card_subtitle'] ?? ''));
+    $achievements = is_array($p['achievements'] ?? null) ? $p['achievements'] : [];
+    $photos       = is_array($p['photos'] ?? null) ? $p['photos'] : [];
+    $heading      = trim((string) ($p['heading'] ?? ''));
+    $body         = trim((string) ($p['body'] ?? ''));
+    $stats        = is_array($p['stats'] ?? null) ? $p['stats'] : [];
+    ?>
+    <div class="xr-visioners">
+        <div class="xr-visioners__grid">
+
+            <!-- Left: achievement card -->
+            <div class="xr-visioners__card">
+                <?php if ($cardTitle !== '' || $cardSub !== ''): ?>
+                    <div class="xr-visioners__card-head">
+                        <?php if ($cardTitle !== ''): ?>
+                            <span class="xr-visioners__card-title"><?= h($cardTitle) ?></span>
+                        <?php endif; ?>
+                        <?php if ($cardSub !== ''): ?>
+                            <span class="xr-visioners__card-sub"><?= h($cardSub) ?></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <?php foreach ($achievements as $a):
+                    if (!is_array($a)) {
+                        continue;
+                    }
+                    $aTitle = trim((string) ($a['title'] ?? ''));
+                    $aItems = is_array($a['items'] ?? null) ? $a['items'] : [];
+                ?>
+                    <div class="xr-visioners__achiev">
+                        <?php if ($aTitle !== ''): ?>
+                            <div class="xr-visioners__achiev-title"><?= h($aTitle) ?></div>
+                        <?php endif; ?>
+                        <?php foreach ($aItems as $item): ?>
+                            <div class="xr-visioners__achiev-item"><?= h((string) $item) ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Middle: stacked photos -->
+            <div class="xr-visioners__photos">
+                <?php foreach ($photos as $ph):
+                    if (!is_array($ph)) {
+                        continue;
+                    }
+                    $src = trim((string) ($ph['src'] ?? ''));
+                    $alt = trim((string) ($ph['alt'] ?? ''));
+                ?>
+                    <div class="xr-visioners__photo">
+                        <?php if ($src !== ''): ?>
+                            <img src="<?= h($src) ?>" alt="<?= h($alt) ?>" loading="lazy" decoding="async">
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Right: heading + body + stats -->
+            <div class="xr-visioners__right">
+                <?php if ($heading !== ''): ?>
+                    <h2 class="xr-visioners__heading"><?= h($heading) ?></h2>
+                <?php endif; ?>
+                <?php if ($body !== ''): ?>
+                    <p class="xr-visioners__body"><?= h($body) ?></p>
+                <?php endif; ?>
+                <?php if ($stats !== []): ?>
+                    <div class="xr-visioners__stats">
+                        <?php foreach ($stats as $s):
+                            if (!is_array($s)) {
+                                continue;
+                            }
+                        ?>
+                            <div class="xr-visioners__stat">
+                                <div class="xr-visioners__stat-value"><?= h((string) ($s['value'] ?? '')) ?></div>
+                                <div class="xr-visioners__stat-label"><?= h((string) ($s['label'] ?? '')) ?></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </div>
+    <?php
+}
+
 /* ——— Professionals ——— */
 
 function xr_block_hero_twinkle(array $p, string $blockId = ''): void
