@@ -17,6 +17,26 @@
     margin: 0 auto;
 }
 
+/* Prevent inputs from overflowing fieldsets / grid columns (min-content traps) */
+.admin-body,
+.admin-body * {
+    box-sizing: border-box;
+}
+
+.admin-form,
+.admin-section,
+.admin-disclosure,
+.admin-disclosure__body {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.admin-fieldset,
+.admin-fieldset--flat {
+    min-width: 0;
+    max-width: 100%;
+}
+
 .admin-card {
     max-width: 400px;
     margin: 10vh auto;
@@ -138,7 +158,7 @@
 .admin-disclosure__summary {
     list-style: none;
     cursor: pointer;
-    padding: 14px 18px;
+    padding: 14px 24px;
     font-weight: 600;
     font-size: 0.98rem;
     color: #e8eaed;
@@ -167,13 +187,36 @@
 }
 
 .admin-disclosure__body {
-    padding: 0 18px 20px;
+    padding: 0 24px 28px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Vertical rhythm for stacked fields (header, hubspot, nested SEO pages, etc.) */
+.admin-form .admin-disclosure__body > .admin-label {
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.admin-form .admin-disclosure__body > .admin-label:first-child {
+    margin-top: 0;
+}
+
+.admin-form .admin-disclosure__body > .admin-hint {
+    margin: 14px 0 18px;
+}
+
+.admin-form .admin-disclosure__body > .admin-hint:first-child {
+    margin-top: 0;
+}
+
+.admin-form .admin-disclosure__body > .admin-repeater {
+    margin-top: 4px;
+    margin-bottom: 22px;
 }
 
 .admin-fieldset--flat {
     border: none;
-    padding: 16px 0 8px;
+    padding: 16px 12px 12px;
     margin: 0;
 }
 
@@ -238,6 +281,12 @@
 .admin-top a,
 .admin-foot a {
     color: #987ffc;
+    text-decoration: none;
+}
+
+.admin-top a:hover,
+.admin-foot a:hover {
+    color: #c4b5fd;
 }
 
 .admin-error {
@@ -269,6 +318,8 @@
 .admin-input,
 .admin-textarea {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: 10px 12px;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -367,27 +418,53 @@ select.admin-input {
 
 .admin-grid2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px 40px;
     margin-top: 16px;
+    margin-bottom: 8px;
+    align-items: start;
+    min-width: 0;
+}
+
+.admin-grid2 > div {
+    min-width: 0;
+}
+
+/* Tighter vertical rhythm inside each column so label groups don’t stack flush */
+.admin-grid2 > div > .admin-label {
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.admin-grid2 > div > .admin-label:first-of-type {
+    margin-top: 0;
+}
+
+.admin-grid2 > div > .admin-check {
+    margin-top: 14px;
+    margin-bottom: 4px;
 }
 
 @media (max-width: 700px) {
     .admin-grid2 {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 }
 
 .admin-row {
     display: grid;
-    grid-template-columns: 32px 1fr 1fr;
+    grid-template-columns: 32px minmax(0, 1fr) minmax(0, 1fr);
     gap: 8px;
     align-items: center;
     margin-bottom: 8px;
+    min-width: 0;
 }
 
 .admin-row--nav {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .admin-radio {
@@ -396,7 +473,7 @@ select.admin-input {
 }
 
 .admin-repeater {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .admin-table-wrap {

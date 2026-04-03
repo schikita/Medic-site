@@ -105,7 +105,9 @@ function xr_block_wave_slider(array $p, string $blockId = ''): void
     ?>
     <div class="xr-wave-slider" data-carousel data-interval="<?= (int) $interval ?>">
         <div class="xr-wave-slider__wave" aria-hidden="true">
-            <img src="/assets/img/figma/home/up-wave.png" alt="" width="1340" height="72" loading="lazy" decoding="async">
+            <svg class="xr-wave-slider__wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
+                <path d="M0,0 C240,80 480,80 720,40 C960,0 1200,0 1440,60 L1440,0 L0,0 Z" fill="#ffffff"/>
+            </svg>
         </div>
         <div class="xr-wave-slider__viewport">
             <?php foreach ($slides as $i => $s): ?>
@@ -173,7 +175,9 @@ function xr_block_layered_star(array $p, string $blockId = ''): void
         <div class="xr-layered-star__gradient" aria-hidden="true"></div>
         <?php if ($showDownWave): ?>
         <div class="xr-layered-star__wave" aria-hidden="true">
-            <img src="/assets/img/figma/home/down-wave.png" alt="" width="1340" height="72" loading="lazy" decoding="async">
+            <svg class="xr-layered-star__wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
+                <path d="M0,0 L1440,0 L1440,24 C1200,80 960,80 720,44 C480,8 240,8 0,64 Z" fill="#0c0f14"/>
+            </svg>
         </div>
         <?php endif; ?>
         <div class="xr-layered-star__edge-glow" aria-hidden="true"></div>
@@ -977,14 +981,16 @@ function xr_block_gallery_three(array $p, string $blockId = ''): void
 
 function xr_block_starfield_cta(array $p, string $blockId = ''): void
 {
-    $sym = (string) ($p['infinity_symbol'] ?? '∞');
-    $title = (string) ($p['title'] ?? '');
-    $btn = (string) ($p['button_label'] ?? '');
-    $href = (string) ($p['href'] ?? '#');
+    $title  = (string) ($p['title'] ?? '');
+    $btn    = (string) ($p['button_label'] ?? '');
+    $href   = (string) ($p['href'] ?? '#');
+    $symSrc = (string) ($p['infinity_image'] ?? '/assets/img/figma/home/infinity.png');
     ?>
     <div class="xr-star-cta">
         <canvas class="xr-star-cta__canvas" data-starfield-cta width="1200" height="420" aria-hidden="true"></canvas>
-        <div class="xr-star-cta__sym" data-infinity-sway><?= h($sym) ?></div>
+        <div class="xr-star-cta__sym">
+            <img class="xr-inf-img" src="<?= h($symSrc) ?>" alt="∞" width="560" height="280" loading="lazy" decoding="async">
+        </div>
         <h2 class="xr-star-cta__title xr-reveal"><?= h($title) ?></h2>
         <a class="btn btn--gradient xr-star-cta__btn xr-pulse-btn" href="<?= h($href) ?>"><?= h($btn) ?></a>
     </div>
