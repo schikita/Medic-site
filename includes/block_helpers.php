@@ -58,10 +58,23 @@ function xr_product_tabs_state(array $site): array
     $props = xr_find_block_props($site['home']['blocks'] ?? [], 'product_tabs');
     $panels = is_array($props['panels'] ?? null) ? $props['panels'] : [];
     $first = is_array($panels[0] ?? null) ? $panels[0] : [];
+    $panel2 = is_array($panels[2] ?? null) ? $panels[2] : [];
+    $fg = is_array($panel2['feature_grid'] ?? null) ? $panel2['feature_grid'] : [];
+    $gridIconImgs = [];
+    for ($i = 0; $i < 4; $i++) {
+        $fi = is_array($fg[$i] ?? null) ? $fg[$i] : [];
+        $gridIconImgs[] = (string) ($fi['icon_img'] ?? '');
+    }
 
     return [
         'tabs' => is_array($props['tabs'] ?? null) ? $props['tabs'] : [],
         'active_tab' => (int) ($props['active_tab'] ?? 0),
+        'video_youtube_id' => (string) ($first['youtube_id'] ?? ''),
+        'video_poster'     => (string) ($first['poster'] ?? ''),
+        'video_label'      => (string) ($first['video_label'] ?? ''),
+        'card_image_0'     => (string) (($panels[0]['card_image'] ?? $panels[0]['poster'] ?? '')),
+        'card_image_1'     => (string) (($panels[1]['card_image'] ?? $panels[1]['poster'] ?? '')),
+        'grid_icon_imgs'   => $gridIconImgs,
         'title' => (string) ($first['title'] ?? ''),
         'lead' => (string) ($first['lead'] ?? ''),
         'paragraph2' => (string) ($first['body'] ?? ''),

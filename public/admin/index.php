@@ -18,6 +18,7 @@ $intro = xr_find_block_props($site['home']['blocks'] ?? [], 'intro_gradient');
 $assistant = xr_product_tabs_state($site);
 $oculusTabs = xr_oculus_tabs_home_state($site);
 $closing = xr_find_block_props($site['home']['blocks'] ?? [], 'closing_block');
+$vfreeze = xr_find_block_props($site['home']['blocks'] ?? [], 'video_freeze_section');
 $hub = $site['hubspot'] ?? [];
 $seo = is_array($site['seo'] ?? null) ? $site['seo'] : xr_site_seo_defaults();
 
@@ -237,8 +238,18 @@ $token = csrf_token();
             <div class="admin-disclosure__body">
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend><?= h(admin_t('hero.legend')) ?></legend>
+                    <label class="admin-label"><?= h(admin_t('hero.youtube')) ?></label>
+                    <input class="admin-input" name="hero_youtube_id" value="<?= h((string) ($hero['youtube_id'] ?? '')) ?>" placeholder="sPJhprfQEQw или https://youtu.be/...">
                     <label class="admin-label"><?= h(admin_t('hero.poster')) ?></label>
-                    <input class="admin-input" name="hero_poster" value="<?= h((string) ($hero['poster'] ?? '')) ?>">
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="hero_poster" value="<?= h((string) ($hero['poster'] ?? '')) ?>" placeholder="/assets/img/hero-bg.png">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview<?= ($hero['poster'] ?? '') === '' ? '' : '' ?>" src="<?= h((string) ($hero['poster'] ?? '')) ?>" alt=""<?= ($hero['poster'] ?? '') === '' ? ' hidden' : '' ?>>
+                    </div>
                     <label class="admin-label"><?= h(admin_t('hero.mp4')) ?></label>
                     <input class="admin-input" name="hero_video_mp4" value="<?= h((string) ($hero['video_mp4'] ?? '')) ?>">
                     <label class="admin-label"><?= h(admin_t('hero.webm')) ?></label>
@@ -276,6 +287,71 @@ $token = csrf_token();
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend><?= h(admin_t('assistant.legend')) ?></legend>
                     <p class="admin-hint"><?= h(admin_t('hint.assistant')) ?></p>
+                    <label class="admin-label"><?= h(admin_t('assistant.video_yt')) ?></label>
+                    <input class="admin-input" name="assistant_video_youtube_id" value="<?= h($assistant['video_youtube_id']) ?>" placeholder="dQw4w9WgXcQ или https://youtu.be/...">
+                    <label class="admin-label"><?= h(admin_t('assistant.video_poster')) ?></label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="assistant_video_poster" value="<?= h($assistant['video_poster']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($assistant['video_poster']) ?>" alt=""<?= $assistant['video_poster'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <label class="admin-label"><?= h(admin_t('assistant.video_label')) ?></label>
+                    <input class="admin-input" name="assistant_video_label" value="<?= h($assistant['video_label']) ?>" placeholder="See XR Doctor Platform in Action">
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('assistant.card_img_0')) ?></label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="assistant_card_image_0" value="<?= h($assistant['card_image_0']) ?>" placeholder="/assets/img/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <?php if ($assistant['card_image_0'] !== ''): ?>
+                                    <img class="admin-img-preview" src="<?= h($assistant['card_image_0']) ?>" alt="">
+                                <?php else: ?>
+                                    <img class="admin-img-preview" src="" alt="" hidden>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('assistant.card_img_1')) ?></label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="assistant_card_image_1" value="<?= h($assistant['card_image_1']) ?>" placeholder="/assets/img/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <?php if ($assistant['card_image_1'] !== ''): ?>
+                                    <img class="admin-img-preview" src="<?= h($assistant['card_image_1']) ?>" alt="">
+                                <?php else: ?>
+                                    <img class="admin-img-preview" src="" alt="" hidden>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="admin-label" style="margin-top:12px;font-weight:600"><?= h(admin_t('assistant.grid_icons')) ?></p>
+                    <div class="admin-grid2">
+                        <?php for ($gi = 0; $gi < 4; $gi++): ?>
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('assistant.grid_icon_' . $gi)) ?></label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="assistant_grid_icon_img_<?= $gi ?>" value="<?= h($assistant['grid_icon_imgs'][$gi] ?? '') ?>" placeholder="/assets/img/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h($assistant['grid_icon_imgs'][$gi] ?? '') ?>" alt=""<?= ($assistant['grid_icon_imgs'][$gi] ?? '') === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
                     <label class="admin-label"><?= h(admin_t('assistant.tabs')) ?></label>
                     <textarea class="admin-textarea" name="assistant_tabs" rows="4"><?= h(implode("\n", $assistant['tabs'])) ?></textarea>
                     <label class="admin-label"><?= h(admin_t('assistant.active')) ?></label>
@@ -301,6 +377,31 @@ $token = csrf_token();
                     <input class="admin-input" name="assistant_bottom_link_label" value="<?= h((string) ($assistant['bottom_link']['label'] ?? '')) ?>">
                     <label class="admin-label"><?= h(admin_t('assistant.link_href')) ?></label>
                     <input class="admin-input" name="assistant_bottom_link_href" value="<?= h((string) ($assistant['bottom_link']['href'] ?? '')) ?>">
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend><?= h(admin_t('vfreeze.legend')) ?></legend>
+                    <p class="admin-hint"><?= h(admin_t('vfreeze.hint')) ?></p>
+                    <label class="admin-label"><?= h(admin_t('vfreeze.youtube')) ?></label>
+                    <input class="admin-input" name="vfreeze_youtube_id" value="<?= h((string) ($vfreeze['youtube_id'] ?? '')) ?>" placeholder="KFaxA3eWwXk или https://youtube.com/watch?v=...">
+                    <label class="admin-label"><?= h(admin_t('vfreeze.mp4')) ?></label>
+                    <input class="admin-input" name="vfreeze_mp4" value="<?= h((string) ($vfreeze['mp4'] ?? '')) ?>" placeholder="https://...video.mp4">
+                    <label class="admin-label"><?= h(admin_t('vfreeze.poster')) ?></label>
+                    <input class="admin-input" name="vfreeze_poster" value="<?= h((string) ($vfreeze['poster'] ?? '')) ?>" placeholder="/assets/img/...">
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('vfreeze.heading')) ?></label>
+                            <input class="admin-input" name="vfreeze_heading" value="<?= h((string) ($vfreeze['heading'] ?? '')) ?>">
+                        </div>
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('vfreeze.heading2')) ?></label>
+                            <input class="admin-input" name="vfreeze_heading2" value="<?= h((string) ($vfreeze['heading_line2'] ?? '')) ?>">
+                        </div>
+                    </div>
+                    <label class="admin-label"><?= h(admin_t('vfreeze.intro')) ?></label>
+                    <textarea class="admin-textarea" name="vfreeze_intro" rows="3"><?= h((string) ($vfreeze['intro'] ?? '')) ?></textarea>
+                    <label class="admin-label"><?= h(admin_t('vfreeze.caption')) ?></label>
+                    <input class="admin-input" name="vfreeze_caption" value="<?= h((string) ($vfreeze['caption'] ?? '')) ?>">
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
@@ -337,5 +438,62 @@ $token = csrf_token();
         <button class="admin-btn admin-btn--primary" type="submit"><?= h(admin_t('btn.save')) ?></button>
     </div>
 </form>
+<script>
+(function () {
+    var csrf = <?= json_encode($token) ?>;
+
+    function initImgUpload(wrap) {
+        var inp   = wrap.querySelector('.admin-img-url');
+        var btn   = wrap.querySelector('.admin-img-upload-btn');
+        var file  = wrap.querySelector('.admin-img-file');
+        var prev  = wrap.querySelector('.admin-img-preview');
+        var spin  = wrap.querySelector('.admin-img-spin');
+        if (!inp || !btn || !file) return;
+
+        function setPreview(url) {
+            if (!prev) return;
+            if (url && /\.(jpe?g|png|webp|gif|svg)(\?|$)/i.test(url)) {
+                prev.src = url;
+                prev.hidden = false;
+            } else {
+                prev.hidden = true;
+            }
+        }
+
+        setPreview(inp.value);
+        inp.addEventListener('input', function () { setPreview(inp.value); });
+
+        btn.addEventListener('click', function () { file.click(); });
+
+        file.addEventListener('change', function () {
+            var f = file.files && file.files[0];
+            if (!f) return;
+            var fd = new FormData();
+            fd.append('csrf', csrf);
+            fd.append('file', f);
+            btn.disabled = true;
+            if (spin) spin.hidden = false;
+            fetch('/admin/media_upload_ajax.php', { method: 'POST', body: fd })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.url) {
+                        inp.value = data.url;
+                        setPreview(data.url);
+                    } else {
+                        alert(data.error || 'Upload failed');
+                    }
+                })
+                .catch(function () { alert('Network error during upload'); })
+                .finally(function () {
+                    btn.disabled = false;
+                    if (spin) spin.hidden = true;
+                    file.value = '';
+                });
+        });
+    }
+
+    document.querySelectorAll('.admin-img-wrap').forEach(initImgUpload);
+})();
+</script>
 </body>
 </html>

@@ -699,8 +699,24 @@
             var total    = Math.max(dots.length, 3);
             var current  = 0;
             var timer;
+            var ytPlaying = false; // true while YouTube iframe is open in this slider
+
+            function stopYtInSlider() {
+                // Remove any active YouTube iframes inside this slider and restore masks
+                qsa("[data-youtube-frame]", root).forEach(function (frame) {
+                    if (!frame.hidden) {
+                        frame.innerHTML = "";
+                        frame.hidden = true;
+                        var mask = frame.closest(".xr-pt-slider__video-stage")
+                                && qs(".xr-yt-mask", frame.closest(".xr-pt-slider__video-stage"));
+                        if (mask) mask.style.display = "";
+                    }
+                });
+                ytPlaying = false;
+            }
 
             function goTo(idx) {
+                stopYtInSlider();
                 current = (idx + total) % total;
                 if (track) track.style.transform = "translateX(-" + (current * 100) + "%)";
                 dots.forEach(function (d, i) { d.classList.toggle("is-active", i === current); });
@@ -711,8 +727,33 @@
 
             function resetTimer() {
                 clearInterval(timer);
-                timer = setInterval(function () { goTo(current + 1); }, 5000);
+                if (!ytPlaying) {
+                    timer = setInterval(function () { goTo(current + 1); }, 5000);
+                }
             }
+
+            // Intercept YouTube play button clicks inside this slider
+            root.addEventListener("click", function (e) {
+                var btn = e.target.closest("[data-youtube-load]");
+                if (btn && root.contains(btn)) {
+                    ytPlaying = true;
+                    clearInterval(timer);
+                }
+            }, true);
+
+            // Also pause on native <video> play events (for future MP4 slides)
+            root.addEventListener("play", function () {
+                ytPlaying = true;
+                clearInterval(timer);
+            }, true);
+            root.addEventListener("pause", function () {
+                ytPlaying = false;
+                resetTimer();
+            }, true);
+            root.addEventListener("ended", function () {
+                ytPlaying = false;
+                resetTimer();
+            }, true);
 
             if (prevBtn) prevBtn.addEventListener("click", function () { goTo(current - 1); resetTimer(); });
             if (nextBtn) nextBtn.addEventListener("click", function () { goTo(current + 1); resetTimer(); });
@@ -724,7 +765,7 @@
             });
 
             root.addEventListener("mouseenter", function () { clearInterval(timer); });
-            root.addEventListener("mouseleave", resetTimer);
+            root.addEventListener("mouseleave", function () { if (!ytPlaying) resetTimer(); });
 
             resetTimer();
         });

@@ -96,7 +96,7 @@ function xr_db_exec_schema(PDO $pdo): void
             alt TEXT,
             title TEXT,
             original_name TEXT,
-            created_at TEXT NOT NULL DEFAULT (datetime("now"))
+            created_at TEXT NOT NULL DEFAULT ""
         )'
     );
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_media_created ON media (created_at DESC)');
@@ -147,6 +147,8 @@ function xr_site_db_ensure_installed(): void
     }
     try {
         $pdo = xr_db();
+        // Always run full schema + migrations (all CREATE IF NOT EXISTS — safe to repeat)
+        xr_db_exec_schema($pdo);
         $pdo->query('SELECT 1 FROM site_settings WHERE id = 1')->fetchColumn();
         $n = (int) $pdo->query('SELECT COUNT(*) FROM pages')->fetchColumn();
         if ($n === 0) {
@@ -373,8 +375,8 @@ function xr_media_save_upload(array $file): ?array
     xr_site_db_ensure_installed();
     $pdo = xr_db();
     $stmt = $pdo->prepare(
-        'INSERT INTO media (storage, public_path, mime, size_bytes, width, height, original_name)
-         VALUES ("local", ?, ?, ?, ?, ?, ?)'
+        'INSERT INTO media (storage, public_path, mime, size_bytes, width, height, original_name, created_at)
+         VALUES ("local", ?, ?, ?, ?, ?, ?, datetime("now"))'
     );
     $stmt->execute([$publicPath, $mime, $size, $width, $height, $orig]);
     $id = (int) $pdo->lastInsertId();

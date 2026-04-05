@@ -89,6 +89,14 @@ function merge_site_from_post(array $current): array
         $p = &$b['props'];
 
         if ($type === 'hero_fullscreen') {
+            $ytRaw = trim((string) ($_POST['hero_youtube_id'] ?? ''));
+            if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $ytRaw, $m)) {
+                $p['youtube_id'] = $m[1];
+            } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $ytRaw)) {
+                $p['youtube_id'] = $ytRaw;
+            } else {
+                $p['youtube_id'] = '';
+            }
             $p['poster'] = trim((string) ($_POST['hero_poster'] ?? '')) ?: (string) ($p['poster'] ?? '');
             $p['video_mp4'] = trim((string) ($_POST['hero_video_mp4'] ?? ''));
             $p['video_webm'] = trim((string) ($_POST['hero_video_webm'] ?? ''));
@@ -134,6 +142,41 @@ function merge_site_from_post(array $current): array
             if (!isset($panels[0]) || !is_array($panels[0])) {
                 $panels[0] = [];
             }
+            $ytRawA = trim((string) ($_POST['assistant_video_youtube_id'] ?? ''));
+            if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $ytRawA, $m)) {
+                $panels[0]['youtube_id'] = $m[1];
+            } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $ytRawA)) {
+                $panels[0]['youtube_id'] = $ytRawA;
+            } else {
+                $panels[0]['youtube_id'] = '';
+            }
+            $panels[0]['poster']      = trim((string) ($_POST['assistant_video_poster'] ?? ''));
+            $panels[0]['video_label'] = trim((string) ($_POST['assistant_video_label'] ?? ''));
+            $panels[0]['card_image']  = trim((string) ($_POST['assistant_card_image_0'] ?? ''));
+
+            if (!isset($panels[1]) || !is_array($panels[1])) {
+                $panels[1] = [];
+            }
+            $panels[1]['card_image']  = trim((string) ($_POST['assistant_card_image_1'] ?? ''));
+
+            // Grid icon images (panel2 / feature_grid)
+            if (!isset($panels[2]) || !is_array($panels[2])) {
+                $panels[2] = [];
+            }
+            $fg2 = is_array($panels[2]['feature_grid'] ?? null) ? $panels[2]['feature_grid'] : [];
+            for ($gi = 0; $gi < 4; $gi++) {
+                $iconImg = trim((string) ($_POST['assistant_grid_icon_img_' . $gi] ?? ''));
+                if ($iconImg !== '') {
+                    if (!isset($fg2[$gi]) || !is_array($fg2[$gi])) {
+                        $fg2[$gi] = [];
+                    }
+                    $fg2[$gi]['icon_img'] = $iconImg;
+                }
+            }
+            if ($fg2 !== []) {
+                $panels[2]['feature_grid'] = array_values($fg2);
+            }
+
             $panels[0]['title'] = trim((string) ($_POST['assistant_title'] ?? '')) ?: (string) ($panels[0]['title'] ?? '');
             $panels[0]['lead'] = trim((string) ($_POST['assistant_lead'] ?? ''));
             $panels[0]['body'] = trim((string) ($_POST['assistant_paragraph2'] ?? ''));
@@ -160,6 +203,24 @@ function merge_site_from_post(array $current): array
                 $panels[0]['features'] = $features;
             }
             $p['panels'] = $panels;
+        }
+
+        if ($type === 'video_freeze_section') {
+            $ytRaw = trim((string) ($_POST['vfreeze_youtube_id'] ?? ''));
+            // Accept full URL or bare ID
+            if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $ytRaw, $m)) {
+                $p['youtube_id'] = $m[1];
+            } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $ytRaw)) {
+                $p['youtube_id'] = $ytRaw;
+            } else {
+                $p['youtube_id'] = '';
+            }
+            $p['mp4']          = trim((string) ($_POST['vfreeze_mp4']     ?? ''));
+            $p['poster']       = trim((string) ($_POST['vfreeze_poster']  ?? ''));
+            $p['heading']      = trim((string) ($_POST['vfreeze_heading'] ?? ''));
+            $p['heading_line2']= trim((string) ($_POST['vfreeze_heading2']?? ''));
+            $p['intro']        = trim((string) ($_POST['vfreeze_intro']   ?? ''));
+            $p['caption']      = trim((string) ($_POST['vfreeze_caption'] ?? ''));
         }
 
         if ($type === 'closing_block') {

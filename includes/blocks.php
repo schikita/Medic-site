@@ -22,13 +22,33 @@ function xr_render_blocks(array $blocks): void
 
 function xr_block_hero_fullscreen(array $p, string $blockId = ''): void
 {
-    $poster = (string) ($p['poster'] ?? '/assets/img/hero-bg.png');
-    $mp4 = (string) ($p['video_mp4'] ?? '');
-    $webm = (string) ($p['video_webm'] ?? '');
+    $poster   = (string) ($p['poster'] ?? '/assets/img/hero-bg.png');
+    $mp4      = (string) ($p['video_mp4'] ?? '');
+    $webm     = (string) ($p['video_webm'] ?? '');
+    $ytId     = trim((string) ($p['youtube_id'] ?? ''));
+
+    // Auto-extract YouTube ID from mp4 field if someone pasted a YouTube URL
+    if ($ytId === '' && $mp4 !== '') {
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $mp4, $m)) {
+            $ytId = $m[1];
+            $mp4  = '';
+        }
+    }
     ?>
     <div class="xr-hero-full">
         <div class="xr-hero-full__media">
-            <?php if ($mp4 !== '' || $webm !== ''): ?>
+            <?php if ($ytId !== ''): ?>
+                <div class="xr-hero-full__yt-bg" aria-hidden="true">
+                    <iframe class="xr-hero-full__yt-iframe"
+                        src="https://www.youtube-nocookie.com/embed/<?= h($ytId) ?>?autoplay=1&mute=1&loop=1&playlist=<?= h($ytId) ?>&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&iv_load_policy=3&enablejsapi=1"
+                        allow="autoplay; encrypted-media"
+                        tabindex="-1"
+                        aria-hidden="true"></iframe>
+                </div>
+                <?php if ($poster !== ''): ?>
+                    <img class="xr-hero-full__poster xr-hero-full__poster--yt-fallback" src="<?= h($poster) ?>" alt="">
+                <?php endif; ?>
+            <?php elseif ($mp4 !== '' || $webm !== ''): ?>
                 <video class="xr-hero-full__video" autoplay muted loop playsinline poster="<?= h($poster) ?>">
                     <?php if ($webm !== ''): ?><source src="<?= h($webm) ?>" type="video/webm"><?php endif; ?>
                     <?php if ($mp4 !== ''): ?><source src="<?= h($mp4) ?>" type="video/mp4"><?php endif; ?>
@@ -105,6 +125,18 @@ function xr_block_wave_slider(array $p, string $blockId = ''): void
     ?>
     <div class="xr-wave-slider" data-carousel data-interval="<?= (int) $interval ?>">
         <div class="xr-wave-slider__wave" aria-hidden="true">
+            <svg class="xr-wave-slider__wave-svg xr-wave-slider__wave-svg--glow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="23%"  stop-color="rgb(103,205,249)"/>
+                        <stop offset="48%"  stop-color="rgb(211,128,228)"/>
+                        <stop offset="67%"  stop-color="rgb(248,96,215)"/>
+                        <stop offset="82%"  stop-color="rgb(233,86,231)"/>
+                        <stop offset="97%"  stop-color="rgb(186,76,250)"/>
+                    </linearGradient>
+                </defs>
+                <path d="M0,10 C240,100 480,100 720,52 C960,4 1200,4 1440,72 L1440,0 L0,0 Z" fill="url(#waveGrad)" opacity="0.55"/>
+            </svg>
             <svg class="xr-wave-slider__wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
                 <path d="M0,0 C240,80 480,80 720,40 C960,0 1200,0 1440,60 L1440,0 L0,0 Z" fill="#ffffff"/>
             </svg>
@@ -409,13 +441,23 @@ function xr_block_tabs_youtube_loop(array $p, string $blockId = ''): void
 
 function xr_block_video_freeze_section(array $p, string $blockId = ''): void
 {
-    $mp4 = (string) ($p['mp4'] ?? '');
-    $poster = (string) ($p['poster'] ?? '');
-    $caption = (string) ($p['caption'] ?? '');
-    $heading = trim((string) ($p['heading'] ?? ''));
+    $mp4        = (string) ($p['mp4'] ?? '');
+    $youtubeId  = trim((string) ($p['youtube_id'] ?? ''));
+    $poster     = (string) ($p['poster'] ?? '');
+    $caption    = (string) ($p['caption'] ?? '');
+    $heading    = trim((string) ($p['heading'] ?? ''));
     $headingLine2 = trim((string) ($p['heading_line2'] ?? ''));
-    $intro = trim((string) ($p['intro'] ?? ''));
-    if ($mp4 === '') {
+    $intro      = trim((string) ($p['intro'] ?? ''));
+
+    // Auto-extract YouTube ID from full URL if needed
+    if ($youtubeId === '' && $mp4 !== '') {
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $mp4, $m)) {
+            $youtubeId = $m[1];
+            $mp4 = '';
+        }
+    }
+
+    if ($mp4 === '' && $youtubeId === '') {
         return;
     }
     ?>
@@ -437,9 +479,22 @@ function xr_block_video_freeze_section(array $p, string $blockId = ''): void
                 <?php endif; ?>
             </header>
         <?php endif; ?>
-        <video class="xr-video-freeze__video" muted playsinline data-video-freeze poster="<?= h($poster) ?>">
-            <source src="<?= h($mp4) ?>" type="video/mp4">
-        </video>
+
+        <?php if ($youtubeId !== ''): ?>
+            <div class="xr-video-freeze__yt-wrap">
+                <iframe class="xr-video-freeze__yt"
+                    src="https://www.youtube-nocookie.com/embed/<?= h($youtubeId) ?>?autoplay=1&mute=1&controls=1&loop=1&playlist=<?= h($youtubeId) ?>&rel=0&modestbranding=1"
+                    title="<?= h($heading ?: 'Video') ?>"
+                    allow="autoplay; encrypted-media; fullscreen"
+                    allowfullscreen
+                    loading="lazy"></iframe>
+            </div>
+        <?php else: ?>
+            <video class="xr-video-freeze__video" muted playsinline data-video-freeze poster="<?= h($poster) ?>">
+                <source src="<?= h($mp4) ?>" type="video/mp4">
+            </video>
+        <?php endif; ?>
+
         <?php if ($caption !== ''): ?>
             <p class="xr-video-freeze__cap"><?= h($caption) ?></p>
         <?php endif; ?>
@@ -566,8 +621,8 @@ function xr_block_product_tabs(array $p, string $blockId = ''): void
                             <!-- Slide 1: two product cards -->
                             <div class="xr-pt-slider__slide xr-pt-slider__slide--cards">
                                 <div class="xr-pt-slider__cards">
-                                    <?php foreach ($slideCards as $sc): ?>
-                                        <div class="xr-pt-slider__card">
+                                    <?php foreach ($slideCards as $sci => $sc): ?>
+                                        <div class="xr-pt-slider__card xr-pt-slider__card--<?= (int) $sci ?>">
                                             <?php if ($sc['image'] !== ''): ?>
                                                 <div class="xr-pt-slider__card-img">
                                                     <img src="<?= h($sc['image']) ?>" alt="">
