@@ -228,6 +228,25 @@ function admin_i18n_strings_ru(): array
         'vfreeze.poster'   => 'Путь к постеру (картинка до старта)',
         'vfreeze.caption'  => 'Подпись под видео',
 
+        'g3.legend'       => 'Галерея гарнитур (блок 1-16-17)',
+        'g3.heading'      => 'Заголовок',
+        'g3.slide_0'      => 'Слайд 1',
+        'g3.slide_1'      => 'Слайд 2',
+        'g3.slide_2'      => 'Слайд 3',
+        'g3.slide_title'  => 'Подпись',
+
+        'visioners.legend'    => 'Команда Visioners — фото (блок 1-11)',
+        'visioners.photo_0'   => 'Фото 1',
+        'visioners.photo_1'   => 'Фото 2',
+        'visioners.photo_alt' => 'Alt-текст',
+        'visioners.image'     => 'Большое фото (правая колонка)',
+
+        'clinical.legend'    => 'Круглые фото (блок 1-10)',
+        'clinical.circle_0'  => 'Фото 1',
+        'clinical.circle_1'  => 'Фото 2',
+        'clinical.circle_2'  => 'Фото 3',
+        'clinical.circle_alt'=> 'Alt-текст',
+
         'closing.legend' => 'Финальный блок',
         'closing.line1' => 'Строка 1',
         'closing.line2' => 'Строка 2',
@@ -423,6 +442,25 @@ function admin_i18n_strings_en(): array
         'vfreeze.mp4'      => 'Video MP4 URL (if not YouTube)',
         'vfreeze.poster'   => 'Poster path (shown before playback)',
         'vfreeze.caption'  => 'Caption below video',
+
+        'g3.legend'       => 'Headsets gallery (block 1-16-17)',
+        'g3.heading'      => 'Heading',
+        'g3.slide_0'      => 'Slide 1',
+        'g3.slide_1'      => 'Slide 2',
+        'g3.slide_2'      => 'Slide 3',
+        'g3.slide_title'  => 'Caption',
+
+        'visioners.legend'    => 'Team Visioners — photos (block 1-11)',
+        'visioners.photo_0'   => 'Photo 1',
+        'visioners.photo_1'   => 'Photo 2',
+        'visioners.photo_alt' => 'Alt text',
+        'visioners.image'     => 'Large photo (right column)',
+
+        'clinical.legend'    => 'Circle photos (block 1-10)',
+        'clinical.circle_0'  => 'Photo 1',
+        'clinical.circle_1'  => 'Photo 2',
+        'clinical.circle_2'  => 'Photo 3',
+        'clinical.circle_alt'=> 'Alt text',
 
         'closing.legend' => 'Closing block',
         'closing.line1' => 'Line 1',

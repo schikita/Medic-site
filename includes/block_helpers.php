@@ -53,6 +53,67 @@ function xr_oculus_tabs_home_state(array $site): array
     return ['tabs' => $defaults];
 }
 
+function xr_clinical_circles_state(array $site): array
+{
+    $props = xr_find_block_props($site['home']['blocks'] ?? [], 'clinical_circles');
+    $circles = is_array($props['circles'] ?? null) ? $props['circles'] : [];
+    $out = [];
+    for ($i = 0; $i < 3; $i++) {
+        $c = is_array($circles[$i] ?? null) ? $circles[$i] : [];
+        $out[] = [
+            'src' => (string) ($c['src'] ?? ''),
+            'alt' => (string) ($c['alt'] ?? ''),
+        ];
+    }
+
+    return [
+        'label'   => (string) ($props['label']   ?? ''),
+        'heading' => (string) ($props['heading']  ?? ''),
+        'subhead' => (string) ($props['subhead']  ?? ''),
+        'tagline' => (string) ($props['tagline']  ?? ''),
+        'circles' => $out,
+    ];
+}
+
+function xr_gallery_three_state(array $site): array
+{
+    $props  = xr_find_block_props($site['home']['blocks'] ?? [], 'gallery_three');
+    $slides = is_array($props['slides'] ?? null) ? $props['slides'] : [];
+    $out    = [];
+    for ($i = 0; $i < 3; $i++) {
+        $s     = is_array($slides[$i] ?? null) ? $slides[$i] : [];
+        $out[] = [
+            'image' => (string) ($s['image'] ?? ''),
+            'title' => (string) ($s['title'] ?? ''),
+        ];
+    }
+
+    return [
+        'heading'     => (string) ($props['heading'] ?? ''),
+        'slides'      => $out,
+        'interval_ms' => (int) ($props['interval_ms'] ?? 4000),
+    ];
+}
+
+function xr_team_visioners_state(array $site): array
+{
+    $props  = xr_find_block_props($site['home']['blocks'] ?? [], 'team_visioners');
+    $photos = is_array($props['photos'] ?? null) ? $props['photos'] : [];
+    $out    = [];
+    for ($i = 0; $i < 2; $i++) {
+        $ph     = is_array($photos[$i] ?? null) ? $photos[$i] : [];
+        $out[]  = [
+            'src' => (string) ($ph['src'] ?? ''),
+            'alt' => (string) ($ph['alt'] ?? ''),
+        ];
+    }
+
+    return [
+        'photos' => $out,
+        'image'  => (string) ($props['image'] ?? ''),
+    ];
+}
+
 function xr_product_tabs_state(array $site): array
 {
     $props = xr_find_block_props($site['home']['blocks'] ?? [], 'product_tabs');

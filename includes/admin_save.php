@@ -223,6 +223,44 @@ function merge_site_from_post(array $current): array
             $p['caption']      = trim((string) ($_POST['vfreeze_caption'] ?? ''));
         }
 
+        if ($type === 'gallery_three' && ($b['id'] ?? '') === 'block-1-16-17') {
+            $p['heading'] = trim((string) ($_POST['g3_heading'] ?? ''));
+            $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [[], [], []];
+            for ($gi = 0; $gi < 3; $gi++) {
+                if (!is_array($slides[$gi] ?? null)) {
+                    $slides[$gi] = [];
+                }
+                $slides[$gi]['image'] = trim((string) ($_POST['g3_slide_image_' . $gi] ?? ''));
+                $slides[$gi]['title'] = trim((string) ($_POST['g3_slide_title_' . $gi] ?? ''));
+            }
+            $p['slides'] = $slides;
+        }
+
+        if ($type === 'team_visioners') {
+            $photos = is_array($p['photos'] ?? null) ? $p['photos'] : [[], []];
+            for ($vi = 0; $vi < 2; $vi++) {
+                if (!is_array($photos[$vi] ?? null)) {
+                    $photos[$vi] = [];
+                }
+                $photos[$vi]['src'] = trim((string) ($_POST['visioners_photo_src_' . $vi] ?? ''));
+                $photos[$vi]['alt'] = trim((string) ($_POST['visioners_photo_alt_' . $vi] ?? ''));
+            }
+            $p['photos'] = $photos;
+            $p['image']  = trim((string) ($_POST['visioners_image'] ?? ''));
+        }
+
+        if ($type === 'clinical_circles') {
+            $circles = is_array($p['circles'] ?? null) ? $p['circles'] : [[], [], []];
+            for ($ci = 0; $ci < 3; $ci++) {
+                if (!is_array($circles[$ci] ?? null)) {
+                    $circles[$ci] = [];
+                }
+                $circles[$ci]['src'] = trim((string) ($_POST['clinical_circle_src_' . $ci] ?? ''));
+                $circles[$ci]['alt'] = trim((string) ($_POST['clinical_circle_alt_' . $ci] ?? ''));
+            }
+            $p['circles'] = $circles;
+        }
+
         if ($type === 'closing_block') {
             $p['line1'] = trim((string) ($_POST['closing_line1'] ?? ''));
             $p['line2'] = trim((string) ($_POST['closing_line2'] ?? ''));

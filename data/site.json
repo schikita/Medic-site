@@ -585,15 +585,15 @@
                     "tagline": "From OR to Classroom – we’ve been there. Every feature answers a Real Need.",
                     "circles": [
                         {
-                            "src": "https:\/\/images.unsplash.com\/photo-1559757148-5c350d0d3c56?w=400&h=400&fit=crop",
+                            "src": "\/uploads\/2026\/04\/12c81f2bbec3e28aeb3bb83d.png",
                             "alt": "Surgery with AR glasses"
                         },
                         {
-                            "src": "https:\/\/images.unsplash.com\/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop",
+                            "src": "\/uploads\/2026\/04\/42f7605fa89f5a555364ccde.png",
                             "alt": "Doctor using hologram with patient"
                         },
                         {
-                            "src": "https:\/\/images.unsplash.com\/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop",
+                            "src": "\/uploads\/2026\/04\/20cbdae2b81f33abbe82f9c0.png",
                             "alt": "Medical team with holograms"
                         }
                     ]
@@ -665,11 +665,11 @@
                     ],
                     "photos": [
                         {
-                            "src": "https:\/\/picsum.photos\/seed\/xrhomei\/580\/430",
+                            "src": "\/uploads\/2026\/04\/6d2928413494cd0bd75164fa.png",
                             "alt": "XR Doctor in clinical setting"
                         },
                         {
-                            "src": "https:\/\/picsum.photos\/seed\/xrhomej\/580\/430",
+                            "src": "\/uploads\/2026\/04\/35414b302b2371633627b571.png",
                             "alt": "XR Doctor surgical team"
                         }
                     ],
@@ -684,7 +684,8 @@
                             "value": "20+",
                             "label": "engaged countries"
                         }
-                    ]
+                    ],
+                    "image": ""
                 }
             },
             {

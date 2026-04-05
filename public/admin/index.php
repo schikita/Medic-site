@@ -17,8 +17,11 @@ $hero = xr_find_block_props($site['home']['blocks'] ?? [], 'hero_fullscreen');
 $intro = xr_find_block_props($site['home']['blocks'] ?? [], 'intro_gradient');
 $assistant = xr_product_tabs_state($site);
 $oculusTabs = xr_oculus_tabs_home_state($site);
-$closing = xr_find_block_props($site['home']['blocks'] ?? [], 'closing_block');
-$vfreeze = xr_find_block_props($site['home']['blocks'] ?? [], 'video_freeze_section');
+$closing  = xr_find_block_props($site['home']['blocks'] ?? [], 'closing_block');
+$vfreeze  = xr_find_block_props($site['home']['blocks'] ?? [], 'video_freeze_section');
+$clinical   = xr_clinical_circles_state($site);
+$visioners  = xr_team_visioners_state($site);
+$galleryThree = xr_gallery_three_state($site);
 $hub = $site['hubspot'] ?? [];
 $seo = is_array($site['seo'] ?? null) ? $site['seo'] : xr_site_seo_defaults();
 
@@ -402,6 +405,84 @@ $token = csrf_token();
                     <textarea class="admin-textarea" name="vfreeze_intro" rows="3"><?= h((string) ($vfreeze['intro'] ?? '')) ?></textarea>
                     <label class="admin-label"><?= h(admin_t('vfreeze.caption')) ?></label>
                     <input class="admin-input" name="vfreeze_caption" value="<?= h((string) ($vfreeze['caption'] ?? '')) ?>">
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend><?= h(admin_t('g3.legend')) ?></legend>
+                    <label class="admin-label"><?= h(admin_t('g3.heading')) ?></label>
+                    <input class="admin-input" name="g3_heading" value="<?= h($galleryThree['heading']) ?>">
+                    <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
+                        <?php for ($gi = 0; $gi < 3; $gi++): ?>
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('g3.slide_' . $gi)) ?></label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="g3_slide_image_<?= $gi ?>" value="<?= h($galleryThree['slides'][$gi]['image']) ?>" placeholder="/assets/img/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h($galleryThree['slides'][$gi]['image']) ?>" alt=""<?= $galleryThree['slides'][$gi]['image'] === '' ? ' hidden' : '' ?>>
+                            </div>
+                            <label class="admin-label"><?= h(admin_t('g3.slide_title')) ?></label>
+                            <input class="admin-input" name="g3_slide_title_<?= $gi ?>" value="<?= h($galleryThree['slides'][$gi]['title']) ?>">
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend><?= h(admin_t('visioners.legend')) ?></legend>
+                    <div class="admin-grid2">
+                        <?php for ($vi = 0; $vi < 2; $vi++): ?>
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('visioners.photo_' . $vi)) ?></label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="visioners_photo_src_<?= $vi ?>" value="<?= h($visioners['photos'][$vi]['src']) ?>" placeholder="/assets/img/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h($visioners['photos'][$vi]['src']) ?>" alt=""<?= $visioners['photos'][$vi]['src'] === '' ? ' hidden' : '' ?>>
+                            </div>
+                            <label class="admin-label"><?= h(admin_t('visioners.photo_alt')) ?></label>
+                            <input class="admin-input" name="visioners_photo_alt_<?= $vi ?>" value="<?= h($visioners['photos'][$vi]['alt']) ?>" placeholder="Alt text">
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                    <label class="admin-label"><?= h(admin_t('visioners.image')) ?></label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="visioners_image" value="<?= h($visioners['image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($visioners['image']) ?>" alt=""<?= $visioners['image'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend><?= h(admin_t('clinical.legend')) ?></legend>
+                    <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
+                        <?php for ($ci = 0; $ci < 3; $ci++): ?>
+                        <div>
+                            <label class="admin-label"><?= h(admin_t('clinical.circle_' . $ci)) ?></label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="clinical_circle_src_<?= $ci ?>" value="<?= h($clinical['circles'][$ci]['src']) ?>" placeholder="/assets/img/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h($clinical['circles'][$ci]['src']) ?>" alt=""<?= $clinical['circles'][$ci]['src'] === '' ? ' hidden' : '' ?>>
+                            </div>
+                            <label class="admin-label"><?= h(admin_t('clinical.circle_alt')) ?></label>
+                            <input class="admin-input" name="clinical_circle_alt_<?= $ci ?>" value="<?= h($clinical['circles'][$ci]['alt']) ?>" placeholder="Alt text">
+                        </div>
+                        <?php endfor; ?>
+                    </div>
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
