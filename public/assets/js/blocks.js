@@ -630,7 +630,7 @@
             function fillModal(idx) {
                 var s = stories[idx];
                 if (!s) return;
-                if (mIcon)   mIcon.textContent = s.icon || "";
+                if (mIcon)   mIcon.innerHTML = s.icon || "";
                 if (mTag)    mTag.innerHTML    = Array.isArray(s.tags) ? s.tags.join("<br>") : "";
                 if (mTitle)  mTitle.textContent = s.title || "";
                 if (mBody) {

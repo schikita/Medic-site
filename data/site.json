@@ -478,7 +478,7 @@
                     "subheading": "Saving Patients and Empowering Doctors",
                     "stories": [
                         {
-                            "icon": "🦴",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-pediatric-cardiology.png\" alt=\"Pediatric Cardiology\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
                             "tags": [
                                 "Traumatology Orthopaedics",
                                 "Endoprosthesis"
@@ -506,7 +506,7 @@
                             "footer": "First in the world maxillofacial surgery with using holograms on an open skull!"
                         },
                         {
-                            "icon": "🦷",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-dentistry.png\" alt=\"Dentistry\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
                             "tags": [
                                 "Dentistry",
                                 "Mental Health"
@@ -520,7 +520,7 @@
                             "footer": "Dentist Fascinated By Using Holograms During Treatment And Joined XR DOCTOR Team"
                         },
                         {
-                            "icon": "🎯",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-dentistry-2.png\" alt=\"Dentistry\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
                             "tags": [
                                 "Oncology",
                                 "Traumatology"
@@ -534,7 +534,7 @@
                             "footer": "Surgeons gained access to the tumour in 30 minutes instead of the 3 hours initially planned"
                         },
                         {
-                            "icon": "❤️",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-oncology.png\" alt=\"Oncology\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
                             "tags": [
                                 "Pediatric",
                                 "Cardiac Surgery"
