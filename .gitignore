@@ -1,3 +1,2 @@
 config.local.php
 data/site.sqlite
-public/uploads/*

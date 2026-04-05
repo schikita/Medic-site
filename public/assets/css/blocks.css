@@ -2357,6 +2357,14 @@
     justify-content: center;
     font-size: 24px;
     flex-shrink: 0;
+    overflow: hidden;
+}
+
+.xr-stories__card-icon img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    display: block;
 }
 
 .xr-stories__card-text {

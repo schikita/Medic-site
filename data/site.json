@@ -492,7 +492,7 @@
                             "footer": "Interactive holographic measurement changed the outcome of the surgery"
                         },
                         {
-                            "icon": "💀",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-traumathology.png\" alt=\"Traumathology\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
                             "tags": [
                                 "Maxillofacial Otolaryngology",
                                 "Plastic Surgery"
