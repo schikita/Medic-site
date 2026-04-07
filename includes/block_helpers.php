@@ -166,3 +166,123 @@ function xr_product_tabs_state(array $site): array
         'bottom_link' => is_array($first['bottom_link'] ?? null) ? $first['bottom_link'] : ['label' => '', 'href' => '#'],
     ];
 }
+
+/* ── helpers for non-home pages ──────────────────────────────────── */
+
+function xr_find_block_props_by_id(array $blocks, string $id): array
+{
+    foreach ($blocks as $b) {
+        if (is_array($b) && ($b['id'] ?? '') === $id) {
+            $p = $b['props'] ?? [];
+            return is_array($p) ? $p : [];
+        }
+    }
+    return [];
+}
+
+function xr_slides_state(array $props, int $count = 3): array
+{
+    $slides = is_array($props['slides'] ?? null) ? $props['slides'] : [];
+    $out = [];
+    for ($i = 0; $i < $count; $i++) {
+        $s = is_array($slides[$i] ?? null) ? $slides[$i] : [];
+        $out[] = ['image' => (string)($s['image'] ?? ''), 'title' => (string)($s['title'] ?? '')];
+    }
+    return $out;
+}
+
+function xr_professionals_state(array $site): array
+{
+    $blocks  = $site['professionals']['blocks'] ?? [];
+    $hero    = xr_find_block_props_by_id($blocks, 'p-2-intro');
+    $engage  = xr_find_block_props_by_id($blocks, 'p-2-2');
+    $youtube = xr_find_block_props_by_id($blocks, 'p-2-5');
+    $gallery = xr_find_block_props_by_id($blocks, 'p-2-9');
+    return [
+        'hero_image'    => (string)($hero['image'] ?? ''),
+        'hero_title'    => (string)($hero['title'] ?? ''),
+        'hero_subtitle' => (string)($hero['subtitle'] ?? ''),
+        'engage_eyebrow'   => (string)($engage['eyebrow'] ?? ''),
+        'engage_title'     => (string)($engage['title'] ?? ''),
+        'engage_taglines'  => implode("\n", is_array($engage['taglines'] ?? null) ? $engage['taglines'] : []),
+        'engage_card_title' => (string)($engage['card_title'] ?? ''),
+        'engage_card_icon'  => (string)($engage['card_icon'] ?? ''),
+        'engage_card_yt'    => (string)($engage['card_youtube_id'] ?? ''),
+        'engage_card_mp4'   => (string)($engage['card_mp4'] ?? ''),
+        'engage_card_poster'=> (string)($engage['card_poster'] ?? ''),
+        'yt_heading'    => (string)($youtube['heading'] ?? ''),
+        'yt_id'         => (string)($youtube['youtube_id'] ?? ''),
+        'gallery_heading' => (string)($gallery['heading'] ?? ''),
+        'gallery_slides'  => xr_slides_state($gallery),
+    ];
+}
+
+function xr_institutions_state(array $site): array
+{
+    $blocks  = $site['institutions']['blocks'] ?? [];
+    $carousel = xr_find_block_props_by_id($blocks, 'i-3-1');
+    $gallery  = xr_find_block_props_by_id($blocks, 'i-3-21-24');
+    return [
+        'carousel_heading' => (string)($carousel['heading'] ?? ''),
+        'carousel_slides'  => xr_slides_state($carousel),
+        'gallery_heading'  => (string)($gallery['heading'] ?? ''),
+        'gallery_slides'   => xr_slides_state($gallery),
+    ];
+}
+
+function xr_blog_state(array $site): array
+{
+    $blocks = $site['blog']['blocks'] ?? [];
+    $hero   = xr_find_block_props_by_id($blocks, 'block-4-1');
+    $grid   = xr_find_block_props_by_id($blocks, 'block-4-2-grid');
+    $rawPosts = is_array($grid['posts'] ?? null) ? $grid['posts'] : [];
+    $posts = [];
+    for ($i = 0; $i < 5; $i++) {
+        $p = is_array($rawPosts[$i] ?? null) ? $rawPosts[$i] : [];
+        $posts[] = [
+            'title'   => (string)($p['title'] ?? ''),
+            'image'   => (string)($p['image'] ?? ''),
+            'excerpt' => (string)($p['excerpt'] ?? ''),
+        ];
+    }
+    return [
+        'hero_image'    => (string)($hero['image'] ?? ''),
+        'hero_title'    => (string)($hero['title'] ?? ''),
+        'hero_subtitle' => (string)($hero['subtitle'] ?? ''),
+        'posts'         => $posts,
+    ];
+}
+
+function xr_partners_state(array $site): array
+{
+    $blocks = $site['partners']['blocks'] ?? [];
+    $hero   = xr_find_block_props_by_id($blocks, 'block-5-1');
+    $sv1    = xr_find_block_props_by_id($blocks, 'block-5-4');
+    $sv2    = xr_find_block_props_by_id($blocks, 'block-5-8');
+    $icons  = xr_find_block_props_by_id($blocks, 'block-5-5');
+    $rawItems = is_array($icons['items'] ?? null) ? $icons['items'] : [];
+    $iconItems = [];
+    for ($i = 0; $i < 4; $i++) {
+        $it = is_array($rawItems[$i] ?? null) ? $rawItems[$i] : [];
+        $iconItems[] = [
+            'label'    => (string)($it['label'] ?? ''),
+            'dashicon' => (string)($it['dashicon'] ?? ''),
+            'text'     => (string)($it['text'] ?? ''),
+        ];
+    }
+    return [
+        'hero_image'    => (string)($hero['image'] ?? ''),
+        'hero_title'    => (string)($hero['title'] ?? ''),
+        'hero_subtitle' => (string)($hero['subtitle'] ?? ''),
+        'sv1_title'  => (string)($sv1['title'] ?? ''),
+        'sv1_body'   => (string)($sv1['body'] ?? ''),
+        'sv1_poster' => (string)($sv1['poster'] ?? ''),
+        'sv1_mp4'    => (string)($sv1['mp4'] ?? ''),
+        'sv2_title'  => (string)($sv2['title'] ?? ''),
+        'sv2_body'   => (string)($sv2['body'] ?? ''),
+        'sv2_poster' => (string)($sv2['poster'] ?? ''),
+        'sv2_mp4'    => (string)($sv2['mp4'] ?? ''),
+        'icons_title' => (string)($icons['title'] ?? ''),
+        'icon_items'  => $iconItems,
+    ];
+}

@@ -145,8 +145,8 @@
                             "overlay_line1": "SEE",
                             "overlay_line2": "Your Edge Appear",
                             "mode": "youtube_click",
-                            "poster": "https:\/\/picsum.photos\/seed\/xrhomed\/800\/500",
-                            "youtube_id": "dQw4w9WgXcQ",
+                            "poster": "https:\/\/youtu.be\/vqVUGONhgek",
+                            "youtube_id": "vqVUGONhgek",
                             "play_label": ""
                         },
                         {
@@ -157,8 +157,8 @@
                             "overlay_line1": "SEE",
                             "overlay_line2": "Your Edge Appear",
                             "mode": "youtube_click",
-                            "poster": "https:\/\/picsum.photos\/seed\/xrhomed\/800\/500",
-                            "youtube_id": "dQw4w9WgXcQ",
+                            "poster": "https:\/\/youtu.be\/vqVUGONhgek",
+                            "youtube_id": "vqVUGONhgek",
                             "play_label": ""
                         },
                         {
@@ -169,8 +169,8 @@
                             "overlay_line1": "SEE",
                             "overlay_line2": "Your Edge Appear",
                             "mode": "youtube_click",
-                            "poster": "https:\/\/picsum.photos\/seed\/xrhomed\/800\/500",
-                            "youtube_id": "dQw4w9WgXcQ",
+                            "poster": "https:\/\/youtu.be\/vqVUGONhgek",
+                            "youtube_id": "vqVUGONhgek",
                             "play_label": ""
                         }
                     ]
@@ -1015,18 +1015,33 @@
                 "type": "hero_twinkle",
                 "id": "p-2-intro",
                 "props": {
-                    "image": "https:\/\/picsum.photos\/seed\/xrprof1\/1440\/900",
+                    "image": "\/uploads\/2026\/04\/8f5d21853888a1dcd6da8e66.png",
                     "title": "XR Doctor for Professionals",
                     "subtitle": "Tools that match the pace of your practice."
                 }
             },
             {
+                "type": "expertise_banner",
+                "id": "p-2-intro-banner",
+                "props": {
+                    "title": "Your growth fuels a global movement — XR Doctor unites medical expertise, expands professional capabilities and connects thousands of healthcare professionals worldwide",
+                    "subtitle": "Navigate Your Success — redefine your professional journey with XR Doctor"
+                }
+            },
+            {
                 "type": "blue_video_freeze",
                 "id": "p-2-2",
+                "type": "engage_split",
                 "props": {
-                    "mp4": "https:\/\/www.w3schools.com\/html\/mov_bbb.mp4",
-                    "poster": "https:\/\/picsum.photos\/seed\/xrprof2\/1440\/800",
-                    "text": "Single-play cinematic intro — holds the last frame, then scroll to continue."
+                    "eyebrow": "Explore XR Doctor Platform",
+                    "eyebrow_href": "#",
+                    "title": "Engage &\nApply for\nNext-GeN",
+                    "taglines": ["One Platform", "Thousands of Solutions", "Millions of Users"],
+                    "card_title": "XR Doctor Solutions",
+                    "card_icon": "",
+                    "card_youtube_id": "",
+                    "card_mp4": "",
+                    "card_poster": ""
                 }
             },
             {
@@ -1296,7 +1311,8 @@
                         {
                             "image": "https:\/\/picsum.photos\/seed\/xrinst31b\/1200\/680",
                             "caption": "Clinical integration"
-                        }
+                        },
+                        []
                     ],
                     "interval_ms": 4500
                 }

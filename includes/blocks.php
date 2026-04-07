@@ -1669,6 +1669,81 @@ function xr_block_hero_twinkle(array $p, string $blockId = ''): void
     <?php
 }
 
+function xr_block_engage_split(array $p, string $blockId = ''): void
+{
+    $eyebrow      = (string) ($p['eyebrow'] ?? '');
+    $eyebrowHref  = (string) ($p['eyebrow_href'] ?? '#');
+    $titleRaw     = (string) ($p['title'] ?? '');
+    $taglines     = is_array($p['taglines'] ?? null) ? $p['taglines'] : [];
+    $cardTitle    = (string) ($p['card_title'] ?? '');
+    $cardIcon     = (string) ($p['card_icon'] ?? '');
+    $cardYt       = trim((string) ($p['card_youtube_id'] ?? ''));
+    $cardMp4      = (string) ($p['card_mp4'] ?? '');
+    $cardPoster   = (string) ($p['card_poster'] ?? '');
+
+    // Parse YouTube URL if full URL pasted
+    if ($cardYt !== '' && !preg_match('/^[a-zA-Z0-9_-]{11}$/', $cardYt)) {
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $cardYt, $m)) {
+            $cardYt = $m[1];
+        } else {
+            $cardYt = '';
+        }
+    }
+
+    // Title: split on \n or literal \n for multiline
+    $titleLines = array_filter(array_map('trim', preg_split('/\\\\n|\n/', $titleRaw)));
+    ?>
+    <div class="xr-engage-split">
+        <div class="xr-engage-split__left">
+            <?php if ($eyebrow !== ''): ?>
+                <a class="xr-engage-split__eyebrow" href="<?= h($eyebrowHref) ?>"><?= h($eyebrow) ?></a>
+            <?php endif; ?>
+            <?php if ($titleLines !== []): ?>
+                <h2 class="xr-engage-split__title">
+                    <?php foreach ($titleLines as $line): ?>
+                        <span><?= h($line) ?></span>
+                    <?php endforeach; ?>
+                </h2>
+            <?php endif; ?>
+            <?php if ($taglines !== []): ?>
+                <ul class="xr-engage-split__taglines" role="list">
+                    <?php foreach ($taglines as $tl): ?>
+                        <li><?= h((string) $tl) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+
+        <div class="xr-engage-split__right">
+            <div class="xr-engage-split__card">
+                <?php if ($cardIcon !== ''): ?>
+                    <img class="xr-engage-split__card-icon" src="<?= h($cardIcon) ?>" alt="">
+                <?php endif; ?>
+                <?php if ($cardTitle !== ''): ?>
+                    <p class="xr-engage-split__card-title"><?= h($cardTitle) ?></p>
+                <?php endif; ?>
+                <div class="xr-engage-split__card-media">
+                    <?php if ($cardYt !== ''): ?>
+                        <iframe class="xr-engage-split__card-yt"
+                            src="https://www.youtube-nocookie.com/embed/<?= h($cardYt) ?>?autoplay=1&mute=1&loop=1&playlist=<?= h($cardYt) ?>&controls=0&rel=0&modestbranding=1"
+                            allow="autoplay; encrypted-media"
+                            tabindex="-1"
+                            aria-hidden="true"></iframe>
+                    <?php elseif ($cardMp4 !== ''): ?>
+                        <video class="xr-engage-split__card-video" autoplay muted loop playsinline
+                               <?= $cardPoster !== '' ? 'poster="' . h($cardPoster) . '"' : '' ?>>
+                            <source src="<?= h($cardMp4) ?>" type="video/mp4">
+                        </video>
+                    <?php elseif ($cardPoster !== ''): ?>
+                        <img class="xr-engage-split__card-poster-img" src="<?= h($cardPoster) ?>" alt="">
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 function xr_block_blue_video_freeze(array $p, string $blockId = ''): void
 {
     $mp4 = (string) ($p['mp4'] ?? '');

@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+function xr_admin_save_page_blocks(array &$out, string $page, callable $fn): void
+{
+    $blocks = $out[$page]['blocks'] ?? [];
+    if (!is_array($blocks)) $blocks = [];
+    $fn($blocks);
+    $out[$page]['blocks'] = $blocks;
+}
+
 function merge_site_from_post(array $current): array
 {
     $out = $current;
@@ -312,6 +320,199 @@ function merge_site_from_post(array $current): array
         }
     }
 
+    /* ── Professionals structured fields ─────────────────────────── */
+    xr_admin_save_page_blocks($out, 'professionals', function (array &$blocks): void {
+        foreach ($blocks as &$b) {
+            if (!is_array($b)) continue;
+            $id = (string)($b['id'] ?? '');
+            if (!isset($b['props']) || !is_array($b['props'])) $b['props'] = [];
+            $p = &$b['props'];
+
+            if ($id === 'p-2-intro') {
+                $img = trim((string)($_POST['pro_hero_image'] ?? ''));
+                if ($img !== '') $p['image'] = $img;
+                $t = trim((string)($_POST['pro_hero_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $s = trim((string)($_POST['pro_hero_subtitle'] ?? ''));
+                if ($s !== '') $p['subtitle'] = $s;
+            }
+            if ($id === 'p-2-2') {
+                $ey = trim((string)($_POST['pro_engage_eyebrow'] ?? ''));
+                if ($ey !== '') $p['eyebrow'] = $ey;
+                $t = trim((string)($_POST['pro_engage_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $lines = preg_split('/\r\n|\r|\n/', (string)($_POST['pro_engage_taglines'] ?? '')) ?: [];
+                $tl = array_values(array_filter(array_map('trim', $lines)));
+                if ($tl !== []) $p['taglines'] = $tl;
+                $ct = trim((string)($_POST['pro_engage_card_title'] ?? ''));
+                if ($ct !== '') $p['card_title'] = $ct;
+                $ci = trim((string)($_POST['pro_engage_card_icon'] ?? ''));
+                if ($ci !== '') $p['card_icon'] = $ci;
+                $yt = trim((string)($_POST['pro_engage_card_yt'] ?? ''));
+                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $yt, $m)) {
+                    $p['card_youtube_id'] = $m[1];
+                } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $yt)) {
+                    $p['card_youtube_id'] = $yt;
+                }
+                $mp4 = trim((string)($_POST['pro_engage_card_mp4'] ?? ''));
+                if ($mp4 !== '') $p['card_mp4'] = $mp4;
+                $poster = trim((string)($_POST['pro_engage_card_poster'] ?? ''));
+                if ($poster !== '') $p['card_poster'] = $poster;
+            }
+            if ($id === 'p-2-5') {
+                $h = trim((string)($_POST['pro_yt_heading'] ?? ''));
+                if ($h !== '') $p['heading'] = $h;
+                $yt = trim((string)($_POST['pro_yt_id'] ?? ''));
+                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $yt, $m)) {
+                    $p['youtube_id'] = $m[1];
+                } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $yt)) {
+                    $p['youtube_id'] = $yt;
+                }
+            }
+            if ($id === 'p-2-9') {
+                $h = trim((string)($_POST['pro_gallery_heading'] ?? ''));
+                if ($h !== '') $p['heading'] = $h;
+                $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [[], [], []];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($slides[$i] ?? null)) $slides[$i] = [];
+                    $img = trim((string)($_POST["pro_slide_image_$i"] ?? ''));
+                    $tit = trim((string)($_POST["pro_slide_title_$i"] ?? ''));
+                    if ($img !== '') $slides[$i]['image'] = $img;
+                    if ($tit !== '') $slides[$i]['title'] = $tit;
+                }
+                $p['slides'] = $slides;
+            }
+        }
+        unset($b);
+    });
+
+    /* ── Institutions structured fields ───────────────────────────── */
+    xr_admin_save_page_blocks($out, 'institutions', function (array &$blocks): void {
+        foreach ($blocks as &$b) {
+            if (!is_array($b)) continue;
+            $id = (string)($b['id'] ?? '');
+            if (!isset($b['props']) || !is_array($b['props'])) $b['props'] = [];
+            $p = &$b['props'];
+
+            if ($id === 'i-3-1') {
+                $h = trim((string)($_POST['inst_carousel_heading'] ?? ''));
+                if ($h !== '') $p['heading'] = $h;
+                $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [[], [], []];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($slides[$i] ?? null)) $slides[$i] = [];
+                    $img = trim((string)($_POST["inst_carousel_image_$i"] ?? ''));
+                    $tit = trim((string)($_POST["inst_carousel_title_$i"] ?? ''));
+                    if ($img !== '') $slides[$i]['image'] = $img;
+                    if ($tit !== '') $slides[$i]['title'] = $tit;
+                }
+                $p['slides'] = $slides;
+            }
+            if ($id === 'i-3-21-24') {
+                $h = trim((string)($_POST['inst_gallery_heading'] ?? ''));
+                if ($h !== '') $p['heading'] = $h;
+                $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [[], [], []];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($slides[$i] ?? null)) $slides[$i] = [];
+                    $img = trim((string)($_POST["inst_gallery_image_$i"] ?? ''));
+                    $tit = trim((string)($_POST["inst_gallery_title_$i"] ?? ''));
+                    if ($img !== '') $slides[$i]['image'] = $img;
+                    if ($tit !== '') $slides[$i]['title'] = $tit;
+                }
+                $p['slides'] = $slides;
+            }
+        }
+        unset($b);
+    });
+
+    /* ── Blog structured fields ────────────────────────────────────── */
+    xr_admin_save_page_blocks($out, 'blog', function (array &$blocks): void {
+        foreach ($blocks as &$b) {
+            if (!is_array($b)) continue;
+            $id = (string)($b['id'] ?? '');
+            if (!isset($b['props']) || !is_array($b['props'])) $b['props'] = [];
+            $p = &$b['props'];
+
+            if ($id === 'block-4-1') {
+                $img = trim((string)($_POST['blog_hero_image'] ?? ''));
+                if ($img !== '') $p['image'] = $img;
+                $t = trim((string)($_POST['blog_hero_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $s = trim((string)($_POST['blog_hero_subtitle'] ?? ''));
+                if ($s !== '') $p['subtitle'] = $s;
+            }
+            if ($id === 'block-4-2-grid') {
+                $posts = is_array($p['posts'] ?? null) ? $p['posts'] : [];
+                for ($i = 0; $i < 5; $i++) {
+                    if (!is_array($posts[$i] ?? null)) $posts[$i] = [];
+                    $img = trim((string)($_POST["blog_post_image_$i"] ?? ''));
+                    $tit = trim((string)($_POST["blog_post_title_$i"] ?? ''));
+                    $exc = trim((string)($_POST["blog_post_excerpt_$i"] ?? ''));
+                    if ($img !== '') $posts[$i]['image'] = $img;
+                    if ($tit !== '') $posts[$i]['title'] = $tit;
+                    if ($exc !== '') $posts[$i]['excerpt'] = $exc;
+                }
+                $p['posts'] = $posts;
+            }
+        }
+        unset($b);
+    });
+
+    /* ── Partners structured fields ────────────────────────────────── */
+    xr_admin_save_page_blocks($out, 'partners', function (array &$blocks): void {
+        foreach ($blocks as &$b) {
+            if (!is_array($b)) continue;
+            $id = (string)($b['id'] ?? '');
+            if (!isset($b['props']) || !is_array($b['props'])) $b['props'] = [];
+            $p = &$b['props'];
+
+            if ($id === 'block-5-1') {
+                $img = trim((string)($_POST['par_hero_image'] ?? ''));
+                if ($img !== '') $p['image'] = $img;
+                $t = trim((string)($_POST['par_hero_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $s = trim((string)($_POST['par_hero_subtitle'] ?? ''));
+                if ($s !== '') $p['subtitle'] = $s;
+            }
+            if ($id === 'block-5-4') {
+                $t = trim((string)($_POST['par_sv1_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $body = trim((string)($_POST['par_sv1_body'] ?? ''));
+                if ($body !== '') $p['body'] = $body;
+                $poster = trim((string)($_POST['par_sv1_poster'] ?? ''));
+                if ($poster !== '') $p['poster'] = $poster;
+                $mp4 = trim((string)($_POST['par_sv1_mp4'] ?? ''));
+                if ($mp4 !== '') $p['mp4'] = $mp4;
+            }
+            if ($id === 'block-5-8') {
+                $t = trim((string)($_POST['par_sv2_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $body = trim((string)($_POST['par_sv2_body'] ?? ''));
+                if ($body !== '') $p['body'] = $body;
+                $poster = trim((string)($_POST['par_sv2_poster'] ?? ''));
+                if ($poster !== '') $p['poster'] = $poster;
+                $mp4 = trim((string)($_POST['par_sv2_mp4'] ?? ''));
+                if ($mp4 !== '') $p['mp4'] = $mp4;
+            }
+            if ($id === 'block-5-5') {
+                $t = trim((string)($_POST['par_icons_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $items = is_array($p['items'] ?? null) ? $p['items'] : [];
+                for ($i = 0; $i < 4; $i++) {
+                    if (!is_array($items[$i] ?? null)) $items[$i] = [];
+                    $lbl  = trim((string)($_POST["par_icon_label_$i"] ?? ''));
+                    $icon = trim((string)($_POST["par_icon_dashicon_$i"] ?? ''));
+                    $txt  = trim((string)($_POST["par_icon_text_$i"] ?? ''));
+                    if ($lbl !== '')  $items[$i]['label']    = $lbl;
+                    if ($icon !== '') $items[$i]['dashicon'] = $icon;
+                    if ($txt !== '')  $items[$i]['text']     = $txt;
+                }
+                $p['items'] = $items;
+            }
+        }
+        unset($b);
+    });
+
+    /* ── JSON overrides (raw editor fallback) ─────────────────────── */
     $rawJsonPro = trim((string) ($_POST['professionals_blocks_json'] ?? ''));
     if ($rawJsonPro !== '') {
         $decoded = json_decode($rawJsonPro, true);
