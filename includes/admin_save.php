@@ -223,17 +223,49 @@ function merge_site_from_post(array $current): array
             $p['caption']      = trim((string) ($_POST['vfreeze_caption'] ?? ''));
         }
 
-        if ($type === 'gallery_three' && ($b['id'] ?? '') === 'block-1-16-17') {
-            $p['heading'] = trim((string) ($_POST['g3_heading'] ?? ''));
-            $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [[], [], []];
-            for ($gi = 0; $gi < 3; $gi++) {
-                if (!is_array($slides[$gi] ?? null)) {
-                    $slides[$gi] = [];
+        if ($type === 'saves_your' && ($b['id'] ?? '') === 'block-1-18') {
+            $items = is_array($p['items'] ?? null) ? $p['items'] : [[], [], []];
+            for ($si = 0; $si < 3; $si++) {
+                if (!is_array($items[$si] ?? null)) {
+                    $items[$si] = [];
                 }
-                $slides[$gi]['image'] = trim((string) ($_POST['g3_slide_image_' . $gi] ?? ''));
-                $slides[$gi]['title'] = trim((string) ($_POST['g3_slide_title_' . $gi] ?? ''));
+                $key = 'saves_img_' . $si;
+                if (isset($_POST[$key])) {
+                    $items[$si]['image'] = trim((string) $_POST[$key]);
+                }
             }
-            $p['slides'] = $slides;
+            $p['items'] = $items;
+        }
+
+        if ($type === 'requirements_grid' && ($b['id'] ?? '') === 'block-1-16-17') {
+            $p['device_image'] = trim((string) ($_POST['reqgrid_device_image'] ?? ''));
+            $columns = is_array($p['columns'] ?? null) ? $p['columns'] : [];
+            foreach ($columns as $ci => &$col) {
+                $groups = is_array($col['groups'] ?? null) ? $col['groups'] : [];
+                foreach ($groups as $gi => &$g) {
+                    $key = 'reqgrid_icon_' . $ci . '_' . $gi;
+                    if (isset($_POST[$key])) {
+                        $g['icon'] = trim((string) $_POST[$key]);
+                    }
+                }
+                unset($g);
+                $col['groups'] = $groups;
+            }
+            unset($col);
+            // AR/VR Glasses list item icons
+            if (isset($columns[2]['groups'][0]['items'])) {
+                foreach ($columns[2]['groups'][0]['items'] as $ii => &$item) {
+                    $key = 'reqgrid_item_icon_' . $ii;
+                    if (isset($_POST[$key])) {
+                        if (!is_array($item)) {
+                            $item = ['text' => (string) $item, 'icon' => ''];
+                        }
+                        $item['icon'] = trim((string) $_POST[$key]);
+                    }
+                }
+                unset($item);
+            }
+            $p['columns'] = $columns;
         }
 
         if ($type === 'team_visioners') {

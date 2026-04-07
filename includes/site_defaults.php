@@ -436,14 +436,11 @@ function xr_default_home_blocks(): array
             ],
         ],
         [
-            'type' => 'counters_row',
+            'type' => 'expertise_banner',
             'id' => 'block-1-11',
             'props' => [
-                'items' => [
-                    ['value' => '120+', 'label' => 'Clinical sites'],
-                    ['value' => '48', 'label' => 'Countries'],
-                    ['value' => '3M+', 'label' => 'Training minutes'],
-                ],
+                'title'    => 'Bridging Expertise & Innovation',
+                'subtitle' => 'XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession.',
             ],
         ],
         [

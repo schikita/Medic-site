@@ -75,23 +75,43 @@ function xr_clinical_circles_state(array $site): array
     ];
 }
 
+function xr_saves_your_state(array $site): array
+{
+    $props = xr_find_block_props($site['home']['blocks'] ?? [], 'saves_your');
+    $items = is_array($props['items'] ?? null) ? $props['items'] : [];
+    $images = [];
+    for ($i = 0; $i < 3; $i++) {
+        $images[$i] = (string) ($items[$i]['image'] ?? '');
+    }
+    return ['images' => $images];
+}
+
 function xr_gallery_three_state(array $site): array
 {
-    $props  = xr_find_block_props($site['home']['blocks'] ?? [], 'gallery_three');
-    $slides = is_array($props['slides'] ?? null) ? $props['slides'] : [];
-    $out    = [];
-    for ($i = 0; $i < 3; $i++) {
-        $s     = is_array($slides[$i] ?? null) ? $slides[$i] : [];
-        $out[] = [
-            'image' => (string) ($s['image'] ?? ''),
-            'title' => (string) ($s['title'] ?? ''),
-        ];
+    $props   = xr_find_block_props($site['home']['blocks'] ?? [], 'requirements_grid');
+    $columns = is_array($props['columns'] ?? null) ? $props['columns'] : [];
+
+    $icons = [];
+    foreach ($columns as $ci => $col) {
+        $groups = is_array($col['groups'] ?? null) ? $col['groups'] : [];
+        foreach ($groups as $gi => $g) {
+            $icons[$ci . '_' . $gi] = (string) ($g['icon'] ?? '');
+        }
+    }
+
+    // AR/VR Glasses list item icons (column 2, group 0)
+    $glassesCol = $columns[2] ?? [];
+    $glassesGroups = is_array($glassesCol['groups'] ?? null) ? $glassesCol['groups'] : [];
+    $glassesItems = is_array(($glassesGroups[0]['items'] ?? null)) ? $glassesGroups[0]['items'] : [];
+    $itemIcons = [];
+    foreach ($glassesItems as $ii => $item) {
+        $itemIcons[$ii] = is_array($item) ? (string) ($item['icon'] ?? '') : '';
     }
 
     return [
-        'heading'     => (string) ($props['heading'] ?? ''),
-        'slides'      => $out,
-        'interval_ms' => (int) ($props['interval_ms'] ?? 4000),
+        'device_image' => (string) ($props['device_image'] ?? ''),
+        'icons'        => $icons,
+        'item_icons'   => $itemIcons,
     ];
 }
 

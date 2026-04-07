@@ -263,7 +263,7 @@
                                 "label": "how it defines the Next-GeN Medical Standard",
                                 "href": "#block-1-9"
                             },
-                            "poster": "https:\/\/picsum.photos\/seed\/xrhomed\/800\/500",
+                            "poster": "\/uploads\/2026\/04\/7c0bcf8a5a17e519f12e9be3.jpg",
                             "youtube_id": "vqVUGONhgek",
                             "video_label": "SeeXR Doctor Platformin Action"
                         },
@@ -600,29 +600,11 @@
                 }
             },
             {
-                "type": "counters_row",
-                "id": "block-1-11",
-                "props": {
-                    "items": [
-                        {
-                            "value": "120+",
-                            "label": "Clinical sites"
-                        },
-                        {
-                            "value": "48",
-                            "label": "Countries"
-                        },
-                        {
-                            "value": "3M+",
-                            "label": "Training minutes"
-                        }
-                    ]
-                }
-            },
-            {
                 "type": "team_visioners",
                 "id": "block-1-11-team",
                 "props": {
+                    "title": "Bridging Expertise & Innovation",
+                    "subtitle": "XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession.",
                     "card_title": "Visioners",
                     "card_subtitle": "behind XR Doctor",
                     "achievements": [
@@ -689,41 +671,156 @@
                 }
             },
             {
-                "type": "floating_plank",
+                "type": "expertise_banner",
+                "id": "block-1-11",
+                "props": {
+                    "card_title": "Visioners",
+                    "card_subtitle": "behind XR Doctor",
+                    "achievements": [
+                        {
+                            "title": "Pioneered",
+                            "items": [
+                                "AR tech, 2.8B+ users",
+                                "Holograms in real surgery",
+                                "Product with built-in AI in 2008"
+                            ]
+                        },
+                        {
+                            "title": "Shaped",
+                            "items": [
+                                "top geo app, 140M+ users",
+                                "top global messenger, 1.3B+ users"
+                            ]
+                        },
+                        {
+                            "title": "Brought to Market",
+                            "items": [
+                                "world’s 1st haptic-feedback VR suit",
+                                "ground-breaking haptic gloves"
+                            ]
+                        },
+                        {
+                            "title": "Awarded",
+                            "items": [
+                                "Red Dot, Future Unicorn",
+                                "CES Innovation, World Summit"
+                            ]
+                        },
+                        {
+                            "title": "Collaborated",
+                            "items": [
+                                "NASA, Boeing, Verizon, Vodafone",
+                                "Formula 1, Accenture, Sanofi"
+                            ]
+                        }
+                    ],
+                    "photos": [
+                        {
+                            "src": "https:\/\/picsum.photos\/seed\/xrhomei\/580\/430",
+                            "alt": "XR Doctor in clinical setting"
+                        },
+                        {
+                            "src": "https:\/\/picsum.photos\/seed\/xrhomej\/580\/430",
+                            "alt": "XR Doctor surgical team"
+                        }
+                    ],
+                    "heading": "Next-GeN Minds\nCode the Leap",
+                    "body": "We are pioneers of XR\/AI and global innovators. Our multidisciplinary team brings together deep scientific and practice expertise in medicine and cutting-edge technologies. Doctors of Science, skilled PhD researchers in Medicine & Computer Science, top-level developers and bioengineers, talented 3D artists have been building next-gen solution for daily medical life.",
+                    "stats": [
+                        {
+                            "value": "5+",
+                            "label": "years of R&D"
+                        },
+                        {
+                            "value": "20+",
+                            "label": "engaged countries"
+                        }
+                    ],
+                    "title": "Bridging Expertise & Innovation",
+                    "subtitle": "XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession."
+                }
+            },
+            {
+                "type": "medical_stats",
                 "id": "block-1-12",
                 "props": {
-                    "title": "Built for real hospitals and universities",
+                    "title": "Proven Groundbreaking Medical Collaboration",
                     "bullets": [
                         "HIPAA-aware workflows",
                         "SSO & enterprise roles",
                         "Offline-capable headsets"
                     ],
-                    "image": "https:\/\/picsum.photos\/seed\/xrhomeh\/600\/800"
-                }
-            },
-            {
-                "type": "timeline_gradient",
-                "id": "block-1-15",
-                "props": {
-                    "heading": "From scan to shared hologram",
-                    "steps": [
+                    "image": "https:\/\/picsum.photos\/seed\/xrhomeh\/600\/800",
+                    "eyebrow": "XR Doctor Platform. Built with real clinical insight from top doctors and educators",
+                    "subtitle": "XR Doctor is built on the strength of top medical minds – validated by real-world achievements",
+                    "stats": [
                         {
-                            "title": "Ingest",
-                            "text": "Upload DICOM or mesh; automatic prep."
+                            "value": "10+",
+                            "label": "Medical fields",
+                            "note": "*Expanding horizons"
                         },
                         {
-                            "title": "Map",
-                            "text": "Align to room and patient context."
+                            "value": "20+",
+                            "label": "Medical patents",
+                            "note": "*Leading doctors authored"
                         },
                         {
-                            "title": "Collaborate",
-                            "text": "Invite peers — same view, live."
+                            "value": "40+",
+                            "label": "Treatment methods",
+                            "note": "*Redefining care by our doctors"
+                        },
+                        {
+                            "value": "150+",
+                            "label": "Scientific articles",
+                            "note": "*Advancing medical science"
                         }
                     ]
                 }
             },
             {
-                "type": "gallery_three",
+                "type": "journey_timeline",
+                "id": "block-1-15",
+                "props": {
+                    "heading": "From scan to shared hologram",
+                    "steps": [
+                        {
+                            "title": "Created Holograms",
+                            "text": "From simple to complex set of scalable, shared and mapped holograms",
+                            "num": "I"
+                        },
+                        {
+                            "title": "Developed AR\/VR app",
+                            "text": "Interactive hologram tool for Next-GeN medical visualisation",
+                            "num": "II"
+                        },
+                        {
+                            "title": "Innovated Collaboration",
+                            "text": "Unified holographic space for telemedicine and teamwork in-person & remotely",
+                            "num": "III"
+                        },
+                        {
+                            "num": "IV",
+                            "title": "Pioneering XR Platform",
+                            "text": "Seamless & Instant holographic environments empowering work and collaboration worldwide"
+                        },
+                        {
+                            "num": "V",
+                            "title": "Deployed Products",
+                            "text": "Assistance and Training globally reshaping & scaling healthcare and education"
+                        },
+                        {
+                            "num": "VI",
+                            "title": "Advancing Tech Stack",
+                            "text": "Empowering XR Doctor with AI, haptics, spatial computing for worldwide infinite impact"
+                        }
+                    ],
+                    "title": "XR Doctor Journey to Set Next-GeN Standard",
+                    "subtitle": "From Vision to Reality through pioneering R&D",
+                    "tagline": "Step by step, XR Doctor brings innovation to life"
+                }
+            },
+            {
+                "type": "requirements_grid",
                 "id": "block-1-16-17",
                 "props": {
                     "heading": "Headsets we optimize for",
@@ -741,27 +838,153 @@
                             "title": "Device family C"
                         }
                     ],
-                    "interval_ms": 4000
+                    "interval_ms": 4000,
+                    "tags": [
+                        "Easy",
+                        "Effective",
+                        "Fast"
+                    ],
+                    "title": "What You Need to work with XR Doctor",
+                    "device_image": "\/uploads\/2026\/04\/03a92ee81ef06001d45f0bd3.png",
+                    "device_caption": "Apple Vision Pro",
+                    "columns": [
+                        {
+                            "header": "XR Doctor App",
+                            "header_color": "blue",
+                            "groups": [
+                                {
+                                    "icon": "\/uploads\/2026\/04\/6963d9f492081f0436060a06.png",
+                                    "title": "Choose Your App",
+                                    "items": [
+                                        "XR Doctor Assistant for practice",
+                                        "XR Doctor Training for training",
+                                        "Both for the best outcome"
+                                    ]
+                                },
+                                {
+                                    "icon": "\/uploads\/2026\/04\/d4d3090d4b2ed4ee5030857b.png",
+                                    "title": "Buy Licence",
+                                    "items": [
+                                        "XR Doctor Assistant for practice",
+                                        "XR Doctor Training for training",
+                                        "Both for the best outcome"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "header": "Content for App",
+                            "header_color": "pink",
+                            "groups": [
+                                {
+                                    "icon": "\/uploads\/2026\/04\/1c6d4d2f26d4e191d12313d0.png",
+                                    "title": "XR Doctor Assistant",
+                                    "items": [
+                                        "Upload CT – scan and get Hologram",
+                                        "Upload 3D model and get Hologram",
+                                        "Pay monthly for hologram access"
+                                    ]
+                                },
+                                {
+                                    "icon": "\/uploads\/2026\/04\/729ae61edb7455b3c4de3239.png",
+                                    "title": "XR Doctor Training",
+                                    "items": [
+                                        "Choose the training you need",
+                                        "Upload anonymized medical data",
+                                        "Pay once. Implement. Resell & Earn"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "header": "AR\/VR Glasses",
+                            "header_color": "blue",
+                            "groups": [
+                                {
+                                    "icon": "🕶️",
+                                    "title": "",
+                                    "items": [
+                                        {
+                                            "text": "Choose suitable AR\/VR glasses",
+                                            "icon": "\/uploads\/2026\/04\/8bfbb8a22718cbb221f2a428.png"
+                                        },
+                                        {
+                                            "text": "AR for full functionality",
+                                            "icon": "\/uploads\/2026\/04\/1c5643e15bb25fcea0e53550.png"
+                                        },
+                                        {
+                                            "text": "VR for limited functionality",
+                                            "icon": "\/uploads\/2026\/04\/5e3d72fa79eb81b99750c19c.png"
+                                        },
+                                        {
+                                            "text": "Buy your own for full price",
+                                            "icon": "\/uploads\/2026\/04\/2e33c6fceafc73e8566e8299.png"
+                                        },
+                                        {
+                                            "text": "Ask about installments",
+                                            "icon": "\/uploads\/2026\/04\/34ce7e9ff21c87a99e4adfbb.png"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "saves_your",
+                "id": "block-1-18",
+                "props": {
+                    "infinity_symbol": "∞",
+                    "title": "XR Doctor Saves Your",
+                    "button_label": "Request Demo",
+                    "href": "#hubspot-demo",
+                    "items": [
+                        {
+                            "image": "\/uploads\/2026\/04\/7185c672e05b4fc5e96bd0ab.png",
+                            "label": "Time",
+                            "text": "Empower to achieve more in less time by simplifying work and speeding up study"
+                        },
+                        {
+                            "image": "\/uploads\/2026\/04\/b21962b3f9e9ec3f4ec08109.png",
+                            "label": "Effort",
+                            "text": "Boost productivity through instant access, seamless collaboration, effortless workflows"
+                        },
+                        {
+                            "image": "\/uploads\/2026\/04\/c6ffc238ede3dcfcb7fae0bf.png",
+                            "label": "Money",
+                            "text": "Replace costly tools, staff & break boundaries with one powerful solution in AR glasses"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "beginning_banner",
+                "id": "block-1-18b",
+                "props": {
+                    "lines": [
+                        "Precision. Presence. Scale.",
+                        "XR Doctor brings teams into the same spatial truth."
+                    ],
+                    "eyebrow": "it’s not the end",
+                    "title": "It’s just the beginning",
+                    "subtitle": "Discover Your Infinite Opportunities with XR Doctor"
                 }
             },
             {
                 "type": "starfield_cta",
                 "id": "block-1-19",
                 "props": {
+                    "line1": "Scale Your Success with XR Doctor",
+                    "line2": "Next Level Starts Now",
+                    "lines": [
+                        "Precision. Presence. Scale.",
+                        "XR Doctor brings teams into the same spatial truth."
+                    ],
                     "infinity_symbol": "∞",
                     "title": "Ready to see your first holographic case?",
                     "button_label": "Request Demo",
                     "href": "#hubspot-demo"
-                }
-            },
-            {
-                "type": "text_reveal_simple",
-                "id": "block-1-20",
-                "props": {
-                    "lines": [
-                        "Precision. Presence. Scale.",
-                        "XR Doctor brings teams into the same spatial truth."
-                    ]
                 }
             },
             {

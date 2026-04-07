@@ -962,6 +962,245 @@ function xr_block_counters_row(array $p, string $blockId = ''): void
     <?php
 }
 
+function xr_block_expertise_banner(array $p, string $blockId = ''): void
+{
+    $title    = (string) ($p['title'] ?? '');
+    $subtitle = (string) ($p['subtitle'] ?? '');
+    ?>
+    <div class="xr-expertise-banner">
+        <div class="xr-expertise-banner__particles" aria-hidden="true"></div>
+        <div class="xr-expertise-banner__content">
+            <?php if ($title !== ''): ?>
+                <h2 class="xr-expertise-banner__title"><?= h($title) ?></h2>
+            <?php endif; ?>
+            <?php if ($subtitle !== ''): ?>
+                <p class="xr-expertise-banner__subtitle"><?= h($subtitle) ?></p>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_medical_stats(array $p, string $blockId = ''): void
+{
+    $eyebrow  = (string) ($p['eyebrow'] ?? '');
+    $title    = (string) ($p['title'] ?? '');
+    $subtitle = (string) ($p['subtitle'] ?? '');
+    $stats    = is_array($p['stats'] ?? null) ? $p['stats'] : [];
+    ?>
+    <div class="xr-medical-stats">
+        <div class="xr-medical-stats__head">
+            <?php if ($eyebrow !== ''): ?>
+                <p class="xr-medical-stats__eyebrow"><?= h($eyebrow) ?></p>
+            <?php endif; ?>
+            <?php if ($title !== ''): ?>
+                <h2 class="xr-medical-stats__title"><?= h($title) ?></h2>
+            <?php endif; ?>
+            <?php if ($subtitle !== ''): ?>
+                <p class="xr-medical-stats__subtitle"><?= h($subtitle) ?></p>
+            <?php endif; ?>
+        </div>
+        <?php if (!empty($stats)): ?>
+            <div class="xr-medical-stats__grid">
+                <?php foreach ($stats as $s): if (!is_array($s)) continue; ?>
+                    <div class="xr-medical-stats__item">
+                        <span class="xr-medical-stats__value"><?= h((string) ($s['value'] ?? '')) ?></span>
+                        <strong class="xr-medical-stats__label"><?= h((string) ($s['label'] ?? '')) ?></strong>
+                        <?php if (!empty($s['note'])): ?>
+                            <span class="xr-medical-stats__note"><?= h((string) $s['note']) ?></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+function xr_block_journey_timeline(array $p, string $blockId = ''): void
+{
+    $title    = (string) ($p['title'] ?? '');
+    $subtitle = (string) ($p['subtitle'] ?? '');
+    $tagline  = (string) ($p['tagline'] ?? '');
+    $steps    = is_array($p['steps'] ?? null) ? $p['steps'] : [];
+    ?>
+    <div class="xr-journey">
+        <div class="xr-journey__head">
+            <?php if ($title !== ''): ?>
+                <h2 class="xr-journey__title"><?= h($title) ?></h2>
+            <?php endif; ?>
+            <?php if ($subtitle !== ''): ?>
+                <p class="xr-journey__subtitle"><?= h($subtitle) ?></p>
+            <?php endif; ?>
+        </div>
+        <?php if (!empty($steps)): ?>
+            <div class="xr-journey__track">
+                <div class="xr-journey__line" aria-hidden="true"></div>
+                <?php foreach ($steps as $s): if (!is_array($s)) continue; ?>
+                    <div class="xr-journey__step">
+                        <div class="xr-journey__step-top">
+                            <strong class="xr-journey__step-title">
+                                <?php if (!empty($s['num'])): ?><span class="xr-journey__step-num"><?= h((string) $s['num']) ?>.</span><?php endif; ?>
+                                <?= h((string) ($s['title'] ?? '')) ?>
+                            </strong>
+                        </div>
+                        <div class="xr-journey__dot" aria-hidden="true"></div>
+                        <p class="xr-journey__step-text"><?= h((string) ($s['text'] ?? '')) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($tagline !== ''): ?>
+            <p class="xr-journey__tagline"><?= h($tagline) ?></p>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+function xr_block_requirements_grid(array $p, string $blockId = ''): void
+{
+    $tags    = is_array($p['tags'] ?? null) ? $p['tags'] : [];
+    $title   = (string) ($p['title'] ?? '');
+    $devImg  = (string) ($p['device_image'] ?? '');
+    $devCap  = (string) ($p['device_caption'] ?? '');
+    $columns = is_array($p['columns'] ?? null) ? $p['columns'] : [];
+    ?>
+    <div class="xr-reqgrid">
+        <?php if (!empty($tags)): ?>
+            <div class="xr-reqgrid__tags">
+                <?php foreach ($tags as $tag): ?>
+                    <span class="xr-reqgrid__tag"><?= h((string) $tag) ?></span>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="xr-reqgrid__hero">
+            <h2 class="xr-reqgrid__title"><?= h($title) ?></h2>
+            <div class="xr-reqgrid__device">
+                <?php if ($devImg !== ''): ?>
+                    <img src="<?= h($devImg) ?>" alt="<?= h($devCap) ?>" class="xr-reqgrid__device-img">
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <?php if (!empty($columns)): ?>
+            <div class="xr-reqgrid__cols">
+                <?php foreach ($columns as $col): if (!is_array($col)) continue;
+                    $color  = (string) ($col['header_color'] ?? 'blue');
+                    $groups = is_array($col['groups'] ?? null) ? $col['groups'] : [];
+                    ?>
+                    <div class="xr-reqgrid__col">
+                        <div class="xr-reqgrid__col-header xr-reqgrid__col-header--<?= h($color) ?>">
+                            <?= h((string) ($col['header'] ?? '')) ?>
+                        </div>
+                        <div class="xr-reqgrid__col-body">
+                            <?php foreach ($groups as $g): if (!is_array($g)) continue; ?>
+                                <div class="xr-reqgrid__group">
+                                    <?php if (!empty($g['title'])): ?>
+                                        <p class="xr-reqgrid__group-title">
+                                            <?php if (!empty($g['icon'])):
+                                                    $ico = (string) $g['icon'];
+                                                    $isUrl = str_starts_with($ico, '/') || str_starts_with($ico, 'http');
+                                                ?>
+                                                <span class="xr-reqgrid__group-icon">
+                                                    <?php if ($isUrl): ?>
+                                                        <img src="<?= h($ico) ?>" alt="" class="xr-reqgrid__group-icon-img">
+                                                    <?php else: ?>
+                                                        <?= h($ico) ?>
+                                                    <?php endif; ?>
+                                                </span>
+                                            <?php endif; ?>
+                                            <?= h((string) $g['title']) ?>
+                                        </p>
+                                    <?php endif; ?>
+                                    <?php if (!empty($g['items'])): ?>
+                                        <ul class="xr-reqgrid__list">
+                                            <?php foreach ((array) $g['items'] as $item):
+                                                if (is_array($item)) {
+                                                    $itemText = (string) ($item['text'] ?? '');
+                                                    $itemIcon = (string) ($item['icon'] ?? '');
+                                                } else {
+                                                    $itemText = (string) $item;
+                                                    $itemIcon = '';
+                                                }
+                                                $itemIconIsUrl = str_starts_with($itemIcon, '/') || str_starts_with($itemIcon, 'http');
+                                            ?>
+                                                <li class="xr-reqgrid__list-item<?= $itemIcon !== '' ? ' xr-reqgrid__list-item--icon' : '' ?>">
+                                                    <?php if ($itemIcon !== ''): ?>
+                                                        <span class="xr-reqgrid__item-icon">
+                                                            <?php if ($itemIconIsUrl): ?>
+                                                                <img src="<?= h($itemIcon) ?>" alt="">
+                                                            <?php else: ?>
+                                                                <?= h($itemIcon) ?>
+                                                            <?php endif; ?>
+                                                        </span>
+                                                    <?php endif; ?>
+                                                    <span><?= h($itemText) ?></span>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+function xr_block_saves_your(array $p, string $blockId = ''): void
+{
+    $title = (string) ($p['title'] ?? '');
+    $items = is_array($p['items'] ?? null) ? $p['items'] : [];
+    ?>
+    <div class="xr-saves">
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-saves__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+        <div class="xr-saves__grid">
+            <?php foreach ($items as $it): if (!is_array($it)) continue; ?>
+                <div class="xr-saves__item">
+                    <?php if (!empty($it['image'])): ?>
+                        <div class="xr-saves__img-wrap">
+                            <img src="<?= h((string) $it['image']) ?>" alt="<?= h((string) ($it['label'] ?? '')) ?>" class="xr-saves__img">
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($it['label'])): ?>
+                        <p class="xr-saves__label"><?= h((string) $it['label']) ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($it['text'])): ?>
+                        <p class="xr-saves__text"><?= h((string) $it['text']) ?></p>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_beginning_banner(array $p, string $blockId = ''): void
+{
+    $eyebrow  = (string) ($p['eyebrow'] ?? '');
+    $title    = (string) ($p['title'] ?? '');
+    $subtitle = (string) ($p['subtitle'] ?? '');
+    ?>
+    <div class="xr-beginning">
+        <?php if ($eyebrow !== ''): ?>
+            <p class="xr-beginning__eyebrow"><?= h($eyebrow) ?></p>
+        <?php endif; ?>
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-beginning__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+        <?php if ($subtitle !== ''): ?>
+            <p class="xr-beginning__subtitle"><?= h($subtitle) ?></p>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
 function xr_block_floating_plank(array $p, string $blockId = ''): void
 {
     $title = (string) ($p['title'] ?? '');

@@ -22,6 +22,7 @@ $vfreeze  = xr_find_block_props($site['home']['blocks'] ?? [], 'video_freeze_sec
 $clinical   = xr_clinical_circles_state($site);
 $visioners  = xr_team_visioners_state($site);
 $galleryThree = xr_gallery_three_state($site);
+$savesYour    = xr_saves_your_state($site);
 $hub = $site['hubspot'] ?? [];
 $seo = is_array($site['seo'] ?? null) ? $site['seo'] : xr_site_seo_defaults();
 
@@ -408,27 +409,91 @@ $token = csrf_token();
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
-                    <legend><?= h(admin_t('g3.legend')) ?></legend>
-                    <label class="admin-label"><?= h(admin_t('g3.heading')) ?></label>
-                    <input class="admin-input" name="g3_heading" value="<?= h($galleryThree['heading']) ?>">
-                    <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
-                        <?php for ($gi = 0; $gi < 3; $gi++): ?>
-                        <div>
-                            <label class="admin-label"><?= h(admin_t('g3.slide_' . $gi)) ?></label>
-                            <div class="admin-img-wrap">
-                                <div class="admin-img-row">
-                                    <input class="admin-input admin-img-url" name="g3_slide_image_<?= $gi ?>" value="<?= h($galleryThree['slides'][$gi]['image']) ?>" placeholder="/assets/img/...">
-                                    <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
-                                    <span class="admin-img-spin" hidden>…</span>
-                                </div>
-                                <input type="file" class="admin-img-file" accept="image/*" hidden>
-                                <img class="admin-img-preview" src="<?= h($galleryThree['slides'][$gi]['image']) ?>" alt=""<?= $galleryThree['slides'][$gi]['image'] === '' ? ' hidden' : '' ?>>
-                            </div>
-                            <label class="admin-label"><?= h(admin_t('g3.slide_title')) ?></label>
-                            <input class="admin-input" name="g3_slide_title_<?= $gi ?>" value="<?= h($galleryThree['slides'][$gi]['title']) ?>">
+                    <legend>What You Need block (block-1-16-17)</legend>
+
+                    <label class="admin-label">Изображение устройства (Apple Vision Pro и др.)</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="reqgrid_device_image" value="<?= h($galleryThree['device_image']) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
                         </div>
-                        <?php endfor; ?>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($galleryThree['device_image']) ?>" alt=""<?= $galleryThree['device_image'] === '' ? ' hidden' : '' ?>>
                     </div>
+
+                    <p class="admin-hint" style="margin-top:16px"><strong>Иконки групп (можно загрузить изображение или вписать эмодзи)</strong></p>
+                    <?php
+                    $reqIconLabels = [
+                        '0_0' => 'XR Doctor App → Choose Your App',
+                        '0_1' => 'XR Doctor App → Buy Licence',
+                        '1_0' => 'Content for App → XR Doctor Assistant',
+                        '1_1' => 'Content for App → XR Doctor Training',
+                    ];
+                    foreach ($reqIconLabels as $key => $label):
+                        $val = $galleryThree['icons'][$key] ?? '';
+                        $isImg = str_starts_with($val, '/') || str_starts_with($val, 'http');
+                    ?>
+                        <label class="admin-label"><?= h($label) ?></label>
+                        <div class="admin-img-wrap">
+                            <div class="admin-img-row">
+                                <input class="admin-input admin-img-url" name="reqgrid_icon_<?= h($key) ?>" value="<?= h($val) ?>" placeholder="эмодзи или /uploads/...">
+                                <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                <span class="admin-img-spin" hidden>…</span>
+                            </div>
+                            <input type="file" class="admin-img-file" accept="image/*" hidden>
+                            <?php if ($isImg): ?>
+                                <img class="admin-img-preview" src="<?= h($val) ?>" alt="">
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <p class="admin-hint" style="margin-top:16px"><strong>AR/VR Glasses — иконки пунктов списка</strong></p>
+                    <?php
+                    $glassesLabels = [
+                        'Choose suitable AR/VR glasses',
+                        'AR for full functionality',
+                        'VR for limited functionality',
+                        'Buy your own for full price',
+                        'Ask about installments',
+                    ];
+                    foreach ($glassesLabels as $ii => $glLabel):
+                        $glVal = $galleryThree['item_icons'][$ii] ?? '';
+                        $glIsImg = str_starts_with($glVal, '/') || str_starts_with($glVal, 'http');
+                    ?>
+                        <label class="admin-label"><?= h($glLabel) ?></label>
+                        <div class="admin-img-wrap">
+                            <div class="admin-img-row">
+                                <input class="admin-input admin-img-url" name="reqgrid_item_icon_<?= (int) $ii ?>" value="<?= h($glVal) ?>" placeholder="эмодзи или /uploads/...">
+                                <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                <span class="admin-img-spin" hidden>…</span>
+                            </div>
+                            <input type="file" class="admin-img-file" accept="image/*" hidden>
+                            <?php if ($glIsImg): ?>
+                                <img class="admin-img-preview" src="<?= h($glVal) ?>" alt="">
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>XR Doctor Saves Your (block-1-18)</legend>
+                    <?php
+                    $savesLabels = ['Time', 'Effort', 'Money'];
+                    foreach ($savesLabels as $si => $slabel):
+                        $sVal = $savesYour['images'][$si] ?? '';
+                    ?>
+                        <label class="admin-label">Изображение — <?= h($slabel) ?></label>
+                        <div class="admin-img-wrap">
+                            <div class="admin-img-row">
+                                <input class="admin-input admin-img-url" name="saves_img_<?= (int) $si ?>" value="<?= h($sVal) ?>" placeholder="/uploads/...">
+                                <button type="button" class="admin-btn admin-img-upload-btn" title="<?= h(admin_t('btn.upload')) ?>">↑</button>
+                                <span class="admin-img-spin" hidden>…</span>
+                            </div>
+                            <input type="file" class="admin-img-file" accept="image/*" hidden>
+                            <img class="admin-img-preview" src="<?= h($sVal) ?>" alt=""<?= $sVal === '' ? ' hidden' : '' ?>>
+                        </div>
+                    <?php endforeach; ?>
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
