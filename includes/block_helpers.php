@@ -275,10 +275,29 @@ function xr_institutions_state(array $site): array
 {
     $blocks  = $site['institutions']['blocks'] ?? [];
     $carousel = xr_find_block_props_by_id($blocks, 'i-3-1');
+    $care     = xr_find_block_props_by_id($blocks, 'i-3-4');
+    $beforeAfter = xr_find_block_props_by_id($blocks, 'i-3-6');
     $gallery  = xr_find_block_props_by_id($blocks, 'i-3-21-24');
+    $careSlides = is_array($care['slides'] ?? null) ? $care['slides'] : [];
+    $careRows = [];
+    for ($i = 0; $i < 3; $i++) {
+        $r = is_array($careSlides[$i] ?? null) ? $careSlides[$i] : [];
+        $careRows[] = [
+            'image' => (string)($r['image'] ?? ''),
+            'subtitle' => (string)($r['subtitle'] ?? ''),
+        ];
+    }
     return [
         'carousel_heading' => (string)($carousel['heading'] ?? ''),
         'carousel_slides'  => xr_slides_state($carousel),
+        'care_title'       => (string)($care['title'] ?? ''),
+        'care_chip_a'      => (string)($care['chip_a'] ?? ''),
+        'care_chip_b'      => (string)($care['chip_b'] ?? ''),
+        'care_slides'      => $careRows,
+        'ba_overlay_title' => (string)($beforeAfter['overlay_title'] ?? $beforeAfter['title'] ?? ''),
+        'ba_overlay_text'  => (string)($beforeAfter['overlay_text'] ?? ''),
+        'ba_before_image'  => (string)(is_array($beforeAfter['before'] ?? null) ? ($beforeAfter['before']['image'] ?? '') : ''),
+        'ba_after_image'   => (string)(is_array($beforeAfter['after'] ?? null) ? ($beforeAfter['after']['image'] ?? '') : ''),
         'gallery_heading'  => (string)($gallery['heading'] ?? ''),
         'gallery_slides'   => xr_slides_state($gallery),
     ];

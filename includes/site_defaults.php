@@ -828,7 +828,10 @@ function xr_default_institutions_blocks(): array
             'type' => 'carousel_two',
             'id' => 'i-3-1',
             'props' => [
-                'heading' => 'Institutional rollout at a glance',
+                'heading' => 'XR Doctor -Your Next-GeN Standard is Here',
+                'left_title' => "Reinvent\nDaily Work\n& Education",
+                'left_text' => "Define Next-GeN Standard with\nXR Doctor ALL-IN-ONE Platform for\nClinics Practice\nMedical Education\nScientific Research",
+                'right_footer' => 'Behind Next-GeN Edge',
                 'slides' => [
                     ['image' => $img('31a', 1200, 680), 'caption' => 'Campus-wide deployment'],
                     ['image' => $img('31b', 1200, 680), 'caption' => 'Clinical integration'],
@@ -843,13 +846,17 @@ function xr_default_institutions_blocks(): array
                 'mp4' => $v,
                 'poster' => $img('32', 1440, 780),
                 'text' => 'Block 3.2 — как 2.2: один проигрыш видео, затем последний кадр; на странице единая анимация появления текста.',
+                'title' => 'ALL-IN-ONE',
+                'line2' => 'XR Doctor Bring Together',
+                'line3' => 'XR Doctor Assistant & Training',
             ],
         ],
         [
             'type' => 'white_text_section',
             'id' => 'i-3-3',
             'props' => [
-                'title' => 'Built for hospitals, health systems, and universities',
+                'title' => "Everything Changes\nwith XR Doctor",
+                'subtitle' => 'AI-powered XR Platform - tailored for your medical reality from hospitals to universities',
                 'body' => 'White content blocks (3.3, 3.9, 3.12, 3.14) — чистая типографика для политик, контрактов и программ обучения.',
             ],
         ],
@@ -857,15 +864,24 @@ function xr_default_institutions_blocks(): array
             'type' => 'layered_star',
             'id' => 'i-3-4',
             'props' => [
-                'title' => 'Layered spatial stack',
-                'subtitle' => 'Как блок 1.3: градиент, «звёздное» поле и текст по центру.',
-                'base_color' => '#12161c',
+                'title' => 'Next-GeN Care for Every Task',
+                'chip_a' => 'XR Doctor',
+                'chip_b' => 'Exclusive',
+                'interval_ms' => 4200,
+                'slides' => [
+                    ['subtitle' => 'Leap Patient Care with Spatial Precision', 'image' => ''],
+                    ['subtitle' => 'Boost Mastery with True-to-Life Simulations', 'image' => ''],
+                    ['subtitle' => 'Harness Next-Gen Medical Infrastructure', 'image' => ''],
+                ],
             ],
         ],
         [
             'type' => 'tabs_youtube_loop',
             'id' => 'i-3-5',
             'props' => [
+                'eyebrow' => 'Meet the Next-GeN Tele-Prepresence Standard for daily work and education.',
+                'title' => 'XR Doctor Tele-Mentoring',
+                'subtitle' => 'Interactive Shared Holographic Space with AI support',
                 'heading' => 'Institutional walkthroughs',
                 'tabs' => [
                     [
@@ -894,7 +910,8 @@ function xr_default_institutions_blocks(): array
             'type' => 'before_after',
             'id' => 'i-3-6',
             'props' => [
-                'title' => 'Before / After',
+                'overlay_title' => 'Collaborate Globally for All',
+                'overlay_text' => 'Both the same with Real – or – Digital Patient. Move & See',
                 'before' => ['image' => $img('36a', 900, 560), 'label' => 'Before'],
                 'after' => ['image' => $img('36b', 900, 560), 'label' => 'After'],
             ],

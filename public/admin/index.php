@@ -901,6 +901,74 @@ $token = csrf_token();
                     </div>
                 </fieldset>
 
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Care slider (i-3-4)</legend>
+                    <label class="admin-label">Заголовок</label>
+                    <input class="admin-input" name="inst_care_title" value="<?= h((string)($instState['care_title'] ?? '')) ?>">
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label">Чип 1</label>
+                            <input class="admin-input" name="inst_care_chip_a" value="<?= h((string)($instState['care_chip_a'] ?? '')) ?>">
+                        </div>
+                        <div>
+                            <label class="admin-label">Чип 2</label>
+                            <input class="admin-input" name="inst_care_chip_b" value="<?= h((string)($instState['care_chip_b'] ?? '')) ?>">
+                        </div>
+                    </div>
+                    <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
+                        <?php for ($ci = 0; $ci < 3; $ci++): ?>
+                        <div>
+                            <label class="admin-label">Слайд <?= $ci + 1 ?> — Подзаголовок</label>
+                            <input class="admin-input" name="inst_care_subtitle_<?= $ci ?>" value="<?= h((string)($instState['care_slides'][$ci]['subtitle'] ?? '')) ?>">
+                            <label class="admin-label">Слайд <?= $ci + 1 ?> — Изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="inst_care_image_<?= $ci ?>" value="<?= h((string)($instState['care_slides'][$ci]['image'] ?? '')) ?>" placeholder="/uploads/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($instState['care_slides'][$ci]['image'] ?? '')) ?>" alt=""<?= ((string)($instState['care_slides'][$ci]['image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Before/After (i-3-6)</legend>
+                    <label class="admin-label">Заголовок поверх изображения (h2)</label>
+                    <input class="admin-input" name="inst_ba_overlay_title" value="<?= h((string)($instState['ba_overlay_title'] ?? '')) ?>">
+                    <label class="admin-label">Текст поверх изображения (абзац)</label>
+                    <textarea class="admin-input" name="inst_ba_overlay_text" rows="3"><?= h((string)($instState['ba_overlay_text'] ?? '')) ?></textarea>
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label">Before — изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="inst_ba_before_image" value="<?= h((string)($instState['ba_before_image'] ?? '')) ?>" placeholder="/uploads/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($instState['ba_before_image'] ?? '')) ?>" alt=""<?= ((string)($instState['ba_before_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="admin-label">After — изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="inst_ba_after_image" value="<?= h((string)($instState['ba_after_image'] ?? '')) ?>" placeholder="/uploads/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($instState['ba_after_image'] ?? '')) ?>" alt=""<?= ((string)($instState['ba_after_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
             </div>
         </details>
     </section>

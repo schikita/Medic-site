@@ -215,6 +215,41 @@
 })();
 
 (function () {
+    var roots = Array.prototype.slice.call(document.querySelectorAll("[data-carousel]"));
+    if (!roots.length) return;
+
+    roots.forEach(function (root) {
+        var slides = Array.prototype.slice.call(root.querySelectorAll("[data-carousel-slide]"));
+        var dots = Array.prototype.slice.call(root.querySelectorAll("[data-carousel-dot]"));
+        if (!slides.length) return;
+
+        var interval = parseInt(root.getAttribute("data-interval") || "4500", 10);
+        if (!isFinite(interval) || interval < 1200) interval = 4500;
+
+        var idx = 0;
+        function show(i) {
+            slides.forEach(function (s, si) {
+                s.classList.toggle("is-active", si === i);
+            });
+            dots.forEach(function (d, di) {
+                d.classList.toggle("is-active", di === i);
+            });
+            idx = i;
+        }
+
+        dots.forEach(function (d, i) {
+            d.addEventListener("click", function () { show(i); });
+        });
+
+        if (slides.length > 1) {
+            window.setInterval(function () {
+                show((idx + 1) % slides.length);
+            }, interval);
+        }
+    });
+})();
+
+(function () {
     var root = document.querySelector("[data-afford]");
     if (!root) return;
     var tabs = Array.prototype.slice.call(root.querySelectorAll("[data-afford-tab]"));

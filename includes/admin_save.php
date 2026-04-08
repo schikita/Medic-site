@@ -496,6 +496,39 @@ function merge_site_from_post(array $current): array
                 }
                 $p['slides'] = $slides;
             }
+            if ($id === 'i-3-4') {
+                $t = trim((string)($_POST['inst_care_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $ca = trim((string)($_POST['inst_care_chip_a'] ?? ''));
+                if ($ca !== '') $p['chip_a'] = $ca;
+                $cb = trim((string)($_POST['inst_care_chip_b'] ?? ''));
+                if ($cb !== '') $p['chip_b'] = $cb;
+                $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [[], [], []];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($slides[$i] ?? null)) $slides[$i] = [];
+                    $img = trim((string)($_POST["inst_care_image_$i"] ?? ''));
+                    $sub = trim((string)($_POST["inst_care_subtitle_$i"] ?? ''));
+                    if ($img !== '') $slides[$i]['image'] = $img;
+                    if ($sub !== '') $slides[$i]['subtitle'] = $sub;
+                }
+                $p['slides'] = $slides;
+            }
+            if ($id === 'i-3-6') {
+                $ot = trim((string)($_POST['inst_ba_overlay_title'] ?? ''));
+                if ($ot !== '') $p['overlay_title'] = $ot;
+                $ob = trim((string)($_POST['inst_ba_overlay_text'] ?? ''));
+                if ($ob !== '') $p['overlay_text'] = $ob;
+                $before = is_array($p['before'] ?? null) ? $p['before'] : [];
+                $after  = is_array($p['after'] ?? null) ? $p['after'] : [];
+                $bi = trim((string)($_POST['inst_ba_before_image'] ?? ''));
+                $ai = trim((string)($_POST['inst_ba_after_image'] ?? ''));
+                if ($bi !== '') $before['image'] = $bi;
+                if ($ai !== '') $after['image'] = $ai;
+                if (!isset($before['label'])) $before['label'] = 'Before';
+                if (!isset($after['label'])) $after['label'] = 'After';
+                $p['before'] = $before;
+                $p['after'] = $after;
+            }
             if ($id === 'i-3-21-24') {
                 $h = trim((string)($_POST['inst_gallery_heading'] ?? ''));
                 if ($h !== '') $p['heading'] = $h;

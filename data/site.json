@@ -1583,17 +1583,6 @@
                     "image": "\/uploads\/2026\/04\/82bdbc11d93e75d7ab088086.png",
                     "text": "Start with a guided pilot We help you pick cases, headsets, and success metrics — then scale."
                 }
-            },
-            {
-                "type": "preorder_banner",
-                "id": "p-2-18",
-                "props": {
-                    "title": "Leap into Your Next-GeN\nMedical Excellence",
-                    "subtitle": "Pre-Order Now - Reserve Your Access",
-                    "note": "Get 3 Years Bonus - 1 Free Month Each Year",
-                    "button_label": "Pre-Order Now",
-                    "href": "#hubspot-demo"
-                }
             }
         ]
     },
@@ -1618,11 +1607,11 @@
                     "heading": "Institutional rollout at a glance",
                     "slides": [
                         {
-                            "image": "https:\/\/picsum.photos\/seed\/xrinst31a\/1200\/680",
+                            "image": "\/uploads\/2026\/04\/f05e8f6ccaf10ff73ff5029c.png",
                             "caption": "Campus-wide deployment"
                         },
                         {
-                            "image": "https:\/\/picsum.photos\/seed\/xrinst31b\/1200\/680",
+                            "image": "\/uploads\/2026\/04\/1cebdd529b8c0fa7a4b7eee6.png",
                             "caption": "Clinical integration"
                         },
                         []
@@ -1653,7 +1642,21 @@
                 "props": {
                     "title": "Layered spatial stack",
                     "subtitle": "Как блок 1.3: градиент, «звёздное» поле и текст по центру.",
-                    "base_color": "#12161c"
+                    "base_color": "#12161c",
+                    "slides": [
+                        {
+                            "image": "\/uploads\/2026\/04\/e0b97dfc18db419c356612d2.png",
+                            "subtitle": "Leap Patient Care with Spatial Precision"
+                        },
+                        {
+                            "image": "\/uploads\/2026\/04\/9e9429043864f729cb6cfc58.png",
+                            "subtitle": "Boost  Mastery with True-to-Life Simulations"
+                        },
+                        {
+                            "image": "\/uploads\/2026\/04\/e5ba57387a4802a01a9dd45c.png",
+                            "subtitle": "Harness Next-Gen Medical Infrastructure"
+                        }
+                    ]
                 }
             },
             {
@@ -1688,13 +1691,14 @@
                 "type": "before_after",
                 "id": "i-3-6",
                 "props": {
-                    "title": "Before \/ After",
+                    "overlay_title": "Collaborate Globally for All",
+                    "overlay_text": "Both the same with Real – or – Digital Patient. Move & See",
                     "before": {
-                        "image": "https:\/\/picsum.photos\/seed\/xrinst36a\/900\/560",
+                        "image": "\/uploads\/2026\/04\/869135ab0f87246255f5961b.jpg",
                         "label": "Before"
                     },
                     "after": {
-                        "image": "https:\/\/picsum.photos\/seed\/xrinst36b\/900\/560",
+                        "image": "\/uploads\/2026\/04\/6ef15bb950ecb79be176ac3a.jpg",
                         "label": "After"
                     }
                 }

@@ -195,6 +195,56 @@ function xr_block_wave_slider(array $p, string $blockId = ''): void
 
 function xr_block_layered_star(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-4') {
+        $title = trim((string)($p['title'] ?? 'Next-GeN Care for Every Task'));
+        $chipA = trim((string)($p['chip_a'] ?? 'XR Doctor'));
+        $chipB = trim((string)($p['chip_b'] ?? 'Exclusive'));
+        $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [];
+        $rows = [];
+        foreach ($slides as $s) {
+            if (!is_array($s)) continue;
+            $img = trim((string)($s['image'] ?? ''));
+            if ($img === '') continue;
+            $rows[] = [
+                'image' => $img,
+                'subtitle' => trim((string)($s['subtitle'] ?? ($s['caption'] ?? ''))),
+            ];
+        }
+        if ($rows === []) {
+            $rows = [
+                ['image' => '', 'subtitle' => 'Leap Patient Care with Spatial Precision'],
+                ['image' => '', 'subtitle' => 'Boost Mastery with True-to-Life Simulations'],
+                ['image' => '', 'subtitle' => 'Harness Next-Gen Medical Infrastructure'],
+            ];
+        }
+        $interval = (int)($p['interval_ms'] ?? 4200);
+        if ($interval < 1200) $interval = 4200;
+        ?>
+        <div class="xr-i4-slider" data-carousel data-interval="<?= (int)$interval ?>">
+            <div class="xr-i4-slider__chips">
+                <span><?= h($chipA) ?></span>
+                <span><?= h($chipB) ?></span>
+            </div>
+            <h2 class="xr-i4-slider__title"><?= h($title) ?></h2>
+            <div class="xr-i4-slider__stage">
+                <?php foreach ($rows as $i => $row): ?>
+                    <article class="xr-i4-slider__slide<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-slide>
+                        <?php if ($row['subtitle'] !== ''): ?>
+                            <p class="xr-i4-slider__subtitle"><?= h($row['subtitle']) ?></p>
+                        <?php endif; ?>
+                        <div class="xr-i4-slider__img-wrap">
+                            <?php if ($row['image'] !== ''): ?>
+                                <img src="<?= h($row['image']) ?>" alt="">
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $title = (string) ($p['title'] ?? '');
     $titleLine2 = trim((string) ($p['title_line2'] ?? ''));
     $subtitle = (string) ($p['subtitle'] ?? '');
@@ -259,6 +309,32 @@ function xr_oculus_lens_overlay_play(string $playAria, bool $isMp4, string $yout
 
 function xr_block_tabs_youtube_loop(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-5') {
+        $eyebrow = trim((string)($p['eyebrow'] ?? ''));
+        if ($eyebrow === '') {
+            $eyebrow = 'Meet the Next-GeN Tele-Prepresence Standard for daily work and education.';
+        }
+        $title = trim((string)($p['title'] ?? ''));
+        if ($title === '') {
+            $title = 'XR Doctor Tele-Mentoring';
+        }
+        $subtitle = trim((string)($p['subtitle'] ?? ''));
+        if ($subtitle === '') {
+            $subtitle = 'Interactive Shared Holographic Space with AI support';
+        }
+        ?>
+        <div class="xr-tele-banner">
+            <div class="xr-tele-banner__noise" aria-hidden="true"></div>
+            <div class="xr-tele-banner__inner">
+                <p class="xr-tele-banner__eyebrow"><?= h($eyebrow) ?></p>
+                <h2 class="xr-tele-banner__title"><?= h($title) ?></h2>
+                <p class="xr-tele-banner__subtitle"><?= h($subtitle) ?></p>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $heading = (string) ($p['heading'] ?? '');
     $subheading = trim((string) ($p['subheading'] ?? ''));
     $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
@@ -1742,6 +1818,29 @@ function xr_block_engage_split(array $p, string $blockId = ''): void
 
 function xr_block_blue_video_freeze(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-2') {
+        $title = trim((string)($p['title'] ?? ''));
+        if ($title === '') {
+            $title = 'ALL-IN-ONE';
+        }
+        $line2 = trim((string)($p['line2'] ?? ''));
+        if ($line2 === '') {
+            $line2 = 'XR Doctor Bring Together';
+        }
+        $line3 = trim((string)($p['line3'] ?? ''));
+        if ($line3 === '') {
+            $line3 = 'XR Doctor Assistant & Training';
+        }
+        ?>
+        <div class="xr-allin-one-banner">
+            <h2 class="xr-allin-one-banner__title"><?= h($title) ?></h2>
+            <p class="xr-allin-one-banner__line"><?= h($line2) ?></p>
+            <p class="xr-allin-one-banner__line"><?= h($line3) ?></p>
+        </div>
+        <?php
+        return;
+    }
+
     $mp4 = (string) ($p['mp4'] ?? '');
     $poster = (string) ($p['poster'] ?? '');
     $text = (string) ($p['text'] ?? '');
@@ -2604,31 +2703,53 @@ function xr_block_preorder_banner(array $p, string $blockId = ''): void
 
 function xr_block_carousel_two(array $p, string $blockId = ''): void
 {
-    $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [];
+    $rawSlides = is_array($p['slides'] ?? null) ? $p['slides'] : [];
+    $slides = [];
+    foreach ($rawSlides as $s) {
+        if (!is_array($s)) {
+            continue;
+        }
+        $img = trim((string)($s['image'] ?? ''));
+        if ($img === '') {
+            continue;
+        }
+        $slides[] = $s;
+    }
     $interval = (int) ($p['interval_ms'] ?? 4500);
-    $heading = (string) ($p['heading'] ?? '');
+    $heading = trim((string) ($p['heading'] ?? ''));
+    $leftTitle = trim((string)($p['left_title'] ?? ''));
+    if ($leftTitle === '') {
+        $leftTitle = "Reinvent\nDaily Work\n& Education";
+    }
+    $leftText = trim((string)($p['left_text'] ?? ''));
+    if ($leftText === '') {
+        $leftText = "Define Next-GeN Standard with\nXR Doctor ALL-IN-ONE Platform for\nClinics Practice\nMedical Education\nScientific Research";
+    }
     ?>
     <div class="xr-carousel-two" data-carousel data-interval="<?= (int) $interval ?>">
-        <?php if ($heading !== ''): ?>
-            <h2 class="xr-carousel-two__head"><?= h($heading) ?></h2>
-        <?php endif; ?>
-        <div class="xr-carousel-two__viewport">
-            <?php foreach ($slides as $i => $s): ?>
-                <?php if (!is_array($s)) {
-                    continue;
-                } ?>
-                <figure class="xr-carousel-two__slide<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-slide>
-                    <img src="<?= h((string) ($s['image'] ?? '')) ?>" alt="">
-                    <?php if (!empty($s['caption'])): ?>
-                        <figcaption><?= h((string) $s['caption']) ?></figcaption>
-                    <?php endif; ?>
-                </figure>
-            <?php endforeach; ?>
+        <div class="xr-carousel-two__left">
+            <h2 class="xr-carousel-two__left-title"><?= nl2br(h($leftTitle)) ?></h2>
+            <p class="xr-carousel-two__left-text"><?= nl2br(h($leftText)) ?></p>
         </div>
-        <div class="xr-carousel-two__dots">
-            <?php foreach ($slides as $i => $_): ?>
-                <button type="button" class="xr-carousel-two__dot<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-dot aria-label="Slide <?= (int) ($i + 1) ?>"></button>
-            <?php endforeach; ?>
+        <div class="xr-carousel-two__right">
+            <?php if ($heading !== ''): ?>
+                <h3 class="xr-carousel-two__head"><?= h($heading) ?></h3>
+            <?php endif; ?>
+            <div class="xr-carousel-two__viewport">
+                <?php foreach ($slides as $i => $s): ?>
+                    <?php if (!is_array($s)) {
+                        continue;
+                    } ?>
+                    <figure class="xr-carousel-two__slide<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-slide>
+                        <img src="<?= h((string) ($s['image'] ?? '')) ?>" alt="">
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+            <div class="xr-carousel-two__dots">
+                <?php foreach ($slides as $i => $_): ?>
+                    <button type="button" class="xr-carousel-two__dot<?= $i === 0 ? ' is-active' : '' ?>" data-carousel-dot aria-label="Slide <?= (int) ($i + 1) ?>"></button>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
     <?php
@@ -2636,6 +2757,31 @@ function xr_block_carousel_two(array $p, string $blockId = ''): void
 
 function xr_block_white_text_section(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-3') {
+        $title = trim((string)($p['title'] ?? ''));
+        if ($title === '') {
+            $title = "Everything Changes\nwith XR Doctor";
+        }
+        $subtitle = trim((string)($p['subtitle'] ?? ''));
+        if ($subtitle === '') {
+            $subtitle = 'AI-powered XR Platform - tailored for your medical reality from hospitals to universities';
+        }
+        ?>
+        <div class="xr-change-banner">
+            <div class="xr-change-banner__inner">
+                <h2 class="xr-change-banner__title"><?= nl2br(h($title)) ?></h2>
+                <p class="xr-change-banner__subtitle"><?= h($subtitle) ?></p>
+            </div>
+            <div class="xr-change-banner__arc" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     ?>
     <div class="xr-white-section">
         <div class="xr-white-section__inner">
@@ -2651,15 +2797,27 @@ function xr_block_before_after(array $p, string $blockId = ''): void
     $before = is_array($p['before'] ?? null) ? $p['before'] : [];
     $after = is_array($p['after'] ?? null) ? $p['after'] : [];
     $bid = preg_replace('/[^a-zA-Z0-9_-]/', '', $blockId) ?: 'ba';
+    $overlayTitle = trim((string) ($p['overlay_title'] ?? ''));
+    if ($overlayTitle === '') {
+        $legacy = trim((string) ($p['title'] ?? ''));
+        $overlayTitle = ($legacy !== '' && strcasecmp($legacy, 'Before / After') !== 0) ? $legacy : 'Collaborate Globally for All';
+    }
+    $overlayText = trim((string) ($p['overlay_text'] ?? ''));
+    if ($overlayText === '') {
+        $overlayText = 'Both the same with Real – or – Digital Patient. Move & See';
+    }
     ?>
     <div class="xr-ba" data-before-after="<?= h($bid) ?>">
-        <h2 class="xr-ba__title"><?= h((string) ($p['title'] ?? '')) ?></h2>
         <div class="xr-ba__stage">
             <img class="xr-ba__img xr-ba__img--after" src="<?= h((string) ($after['image'] ?? '')) ?>" alt="">
             <div class="xr-ba__clip" data-ba-clip>
                 <img class="xr-ba__img xr-ba__img--before" src="<?= h((string) ($before['image'] ?? '')) ?>" alt="">
             </div>
             <div class="xr-ba__handle" data-ba-handle tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-label="Before and after"></div>
+            <div class="xr-ba__overlay">
+                <h2 class="xr-ba__overlay-title"><?= h($overlayTitle) ?></h2>
+                <p class="xr-ba__overlay-text"><?= h($overlayText) ?></p>
+            </div>
         </div>
         <div class="xr-ba__labels">
             <span><?= h((string) ($before['label'] ?? 'Before')) ?></span>
