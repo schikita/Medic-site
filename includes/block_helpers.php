@@ -196,8 +196,40 @@ function xr_professionals_state(array $site): array
     $blocks  = $site['professionals']['blocks'] ?? [];
     $hero    = xr_find_block_props_by_id($blocks, 'p-2-intro');
     $engage  = xr_find_block_props_by_id($blocks, 'p-2-2');
+    $reality = xr_find_block_props_by_id($blocks, 'p-2-3');
+    $nextgen = xr_find_block_props_by_id($blocks, 'p-2-7');
     $youtube = xr_find_block_props_by_id($blocks, 'p-2-5');
     $gallery = xr_find_block_props_by_id($blocks, 'p-2-9');
+    $workflow = xr_find_block_props_by_id($blocks, 'p-2-11');
+    $outro = xr_find_block_props_by_id($blocks, 'p-2-17');
+    $rslides = is_array($reality['slides'] ?? null) ? $reality['slides'] : [];
+    $sparks = [];
+    for ($i = 0; $i < 4; $i++) {
+        $row = is_array($rslides[$i] ?? null) ? $rslides[$i] : [];
+        $sparks[] = (string)($row['spark_image'] ?? '');
+    }
+    $equip = xr_find_block_props_by_id($blocks, 'p-2-4');
+    $challenges = xr_find_block_props_by_id($blocks, 'p-2-8');
+    $ngTabs = is_array($nextgen['tabs'] ?? null) ? $nextgen['tabs'] : [];
+    $ngRows = [];
+    for ($i = 0; $i < 3; $i++) {
+        $row = is_array($ngTabs[$i] ?? null) ? $ngTabs[$i] : [];
+        $ngRows[] = [
+            'label' => (string)($row['label'] ?? ''),
+            'subtitle' => (string)($row['subtitle'] ?? ''),
+            'image' => (string)($row['image'] ?? ''),
+        ];
+    }
+    $wfRaw = is_array($workflow['steps'] ?? null) ? $workflow['steps'] : [];
+    $wfRows = [];
+    for ($i = 0; $i < 6; $i++) {
+        $row = is_array($wfRaw[$i] ?? null) ? $wfRaw[$i] : [];
+        $wfRows[] = [
+            'title' => (string)($row['title'] ?? ''),
+            'text' => (string)($row['text'] ?? ''),
+            'image' => (string)($row['image'] ?? ''),
+        ];
+    }
     return [
         'hero_image'    => (string)($hero['image'] ?? ''),
         'hero_title'    => (string)($hero['title'] ?? ''),
@@ -210,10 +242,32 @@ function xr_professionals_state(array $site): array
         'engage_card_yt'    => (string)($engage['card_youtube_id'] ?? ''),
         'engage_card_mp4'   => (string)($engage['card_mp4'] ?? ''),
         'engage_card_poster'=> (string)($engage['card_poster'] ?? ''),
+        'reality_title' => (string)($reality['title'] ?? ''),
+        'reality_interval_ms' => (string)($reality['interval_ms'] ?? ''),
+        'reality_sparks' => $sparks,
+        'equip_title' => (string)($equip['title'] ?? ''),
+        'equip_subtitle' => (string)($equip['subtitle'] ?? ''),
+        'equip_video_yt' => (string)($equip['video_youtube_id'] ?? ''),
+        'equip_video_mp4' => (string)($equip['video_mp4'] ?? ''),
+        'equip_video_poster' => (string)($equip['video_poster'] ?? ''),
+        'nextgen_title' => (string)($nextgen['title'] ?? ''),
+        'nextgen_chip_left' => (string)($nextgen['chip_left'] ?? ''),
+        'nextgen_chip_right' => (string)($nextgen['chip_right'] ?? ''),
+        'nextgen_tabs' => $ngRows,
+        'challenges_title' => (string)($challenges['title'] ?? ''),
+        'challenges_device_image' => (string)($challenges['device_image'] ?? ''),
+        'challenges_device_caption' => (string)($challenges['device_caption'] ?? ''),
+        'challenges_device_caption_image' => (string)($challenges['device_caption_image'] ?? ''),
         'yt_heading'    => (string)($youtube['heading'] ?? ''),
         'yt_id'         => (string)($youtube['youtube_id'] ?? ''),
         'gallery_heading' => (string)($gallery['heading'] ?? ''),
         'gallery_slides'  => xr_slides_state($gallery),
+        'workflow_title' => (string)($workflow['title'] ?? ''),
+        'workflow_subtitle' => (string)($workflow['subtitle'] ?? ''),
+        'workflow_footer' => (string)($workflow['footer'] ?? ''),
+        'workflow_steps' => $wfRows,
+        'outro_image' => (string)($outro['image'] ?? ''),
+        'outro_text' => (string)($outro['text'] ?? (($outro['title'] ?? '') . ' ' . ($outro['body'] ?? ''))),
     ];
 }
 

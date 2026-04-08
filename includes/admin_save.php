@@ -359,6 +359,39 @@ function merge_site_from_post(array $current): array
                 $poster = trim((string)($_POST['pro_engage_card_poster'] ?? ''));
                 if ($poster !== '') $p['card_poster'] = $poster;
             }
+            if ($id === 'p-2-3') {
+                $title = trim((string)($_POST['pro_reality_title'] ?? ''));
+                if ($title !== '') $p['title'] = $title;
+                $interval = (int)($_POST['pro_reality_interval_ms'] ?? 0);
+                if ($interval > 0) $p['interval_ms'] = max(1200, min(30000, $interval));
+
+                $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [];
+                for ($i = 0; $i < 4; $i++) {
+                    if (!isset($slides[$i]) || !is_array($slides[$i])) $slides[$i] = [];
+                    $spark = trim((string)($_POST["pro_reality_spark_$i"] ?? ''));
+                    if ($spark !== '') $slides[$i]['spark_image'] = $spark;
+                }
+                $p['slides'] = $slides;
+            }
+            if ($id === 'p-2-4') {
+                $t = trim((string)($_POST['pro_equip_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $st = trim((string)($_POST['pro_equip_subtitle'] ?? ''));
+                if ($st !== '') $p['subtitle'] = $st;
+
+                $yt = trim((string)($_POST['pro_equip_video_yt'] ?? ''));
+                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $yt, $m)) {
+                    $p['video_youtube_id'] = $m[1];
+                } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $yt)) {
+                    $p['video_youtube_id'] = $yt;
+                } elseif ($yt === '') {
+                    $p['video_youtube_id'] = '';
+                }
+                $mp4 = trim((string)($_POST['pro_equip_video_mp4'] ?? ''));
+                if ($mp4 !== '') $p['video_mp4'] = $mp4;
+                $poster = trim((string)($_POST['pro_equip_video_poster'] ?? ''));
+                if ($poster !== '') $p['video_poster'] = $poster;
+            }
             if ($id === 'p-2-5') {
                 $h = trim((string)($_POST['pro_yt_heading'] ?? ''));
                 if ($h !== '') $p['heading'] = $h;
@@ -368,6 +401,36 @@ function merge_site_from_post(array $current): array
                 } elseif (preg_match('/^[a-zA-Z0-9_-]{11}$/', $yt)) {
                     $p['youtube_id'] = $yt;
                 }
+            }
+            if ($id === 'p-2-7') {
+                $t = trim((string)($_POST['pro_nextgen_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $cl = trim((string)($_POST['pro_nextgen_chip_left'] ?? ''));
+                if ($cl !== '') $p['chip_left'] = $cl;
+                $cr = trim((string)($_POST['pro_nextgen_chip_right'] ?? ''));
+                if ($cr !== '') $p['chip_right'] = $cr;
+
+                $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [[], [], []];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($tabs[$i] ?? null)) $tabs[$i] = [];
+                    $lbl = trim((string)($_POST["pro_nextgen_label_$i"] ?? ''));
+                    $sub = trim((string)($_POST["pro_nextgen_subtitle_$i"] ?? ''));
+                    $img = trim((string)($_POST["pro_nextgen_image_$i"] ?? ''));
+                    if ($lbl !== '') $tabs[$i]['label'] = $lbl;
+                    if ($sub !== '') $tabs[$i]['subtitle'] = $sub;
+                    if ($img !== '') $tabs[$i]['image'] = $img;
+                }
+                $p['tabs'] = $tabs;
+            }
+            if ($id === 'p-2-8') {
+                $t = trim((string)($_POST['pro_challenges_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $img = trim((string)($_POST['pro_challenges_device_image'] ?? ''));
+                if ($img !== '') $p['device_image'] = $img;
+                $cap = trim((string)($_POST['pro_challenges_device_caption'] ?? ''));
+                if ($cap !== '') $p['device_caption'] = $cap;
+                $capImg = trim((string)($_POST['pro_challenges_device_caption_image'] ?? ''));
+                if ($capImg !== '') $p['device_caption_image'] = $capImg;
             }
             if ($id === 'p-2-9') {
                 $h = trim((string)($_POST['pro_gallery_heading'] ?? ''));
@@ -381,6 +444,32 @@ function merge_site_from_post(array $current): array
                     if ($tit !== '') $slides[$i]['title'] = $tit;
                 }
                 $p['slides'] = $slides;
+            }
+            if ($id === 'p-2-11') {
+                $t = trim((string)($_POST['pro_workflow_title'] ?? ''));
+                if ($t !== '') $p['title'] = $t;
+                $s = trim((string)($_POST['pro_workflow_subtitle'] ?? ''));
+                if ($s !== '') $p['subtitle'] = $s;
+                $f = trim((string)($_POST['pro_workflow_footer'] ?? ''));
+                if ($f !== '') $p['footer'] = $f;
+
+                $steps = is_array($p['steps'] ?? null) ? $p['steps'] : [];
+                for ($i = 0; $i < 6; $i++) {
+                    if (!is_array($steps[$i] ?? null)) $steps[$i] = [];
+                    $st = trim((string)($_POST["pro_workflow_step_title_$i"] ?? ''));
+                    $tx = trim((string)($_POST["pro_workflow_step_text_$i"] ?? ''));
+                    $im = trim((string)($_POST["pro_workflow_step_image_$i"] ?? ''));
+                    if ($st !== '') $steps[$i]['title'] = $st;
+                    if ($tx !== '') $steps[$i]['text'] = $tx;
+                    if ($im !== '') $steps[$i]['image'] = $im;
+                }
+                $p['steps'] = $steps;
+            }
+            if ($id === 'p-2-17') {
+                $img = trim((string)($_POST['pro_outro_image'] ?? ''));
+                if ($img !== '') $p['image'] = $img;
+                $txt = trim((string)($_POST['pro_outro_text'] ?? ''));
+                if ($txt !== '') $p['text'] = $txt;
             }
         }
         unset($b);

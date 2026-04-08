@@ -572,20 +572,20 @@ $token = csrf_token();
     <!-- ═══════════════════ PROFESSIONALS ═══════════════════ -->
     <section id="section-professionals" class="admin-section">
         <details class="admin-disclosure">
-            <summary class="admin-disclosure__summary">Professionals — блоки сторінки</summary>
+            <summary class="admin-disclosure__summary">Professionals — блоки страницы</summary>
             <div class="admin-disclosure__body">
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Hero (p-2-intro)</legend>
                     <label class="admin-label">Заголовок</label>
                     <input class="admin-input" name="pro_hero_title" value="<?= h($profState['hero_title']) ?>">
-                    <label class="admin-label">Підзаголовок</label>
+                    <label class="admin-label">Подзаголовок</label>
                     <input class="admin-input" name="pro_hero_subtitle" value="<?= h($profState['hero_subtitle']) ?>">
-                    <label class="admin-label">Зображення</label>
+                    <label class="admin-label">Изображение</label>
                     <div class="admin-img-wrap">
                         <div class="admin-img-row">
                             <input class="admin-input admin-img-url" name="pro_hero_image" value="<?= h($profState['hero_image']) ?>" placeholder="/assets/img/...">
-                            <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                             <span class="admin-img-spin" hidden>…</span>
                         </div>
                         <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -617,7 +617,16 @@ $token = csrf_token();
                     <label class="admin-label">YouTube ID или URL (видео в карточке)</label>
                     <input class="admin-input" name="pro_engage_card_yt" value="<?= h($profState['engage_card_yt']) ?>" placeholder="dQw4w9WgXcQ">
                     <label class="admin-label">Видео MP4 URL (если не YouTube)</label>
-                    <input class="admin-input" name="pro_engage_card_mp4" value="<?= h($profState['engage_card_mp4']) ?>" placeholder="/uploads/...">
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="pro_engage_card_mp4" value="<?= h($profState['engage_card_mp4']) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="video/mp4,video/webm" hidden>
+                        <video class="admin-video-preview" src="<?= h($profState['engage_card_mp4']) ?>" controls muted playsinline<?= $profState['engage_card_mp4'] === '' ? ' hidden' : '' ?>></video>
+                        <img class="admin-img-preview" src="" alt="" hidden>
+                    </div>
                     <label class="admin-label">Постер видео</label>
                     <div class="admin-img-wrap">
                         <div class="admin-img-row">
@@ -632,26 +641,150 @@ $token = csrf_token();
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>YouTube Heading (p-2-5)</legend>
-                    <label class="admin-label">Заголовок секції</label>
+                    <label class="admin-label">Заголовок секции</label>
                     <input class="admin-input" name="pro_yt_heading" value="<?= h($profState['yt_heading']) ?>">
-                    <label class="admin-label">YouTube ID або URL</label>
+                    <label class="admin-label">YouTube ID или URL</label>
                     <input class="admin-input" name="pro_yt_id" value="<?= h($profState['yt_id']) ?>" placeholder="dQw4w9WgXcQ">
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Reality slider (p-2-3) — PNG для “искорки”</legend>
+                    <label class="admin-label">Заголовок</label>
+                    <input class="admin-input" name="pro_reality_title" value="<?= h($profState['reality_title'] ?? '') ?>">
+                    <label class="admin-label">Интервал (мс)</label>
+                    <input class="admin-input" name="pro_reality_interval_ms" value="<?= h($profState['reality_interval_ms'] ?? '') ?>" placeholder="3500">
+                    <p class="admin-hint">Загрузите PNG (или вставьте URL) для каждого слайда.</p>
+                    <div class="admin-grid2" style="grid-template-columns:repeat(2,1fr)">
+                        <?php for ($ri = 0; $ri < 4; $ri++): ?>
+                        <div>
+                            <label class="admin-label">Слайд <?= $ri + 1 ?> — PNG</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="pro_reality_spark_<?= $ri ?>" value="<?= h((string)($profState['reality_sparks'][$ri] ?? '')) ?>" placeholder="/uploads/...png">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/png" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($profState['reality_sparks'][$ri] ?? '')) ?>" alt=""<?= ((string)($profState['reality_sparks'][$ri] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Equips compare (p-2-4)</legend>
+                    <label class="admin-label">Заголовок</label>
+                    <input class="admin-input" name="pro_equip_title" value="<?= h((string)($profState['equip_title'] ?? '')) ?>">
+                    <label class="admin-label">Подзаголовок</label>
+                    <input class="admin-input" name="pro_equip_subtitle" value="<?= h((string)($profState['equip_subtitle'] ?? '')) ?>">
+
+                    <p class="admin-hint" style="margin-top:1rem">Видео (по клику на play в центре)</p>
+                    <label class="admin-label">YouTube ID или URL</label>
+                    <input class="admin-input" name="pro_equip_video_yt" value="<?= h((string)($profState['equip_video_yt'] ?? '')) ?>" placeholder="dQw4w9WgXcQ">
+                    <label class="admin-label">Видео MP4 URL</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="pro_equip_video_mp4" value="<?= h((string)($profState['equip_video_mp4'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="video/mp4,video/webm" hidden>
+                        <video class="admin-video-preview" src="<?= h((string)($profState['equip_video_mp4'] ?? '')) ?>" controls muted playsinline<?= ((string)($profState['equip_video_mp4'] ?? '')) === '' ? ' hidden' : '' ?>></video>
+                        <img class="admin-img-preview" src="" alt="" hidden>
+                    </div>
+                    <label class="admin-label">Постер видео</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="pro_equip_video_poster" value="<?= h((string)($profState['equip_video_poster'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($profState['equip_video_poster'] ?? '')) ?>" alt=""<?= ((string)($profState['equip_video_poster'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>NextGen image slider (p-2-7)</legend>
+                    <label class="admin-label">Заголовок блока</label>
+                    <input class="admin-input" name="pro_nextgen_title" value="<?= h((string)($profState['nextgen_title'] ?? '')) ?>">
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label">Чип слева</label>
+                            <input class="admin-input" name="pro_nextgen_chip_left" value="<?= h((string)($profState['nextgen_chip_left'] ?? '')) ?>">
+                        </div>
+                        <div>
+                            <label class="admin-label">Чип справа</label>
+                            <input class="admin-input" name="pro_nextgen_chip_right" value="<?= h((string)($profState['nextgen_chip_right'] ?? '')) ?>">
+                        </div>
+                    </div>
+
+                    <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
+                        <?php for ($ni = 0; $ni < 3; $ni++): ?>
+                        <div>
+                            <p class="admin-hint">Слайд <?= $ni + 1 ?></p>
+                            <label class="admin-label">Название таба</label>
+                            <input class="admin-input" name="pro_nextgen_label_<?= $ni ?>" value="<?= h((string)($profState['nextgen_tabs'][$ni]['label'] ?? '')) ?>">
+                            <label class="admin-label">Подзаголовок</label>
+                            <textarea class="admin-textarea admin-textarea--sm" name="pro_nextgen_subtitle_<?= $ni ?>" rows="3"><?= h((string)($profState['nextgen_tabs'][$ni]['subtitle'] ?? '')) ?></textarea>
+                            <label class="admin-label">Изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="pro_nextgen_image_<?= $ni ?>" value="<?= h((string)($profState['nextgen_tabs'][$ni]['image'] ?? '')) ?>" placeholder="/uploads/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($profState['nextgen_tabs'][$ni]['image'] ?? '')) ?>" alt=""<?= ((string)($profState['nextgen_tabs'][$ni]['image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Challenges glasses (p-2-8)</legend>
+                    <label class="admin-label">Заголовок</label>
+                    <textarea class="admin-textarea admin-textarea--sm" name="pro_challenges_title" rows="2"><?= h((string)($profState['challenges_title'] ?? '')) ?></textarea>
+                    <label class="admin-label">Изображение гарнитуры</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="pro_challenges_device_image" value="<?= h((string)($profState['challenges_device_image'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($profState['challenges_device_image'] ?? '')) ?>" alt=""<?= ((string)($profState['challenges_device_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <label class="admin-label">Подпись под гарнитурой</label>
+                    <input class="admin-input" name="pro_challenges_device_caption" value="<?= h((string)($profState['challenges_device_caption'] ?? '')) ?>">
+                    <label class="admin-label">PNG подписи (вместо текста)</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="pro_challenges_device_caption_image" value="<?= h((string)($profState['challenges_device_caption_image'] ?? '')) ?>" placeholder="/uploads/...png">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/png,image/webp,image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($profState['challenges_device_caption_image'] ?? '')) ?>" alt=""<?= ((string)($profState['challenges_device_caption_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Gallery (p-2-9)</legend>
-                    <label class="admin-label">Заголовок галереї</label>
+                    <label class="admin-label">Заголовок галереи</label>
                     <input class="admin-input" name="pro_gallery_heading" value="<?= h($profState['gallery_heading']) ?>">
                     <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
                         <?php for ($si = 0; $si < 3; $si++): ?>
                         <div>
-                            <label class="admin-label">Слайд <?= $si + 1 ?> — Назва</label>
+                            <label class="admin-label">Слайд <?= $si + 1 ?> — Название</label>
                             <input class="admin-input" name="pro_slide_title_<?= $si ?>" value="<?= h($profState['gallery_slides'][$si]['title']) ?>">
-                            <label class="admin-label">Слайд <?= $si + 1 ?> — Зображення</label>
+                            <label class="admin-label">Слайд <?= $si + 1 ?> — Изображение</label>
                             <div class="admin-img-wrap">
                                 <div class="admin-img-row">
                                     <input class="admin-input admin-img-url" name="pro_slide_image_<?= $si ?>" value="<?= h($profState['gallery_slides'][$si]['image']) ?>" placeholder="/assets/img/...">
-                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                                     <span class="admin-img-spin" hidden>…</span>
                                 </div>
                                 <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -662,6 +795,54 @@ $token = csrf_token();
                     </div>
                 </fieldset>
 
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Workflow steps (p-2-11)</legend>
+                    <label class="admin-label">Заголовок секции</label>
+                    <input class="admin-input" name="pro_workflow_title" value="<?= h((string)($profState['workflow_title'] ?? '')) ?>">
+                    <label class="admin-label">Подзаголовок</label>
+                    <input class="admin-input" name="pro_workflow_subtitle" value="<?= h((string)($profState['workflow_subtitle'] ?? '')) ?>">
+                    <label class="admin-label">Нижняя строка</label>
+                    <input class="admin-input" name="pro_workflow_footer" value="<?= h((string)($profState['workflow_footer'] ?? '')) ?>">
+
+                    <div class="admin-grid2" style="grid-template-columns:repeat(2,1fr)">
+                        <?php for ($wi = 0; $wi < 6; $wi++): ?>
+                        <div>
+                            <p class="admin-hint">Шаг <?= $wi + 1 ?></p>
+                            <label class="admin-label">Короткий заголовок (например: I. Login)</label>
+                            <input class="admin-input" name="pro_workflow_step_title_<?= $wi ?>" value="<?= h((string)($profState['workflow_steps'][$wi]['title'] ?? '')) ?>">
+                            <label class="admin-label">Текст шага</label>
+                            <textarea class="admin-textarea admin-textarea--sm" name="pro_workflow_step_text_<?= $wi ?>" rows="2"><?= h((string)($profState['workflow_steps'][$wi]['text'] ?? '')) ?></textarea>
+                            <label class="admin-label">PNG шага</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="pro_workflow_step_image_<?= $wi ?>" value="<?= h((string)($profState['workflow_steps'][$wi]['image'] ?? '')) ?>" placeholder="/uploads/...png">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/png,image/webp,image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($profState['workflow_steps'][$wi]['image'] ?? '')) ?>" alt=""<?= ((string)($profState['workflow_steps'][$wi]['image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Final split banner (p-2-17)</legend>
+                    <label class="admin-label">Текст справа</label>
+                    <textarea class="admin-textarea admin-textarea--sm" name="pro_outro_text" rows="3"><?= h((string)($profState['outro_text'] ?? '')) ?></textarea>
+                    <label class="admin-label">Изображение слева</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="pro_outro_image" value="<?= h((string)($profState['outro_image'] ?? '')) ?>" placeholder="/uploads/...png">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($profState['outro_image'] ?? '')) ?>" alt=""<?= ((string)($profState['outro_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                </fieldset>
+
             </div>
         </details>
     </section>
@@ -669,7 +850,7 @@ $token = csrf_token();
     <!-- ═══════════════════ INSTITUTIONS ═══════════════════ -->
     <section id="section-institutions" class="admin-section">
         <details class="admin-disclosure">
-            <summary class="admin-disclosure__summary">Institutions — блоки сторінки</summary>
+            <summary class="admin-disclosure__summary">Institutions — блоки страницы</summary>
             <div class="admin-disclosure__body">
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
@@ -679,13 +860,13 @@ $token = csrf_token();
                     <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
                         <?php for ($si = 0; $si < 3; $si++): ?>
                         <div>
-                            <label class="admin-label">Слайд <?= $si + 1 ?> — Назва</label>
+                            <label class="admin-label">Слайд <?= $si + 1 ?> — Название</label>
                             <input class="admin-input" name="inst_carousel_title_<?= $si ?>" value="<?= h($instState['carousel_slides'][$si]['title']) ?>">
-                            <label class="admin-label">Слайд <?= $si + 1 ?> — Зображення</label>
+                            <label class="admin-label">Слайд <?= $si + 1 ?> — Изображение</label>
                             <div class="admin-img-wrap">
                                 <div class="admin-img-row">
                                     <input class="admin-input admin-img-url" name="inst_carousel_image_<?= $si ?>" value="<?= h($instState['carousel_slides'][$si]['image']) ?>" placeholder="/assets/img/...">
-                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                                     <span class="admin-img-spin" hidden>…</span>
                                 </div>
                                 <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -698,18 +879,18 @@ $token = csrf_token();
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Gallery (i-3-21-24)</legend>
-                    <label class="admin-label">Заголовок галереї</label>
+                    <label class="admin-label">Заголовок галереи</label>
                     <input class="admin-input" name="inst_gallery_heading" value="<?= h($instState['gallery_heading']) ?>">
                     <div class="admin-grid2" style="grid-template-columns:repeat(3,1fr)">
                         <?php for ($si = 0; $si < 3; $si++): ?>
                         <div>
-                            <label class="admin-label">Слайд <?= $si + 1 ?> — Назва</label>
+                            <label class="admin-label">Слайд <?= $si + 1 ?> — Название</label>
                             <input class="admin-input" name="inst_gallery_title_<?= $si ?>" value="<?= h($instState['gallery_slides'][$si]['title']) ?>">
-                            <label class="admin-label">Слайд <?= $si + 1 ?> — Зображення</label>
+                            <label class="admin-label">Слайд <?= $si + 1 ?> — Изображение</label>
                             <div class="admin-img-wrap">
                                 <div class="admin-img-row">
                                     <input class="admin-input admin-img-url" name="inst_gallery_image_<?= $si ?>" value="<?= h($instState['gallery_slides'][$si]['image']) ?>" placeholder="/assets/img/...">
-                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                                     <span class="admin-img-spin" hidden>…</span>
                                 </div>
                                 <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -727,20 +908,20 @@ $token = csrf_token();
     <!-- ═══════════════════ BLOG ═══════════════════ -->
     <section id="section-blog" class="admin-section">
         <details class="admin-disclosure">
-            <summary class="admin-disclosure__summary">Blog — блоки сторінки</summary>
+            <summary class="admin-disclosure__summary">Blog — блоки страницы</summary>
             <div class="admin-disclosure__body">
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Hero (block-4-1)</legend>
                     <label class="admin-label">Заголовок</label>
                     <input class="admin-input" name="blog_hero_title" value="<?= h($blogState['hero_title']) ?>">
-                    <label class="admin-label">Підзаголовок</label>
+                    <label class="admin-label">Подзаголовок</label>
                     <input class="admin-input" name="blog_hero_subtitle" value="<?= h($blogState['hero_subtitle']) ?>">
-                    <label class="admin-label">Зображення</label>
+                    <label class="admin-label">Изображение</label>
                     <div class="admin-img-wrap">
                         <div class="admin-img-row">
                             <input class="admin-input admin-img-url" name="blog_hero_image" value="<?= h($blogState['hero_image']) ?>" placeholder="/assets/img/...">
-                            <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                             <span class="admin-img-spin" hidden>…</span>
                         </div>
                         <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -758,11 +939,11 @@ $token = csrf_token();
                             <input class="admin-input" name="blog_post_title_<?= $pi ?>" value="<?= h($blogState['posts'][$pi]['title']) ?>">
                             <label class="admin-label">Анонс</label>
                             <textarea class="admin-textarea admin-textarea--sm" name="blog_post_excerpt_<?= $pi ?>" rows="3"><?= h($blogState['posts'][$pi]['excerpt']) ?></textarea>
-                            <label class="admin-label">Зображення</label>
+                            <label class="admin-label">Изображение</label>
                             <div class="admin-img-wrap">
                                 <div class="admin-img-row">
                                     <input class="admin-input admin-img-url" name="blog_post_image_<?= $pi ?>" value="<?= h($blogState['posts'][$pi]['image']) ?>" placeholder="/assets/img/...">
-                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                                     <span class="admin-img-spin" hidden>…</span>
                                 </div>
                                 <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -780,20 +961,20 @@ $token = csrf_token();
     <!-- ═══════════════════ PARTNERS ═══════════════════ -->
     <section id="section-partners" class="admin-section">
         <details class="admin-disclosure">
-            <summary class="admin-disclosure__summary">Partners — блоки сторінки</summary>
+            <summary class="admin-disclosure__summary">Partners — блоки страницы</summary>
             <div class="admin-disclosure__body">
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Hero (block-5-1)</legend>
                     <label class="admin-label">Заголовок</label>
                     <input class="admin-input" name="par_hero_title" value="<?= h($parState['hero_title']) ?>">
-                    <label class="admin-label">Підзаголовок</label>
+                    <label class="admin-label">Подзаголовок</label>
                     <input class="admin-input" name="par_hero_subtitle" value="<?= h($parState['hero_subtitle']) ?>">
-                    <label class="admin-label">Зображення</label>
+                    <label class="admin-label">Изображение</label>
                     <div class="admin-img-wrap">
                         <div class="admin-img-row">
                             <input class="admin-input admin-img-url" name="par_hero_image" value="<?= h($parState['hero_image']) ?>" placeholder="/assets/img/...">
-                            <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                             <span class="admin-img-spin" hidden>…</span>
                         </div>
                         <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -811,7 +992,7 @@ $token = csrf_token();
                     <div class="admin-img-wrap">
                         <div class="admin-img-row">
                             <input class="admin-input admin-img-url" name="par_sv1_poster" value="<?= h($parState['sv1_poster']) ?>" placeholder="/assets/img/...">
-                            <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                             <span class="admin-img-spin" hidden>…</span>
                         </div>
                         <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -831,7 +1012,7 @@ $token = csrf_token();
                     <div class="admin-img-wrap">
                         <div class="admin-img-row">
                             <input class="admin-input admin-img-url" name="par_sv2_poster" value="<?= h($parState['sv2_poster']) ?>" placeholder="/assets/img/...">
-                            <button type="button" class="admin-btn admin-img-upload-btn" title="Завантажити">↑</button>
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
                             <span class="admin-img-spin" hidden>…</span>
                         </div>
                         <input type="file" class="admin-img-file" accept="image/*" hidden>
@@ -843,13 +1024,13 @@ $token = csrf_token();
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Partner Icons (block-5-5)</legend>
-                    <label class="admin-label">Заголовок секції</label>
+                    <label class="admin-label">Заголовок секции</label>
                     <input class="admin-input" name="par_icons_title" value="<?= h($parState['icons_title']) ?>">
                     <?php for ($ii = 0; $ii < 4; $ii++): ?>
                     <p class="admin-hint" style="margin-top:1rem">Іконка <?= $ii + 1 ?></p>
                     <div class="admin-grid2">
                         <div>
-                            <label class="admin-label">Назва</label>
+                            <label class="admin-label">Название</label>
                             <input class="admin-input" name="par_icon_label_<?= $ii ?>" value="<?= h($parState['icon_items'][$ii]['label']) ?>">
                             <label class="admin-label">Клас іконки (dashicon)</label>
                             <input class="admin-input" name="par_icon_dashicon_<?= $ii ?>" value="<?= h($parState['icon_items'][$ii]['dashicon']) ?>">
@@ -898,16 +1079,28 @@ $token = csrf_token();
         var btn   = wrap.querySelector('.admin-img-upload-btn');
         var file  = wrap.querySelector('.admin-img-file');
         var prev  = wrap.querySelector('.admin-img-preview');
+        var vprev = wrap.querySelector('.admin-video-preview');
         var spin  = wrap.querySelector('.admin-img-spin');
         if (!inp || !btn || !file) return;
 
         function setPreview(url) {
-            if (!prev) return;
-            if (url && /\.(jpe?g|png|webp|gif|svg)(\?|$)/i.test(url)) {
-                prev.src = url;
-                prev.hidden = false;
-            } else {
-                prev.hidden = true;
+            var isImg = !!(url && /\.(jpe?g|png|webp|gif|svg)(\?|$)/i.test(url));
+            var isVid = !!(url && /\.(mp4|webm)(\?|$)/i.test(url));
+            if (prev) {
+                if (isImg) {
+                    prev.src = url;
+                    prev.hidden = false;
+                } else {
+                    prev.hidden = true;
+                }
+            }
+            if (vprev) {
+                if (isVid) {
+                    vprev.src = url;
+                    vprev.hidden = false;
+                } else {
+                    vprev.hidden = true;
+                }
             }
         }
 

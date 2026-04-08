@@ -677,11 +677,16 @@ function xr_default_professionals_blocks(): array
             'type' => 'tabs_top_images',
             'id' => 'p-2-11',
             'props' => [
-                'images' => [$img('11a', 320, 200), $img('11b', 320, 200), $img('11c', 320, 200)],
-                'tabs' => [
-                    ['label' => 'Step 1', 'body' => 'Images above, tabbed story below — sequential reveal optional.'],
-                    ['label' => 'Step 2', 'body' => 'Use for onboarding professionals to your rollout.'],
-                    ['label' => 'Step 3', 'body' => 'Tie to block 4.3 pinned article when you add that page.'],
+                'title' => 'Your Workflow with XR Doctor',
+                'subtitle' => 'Easy Start. Simple Steps. Next-GeN Reality.',
+                'footer' => 'Built for real professionals. Ready to be a part of your daily work.',
+                'steps' => [
+                    ['title' => 'I. Login', 'text' => 'Sign up in seconds and step into your XR workspace', 'image' => ''],
+                    ['title' => 'II. Upload', 'text' => 'Advancing holographic interactive visualization tools for medical excellence', 'image' => ''],
+                    ['title' => 'III. Work', 'text' => 'Apply pioneering professional hologram tools in daily work', 'image' => ''],
+                    ['title' => 'IV. Share', 'text' => 'Collaborate seamlessly with shared holograms onsite and remotely', 'image' => ''],
+                    ['title' => 'V. Scale', 'text' => 'Scale worldwide holographic work across roles and tasks', 'image' => ''],
+                    ['title' => 'VI. Stream', 'text' => 'Show view from glasses globally to any screens and YouTube', 'image' => ''],
                 ],
             ],
         ],
@@ -689,28 +694,92 @@ function xr_default_professionals_blocks(): array
             'type' => 'pricing_creative',
             'id' => 'p-2-13',
             'props' => [
-                'plans' => [
-                    ['name' => 'Team', 'price' => 'Contact', 'features' => ['Up to 25 seats', 'SSO optional', 'Training library']],
-                    ['name' => 'Hospital', 'price' => 'Contact', 'features' => ['Clinical workflows', 'Audit logs', 'Dedicated CSM'], 'highlight' => true],
-                    ['name' => 'University', 'price' => 'Contact', 'features' => ['Curriculum kits', 'LMS hooks', 'Research use']],
-                ],
+                'eyebrow' => 'XR Doctor knows what matters & designed plans that work for you',
+                'title' => "Choose Your Plan\n& Let XR Doctor\nEmpower Your Every Day",
             ],
         ],
         [
             'type' => 'coming_soon_anim',
             'id' => 'p-2-14',
             'props' => [
-                'line1' => 'XRdoctor.',
-                'line2' => 'The next chapter of medical XR is shipping continuously.',
+                'title' => "Affordable\nPrices for\nEveryone",
+                'tabs' => [
+                    ['label' => 'Glasses Licence'],
+                    ['label' => 'Content Cost'],
+                ],
+                'panels' => [
+                    [
+                        'cards' => [
+                            [
+                                'badge' => 'VR Glasses',
+                                'price' => '$65 mo/$699 year',
+                                'items' => [
+                                    'Inside a fully virtual space',
+                                    'Work with interactive hologram',
+                                    'Explore clinical and simulated cases',
+                                    'Precise diagnosis and preparation',
+                                    'Immersive planning, executing, training',
+                                ],
+                                'cta' => 'Pre-Order',
+                            ],
+                            [
+                                'badge' => 'AR Glasses',
+                                'price' => '$95 mo/$999 year',
+                                'items' => [
+                                    'Matched with the physical world',
+                                    'Work with interactive mapped hologram',
+                                    'Handle standard and complex cases',
+                                    'Enhance diagnostics via real overlay',
+                                    'Shared mapped hologram space',
+                                ],
+                                'cta' => 'Pre-Order',
+                            ],
+                        ],
+                    ],
+                    [
+                        'cards' => [
+                            [
+                                'badge' => 'FREE',
+                                'items' => [
+                                    'Use your own 3D models',
+                                    'Upload as many as you need',
+                                    'Built to fit the platform',
+                                    'Included in every plan',
+                                    'No extra cost - start now',
+                                ],
+                            ],
+                            [
+                                'badge' => 'From $7',
+                                'items' => [
+                                    'Standard CT-scans - $10',
+                                    'Prepaid bundles: 10 CT-scans - $90',
+                                    '25 CT-scans - $200',
+                                    '50 CT-scans - $350',
+                                    'Usage tracked in your account',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
         [
             'type' => 'stagger_lines',
             'id' => 'p-2-15',
             'props' => [
-                'pairs' => [
-                    ['lines' => ['Line one.', 'Line two.']],
-                    ['lines' => ['Line three.', 'Line four.']],
+                'columns' => [
+                    [
+                        'title' => 'World-Class Product',
+                        'text' => 'XR Doctor - Next-GeN interactive holographic tool with AI support to leap your growth & boost success setting the new world standard',
+                    ],
+                    [
+                        'title' => 'World-Wide Network',
+                        'text' => 'Build a global network & become part of XR Doctor community for sharing expertise, hologram-guided telementoring via instant access to XR/AI-powered shared space',
+                    ],
+                    [
+                        'title' => 'World-Level Mastery',
+                        'text' => 'Achieve professional excellence & bring your skills to global standards with live layered mapped holograms & enhanced AI Clinical Assistance',
+                    ],
                 ],
             ],
         ],
@@ -718,18 +787,27 @@ function xr_default_professionals_blocks(): array
             'type' => 'image_pulse_cta',
             'id' => 'p-2-16',
             'props' => [
-                'image' => $img('16', 900, 500),
-                'text' => 'Pulsing CTA draws attention — hook your HubSpot demo form.',
-                'button_label' => 'Talk to us',
-                'href' => '#hubspot-demo',
+                'badge' => 'Stay tuned.',
+                'title' => 'XR Doctor. Already Here.',
             ],
         ],
         [
             'type' => 'reveal_outro',
             'id' => 'p-2-17',
             'props' => [
-                'title' => 'Start with a guided pilot',
-                'body' => 'We help you pick cases, headsets, and success metrics — then scale.',
+                'image' => '',
+                'text' => "Take the World into Your Hands.\nUnlock XR Doctor Power for Your Mastery & Edge.",
+            ],
+        ],
+        [
+            'type' => 'preorder_banner',
+            'id' => 'p-2-18',
+            'props' => [
+                'title' => "Leap into Your Next-GeN\nMedical Excellence",
+                'subtitle' => 'Pre-Order Now - Reserve Your Access',
+                'note' => 'Get 3 Years Bonus - 1 Free Month Each Year',
+                'button_label' => 'Pre-Order Now',
+                'href' => '#hubspot-demo',
             ],
         ],
     ];

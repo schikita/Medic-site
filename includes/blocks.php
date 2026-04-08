@@ -1715,30 +1715,26 @@ function xr_block_engage_split(array $p, string $blockId = ''): void
         </div>
 
         <div class="xr-engage-split__right">
-            <div class="xr-engage-split__card">
-                <?php if ($cardIcon !== ''): ?>
-                    <img class="xr-engage-split__card-icon" src="<?= h($cardIcon) ?>" alt="">
-                <?php endif; ?>
-                <?php if ($cardTitle !== ''): ?>
-                    <p class="xr-engage-split__card-title"><?= h($cardTitle) ?></p>
-                <?php endif; ?>
-                <div class="xr-engage-split__card-media">
-                    <?php if ($cardYt !== ''): ?>
-                        <iframe class="xr-engage-split__card-yt"
-                            src="https://www.youtube-nocookie.com/embed/<?= h($cardYt) ?>?autoplay=1&mute=1&loop=1&playlist=<?= h($cardYt) ?>&controls=0&rel=0&modestbranding=1"
-                            allow="autoplay; encrypted-media"
-                            tabindex="-1"
-                            aria-hidden="true"></iframe>
-                    <?php elseif ($cardMp4 !== ''): ?>
-                        <video class="xr-engage-split__card-video" autoplay muted loop playsinline
-                               <?= $cardPoster !== '' ? 'poster="' . h($cardPoster) . '"' : '' ?>>
-                            <source src="<?= h($cardMp4) ?>" type="video/mp4">
-                        </video>
-                    <?php elseif ($cardPoster !== ''): ?>
-                        <img class="xr-engage-split__card-poster-img" src="<?= h($cardPoster) ?>" alt="">
-                    <?php endif; ?>
-                </div>
-            </div>
+            <?php if ($cardIcon !== ''): ?>
+                <img class="xr-engage-split__card-icon" src="<?= h($cardIcon) ?>" alt="">
+            <?php endif; ?>
+            <?php if ($cardTitle !== ''): ?>
+                <p class="xr-engage-split__card-title"><?= h($cardTitle) ?></p>
+            <?php endif; ?>
+            <?php if ($cardYt !== ''): ?>
+                <iframe class="xr-engage-split__card-yt"
+                    src="https://www.youtube-nocookie.com/embed/<?= h($cardYt) ?>?autoplay=1&mute=1&loop=1&playlist=<?= h($cardYt) ?>&controls=0&rel=0&modestbranding=1"
+                    allow="autoplay; encrypted-media"
+                    tabindex="-1"
+                    aria-hidden="true"></iframe>
+            <?php elseif ($cardMp4 !== ''): ?>
+                <video class="xr-engage-split__card-video" autoplay muted loop playsinline
+                       <?= $cardPoster !== '' ? 'poster="' . h($cardPoster) . '"' : '' ?>>
+                    <source src="<?= h($cardMp4) ?>" type="video/mp4">
+                </video>
+            <?php elseif ($cardPoster !== ''): ?>
+                <img class="xr-engage-split__card-poster-img" src="<?= h($cardPoster) ?>" alt="">
+            <?php endif; ?>
         </div>
     </div>
     <?php
@@ -1848,6 +1844,49 @@ function xr_block_two_column_features(array $p, string $blockId = ''): void
     <?php
 }
 
+function xr_block_reality_slider(array $p, string $blockId = ''): void
+{
+    $title = (string) ($p['title'] ?? '');
+    $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [];
+    $interval = (int) ($p['interval_ms'] ?? 3500);
+    ?>
+    <div class="xr-reality" data-xr-reality data-interval="<?= (int) max(1200, $interval) ?>">
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-reality__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+        <div class="xr-reality__stage">
+            <?php foreach ($slides as $i => $s): ?>
+                <?php if (!is_array($s)) continue; ?>
+                <article class="xr-reality__slide<?= $i === 0 ? ' is-active' : '' ?>" data-slide>
+                    <p class="xr-reality__lead">
+                        <?php
+                        $lead = (string) ($s['lead'] ?? '');
+                        $accent = (string) ($s['accent'] ?? '');
+                        if ($accent !== '' && str_contains($lead, $accent)) {
+                            $parts = explode($accent, $lead, 2);
+                            echo h($parts[0]) . '<span class="xr-reality__accent">' . h($accent) . '</span>' . h($parts[1]);
+                        } else {
+                            echo h($lead);
+                        }
+                        ?>
+                    </p>
+                    <?php if ((string)($s['note'] ?? '') !== ''): ?>
+                        <?php $spark = (string) ($s['spark_image'] ?? ''); ?>
+                        <?php if ($spark !== ''): ?>
+                            <img class="xr-reality__spark-img" src="<?= h($spark) ?>" alt="" aria-hidden="true">
+                        <?php else: ?>
+                            <div class="xr-reality__spark" aria-hidden="true"></div>
+                        <?php endif; ?>
+                        <p class="xr-reality__note"><?= h((string)($s['note'] ?? '')) ?></p>
+                        <div class="xr-reality__line" aria-hidden="true"></div>
+                    <?php endif; ?>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+}
+
 function xr_block_carousel_four_cards(array $p, string $blockId = ''): void
 {
     $cards = is_array($p['cards'] ?? null) ? $p['cards'] : [];
@@ -1867,6 +1906,88 @@ function xr_block_carousel_four_cards(array $p, string $blockId = ''): void
                 <?php endforeach; ?>
             <?php endfor; ?>
         </div>
+    </div>
+    <?php
+}
+
+function xr_block_equips_compare(array $p, string $blockId = ''): void
+{
+    $title = (string) ($p['title'] ?? '');
+    $subtitle = (string) ($p['subtitle'] ?? '');
+
+    $yt = trim((string) ($p['video_youtube_id'] ?? ''));
+    $mp4 = (string) ($p['video_mp4'] ?? '');
+    $poster = (string) ($p['video_poster'] ?? '');
+
+    if ($yt !== '' && !preg_match('/^[a-zA-Z0-9_-]{11}$/', $yt)) {
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $yt, $m)) {
+            $yt = $m[1];
+        } else {
+            $yt = '';
+        }
+    }
+    ?>
+    <div class="xr-equip">
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-equip__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+        <?php if ($subtitle !== ''): ?>
+            <p class="xr-equip__subtitle"><?= h($subtitle) ?></p>
+        <?php endif; ?>
+
+        <div class="xr-equip__frame" data-equip>
+            <?php if ($poster !== ''): ?>
+                <img class="xr-equip__poster" src="<?= h($poster) ?>" alt="">
+            <?php endif; ?>
+            <?php if ($yt !== '' || $mp4 !== ''): ?>
+                <button class="xr-equip__play" type="button"
+                        aria-label="Play video"
+                        data-equip-play
+                        data-yt="<?= h($yt) ?>"
+                        data-mp4="<?= h($mp4) ?>"
+                        data-poster="<?= h($poster) ?>"></button>
+                <div class="xr-equip__video" data-equip-video hidden></div>
+            <?php endif; ?>
+        </div>
+
+        <?php if ((string)($p['footer'] ?? '') !== ''): ?>
+            <p class="xr-equip__footer">
+                <span class="xr-equip__footer-a"><?= h((string)($p['footer_a'] ?? 'Tailored for')) ?></span>
+                <span class="xr-equip__footer-b"><?= h((string)($p['footer_b'] ?? 'Every You')) ?></span>
+            </p>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+function xr_block_growth_cards(array $p, string $blockId = ''): void
+{
+    $title = (string) ($p['title'] ?? '');
+    $cards = is_array($p['cards'] ?? null) ? $p['cards'] : [];
+    $footerA = (string) ($p['footer_a'] ?? '');
+    $footerB = (string) ($p['footer_b'] ?? '');
+    ?>
+    <div class="xr-growth">
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-growth__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+
+        <div class="xr-growth__grid">
+            <?php foreach ($cards as $c): ?>
+                <?php if (!is_array($c)) continue; ?>
+                <article class="xr-growth__card">
+                    <h3 class="xr-growth__card-title"><?= h((string)($c['title'] ?? '')) ?></h3>
+                    <p class="xr-growth__card-text"><?= h((string)($c['text'] ?? '')) ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+
+        <?php if ($footerA !== '' || $footerB !== ''): ?>
+            <p class="xr-growth__footer">
+                <span class="xr-growth__footer-a"><?= h($footerA) ?></span>
+                <span class="xr-growth__footer-b"><?= h($footerB) ?></span>
+            </p>
+        <?php endif; ?>
     </div>
     <?php
 }
@@ -1919,6 +2040,51 @@ function xr_block_animated_heading_tabs(array $p, string $blockId = ''): void
     <?php
 }
 
+function xr_block_assistant_tabs_slider(array $p, string $blockId = ''): void
+{
+    $title = (string)($p['title'] ?? '');
+    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $footerPrefix = (string)($p['footer_prefix'] ?? '');
+    ?>
+    <div class="xr-assist" data-assist-tabs>
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-assist__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+
+        <div class="xr-assist__tabbar" role="tablist" aria-label="Assistant personas">
+            <?php foreach ($tabs as $i => $tab): ?>
+                <?php if (!is_array($tab)) continue; ?>
+                <button
+                    type="button"
+                    role="tab"
+                    class="xr-assist__tab<?= $i === 0 ? ' is-active' : '' ?>"
+                    data-assist-tab
+                    data-index="<?= (int)$i ?>"
+                    aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"
+                ><?= h((string)($tab['label'] ?? '')) ?></button>
+            <?php endforeach; ?>
+        </div>
+
+        <?php foreach ($tabs as $i => $tab): ?>
+            <?php if (!is_array($tab)) continue; ?>
+            <?php $items = is_array($tab['items'] ?? null) ? $tab['items'] : []; ?>
+            <div class="xr-assist__panel<?= $i === 0 ? ' is-active' : '' ?>" data-assist-panel data-index="<?= (int)$i ?>" role="tabpanel">
+                <ul class="xr-assist__list" role="list">
+                    <?php foreach ($items as $it): ?>
+                        <?php $t = trim((string)$it); if ($t === '') continue; ?>
+                        <li><?= h($t) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <p class="xr-assist__footer">
+                    <span class="xr-assist__footer-a"><?= h($footerPrefix) ?></span>
+                    <span class="xr-assist__footer-b"><?= h((string)($tab['footer'] ?? '')) ?></span>
+                </p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php
+}
+
 function xr_block_tabs_three_horizontal(array $p, string $blockId = ''): void
 {
     $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
@@ -1945,111 +2111,437 @@ function xr_block_tabs_three_horizontal(array $p, string $blockId = ''): void
     <?php
 }
 
-function xr_block_text_heading_anim(array $p, string $blockId = ''): void
+function xr_block_nextgen_image_slider(array $p, string $blockId = ''): void
 {
+    $title = (string)($p['title'] ?? '');
+    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
     ?>
-    <div class="xr-tha">
-        <h2 class="xr-tha__h xr-reveal"><?= h((string) ($p['headline'] ?? '')) ?></h2>
-        <p class="xr-tha__p xr-reveal"><?= h((string) ($p['paragraph'] ?? '')) ?></p>
+    <div class="xr-nextgen" data-nextgen>
+        <div class="xr-nextgen__chips" aria-hidden="true">
+            <span class="xr-nextgen__chip"><?= h((string)($p['chip_left'] ?? 'XR Doctor')) ?></span>
+            <span class="xr-nextgen__chip"><?= h((string)($p['chip_right'] ?? 'Exclusive')) ?></span>
+        </div>
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-nextgen__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+        <div class="xr-nextgen__tabbar" role="tablist">
+            <?php foreach ($tabs as $i => $tab): ?>
+                <?php if (!is_array($tab)) continue; ?>
+                <button type="button" class="xr-nextgen__tab<?= $i === 0 ? ' is-active' : '' ?>" data-nextgen-tab data-index="<?= (int)$i ?>" role="tab">
+                    <?= h((string)($tab['label'] ?? '')) ?>
+                </button>
+            <?php endforeach; ?>
+        </div>
+        <?php foreach ($tabs as $i => $tab): ?>
+            <?php if (!is_array($tab)) continue; ?>
+            <div class="xr-nextgen__panel<?= $i === 0 ? ' is-active' : '' ?>" data-nextgen-panel data-index="<?= (int)$i ?>" role="tabpanel">
+                <p class="xr-nextgen__subtitle"><?= h((string)($tab['subtitle'] ?? '')) ?></p>
+                <?php if ((string)($tab['image'] ?? '') !== ''): ?>
+                    <div class="xr-nextgen__image-wrap">
+                        <img class="xr-nextgen__image" src="<?= h((string)($tab['image'] ?? '')) ?>" alt="">
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
     </div>
     <?php
 }
 
+function xr_block_challenges_glasses(array $p, string $blockId = ''): void
+{
+    $title = (string)($p['title'] ?? '');
+    $deviceImage = (string)($p['device_image'] ?? '');
+    $deviceCaption = (string)($p['device_caption'] ?? '');
+    $deviceCaptionImage = (string)($p['device_caption_image'] ?? '');
+    $cols = is_array($p['columns'] ?? null) ? $p['columns'] : [];
+    ?>
+    <div class="xr-challenges">
+        <div class="xr-challenges__hero">
+            <?php if ($title !== ''): ?>
+                <h2 class="xr-challenges__title"><?= h($title) ?></h2>
+            <?php endif; ?>
+            <div class="xr-challenges__device">
+                <?php if ($deviceImage !== ''): ?>
+                    <img class="xr-challenges__device-img" src="<?= h($deviceImage) ?>" alt="">
+                <?php endif; ?>
+                <?php if ($deviceCaptionImage !== ''): ?>
+                    <img class="xr-challenges__device-cap-img" src="<?= h($deviceCaptionImage) ?>" alt="">
+                <?php elseif ($deviceCaption !== ''): ?>
+                    <p class="xr-challenges__device-cap"><?= h($deviceCaption) ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="xr-challenges__grid">
+            <?php foreach ($cols as $col): ?>
+                <?php if (!is_array($col)) continue; ?>
+                <article class="xr-challenges__col">
+                    <p class="xr-challenges__col-head"><?= h((string)($col['head'] ?? '')) ?></p>
+                    <?php
+                    $groups = is_array($col['groups'] ?? null) ? $col['groups'] : [];
+                    foreach ($groups as $g):
+                        if (!is_array($g)) continue;
+                    ?>
+                        <div class="xr-challenges__group">
+                            <h3 class="xr-challenges__group-title"><?= h((string)($g['title'] ?? '')) ?></h3>
+                            <?php $items = is_array($g['items'] ?? null) ? $g['items'] : []; ?>
+                            <?php if ($items !== []): ?>
+                                <ul class="xr-challenges__list" role="list">
+                                    <?php foreach ($items as $it): ?>
+                                        <?php $txt = trim((string)$it); if ($txt === '') continue; ?>
+                                        <li><?= h($txt) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_tele_mentoring_bullets(array $p, string $blockId = ''): void
+{
+    $title = (string)($p['title'] ?? '');
+    $items = is_array($p['items'] ?? null) ? $p['items'] : [];
+    $footerA = (string)($p['footer_a'] ?? '');
+    $footerB = (string)($p['footer_b'] ?? '');
+    ?>
+    <div class="xr-mentor">
+        <?php if ($title !== ''): ?>
+            <h2 class="xr-mentor__title"><?= h($title) ?></h2>
+        <?php endif; ?>
+        <?php if ($items !== []): ?>
+            <ul class="xr-mentor__list" role="list">
+                <?php foreach ($items as $it): ?>
+                    <?php $txt = trim((string)$it); if ($txt === '') continue; ?>
+                    <li><?= h($txt) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+        <?php if ($footerA !== '' || $footerB !== ''): ?>
+            <p class="xr-mentor__footer">
+                <span class="xr-mentor__footer-a"><?= h($footerA) ?></span>
+                <span class="xr-mentor__footer-b"><?= h($footerB) ?></span>
+            </p>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+function xr_block_deploy_banner(array $p, string $blockId = ''): void
+{
+    $title = (string)($p['title'] ?? '');
+    $subtitle = (string)($p['subtitle'] ?? '');
+    ?>
+    <div class="xr-deploy">
+        <div class="xr-deploy__noise" aria-hidden="true"></div>
+        <div class="xr-deploy__inner">
+            <?php if ($title !== ''): ?>
+                <h2 class="xr-deploy__title"><?= h($title) ?></h2>
+            <?php endif; ?>
+            <?php if ($subtitle !== ''): ?>
+                <p class="xr-deploy__subtitle"><?= h($subtitle) ?></p>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_text_heading_anim(array $p, string $blockId = ''): void
+{
+    // Backward-compatible renderer: old text_heading_anim now shows deploy banner design.
+    $title = trim((string)($p['title'] ?? ''));
+    if ($title === '') {
+        $title = trim((string)($p['headline'] ?? ''));
+    }
+    if ($title === 'Designed for accountable outcomes') {
+        $title = "Deploy XR Doctor\nfor Next - LeveL Mastery";
+    }
+    if ($title === '') {
+        $title = "Deploy XR Doctor\nfor Next - LeveL Mastery";
+    }
+
+    $subtitle = trim((string)($p['subtitle'] ?? ''));
+    if ($subtitle === '') {
+        $subtitle = trim((string)($p['paragraph'] ?? ''));
+    }
+    if ($subtitle === 'Animated headline entrance + supporting copy for scanning.') {
+        $subtitle = 'See how 6 simple steps take you from a CT scan to Next-GeN Reality';
+    }
+    if ($subtitle === '') {
+        $subtitle = "See how 6 simple steps take you from a CT scan to Next-GeN Reality";
+    }
+
+    xr_block_deploy_banner([
+        'title' => $title,
+        'subtitle' => $subtitle,
+    ], $blockId);
+}
+
 function xr_block_tabs_top_images(array $p, string $blockId = ''): void
 {
-    $imgs = is_array($p['images'] ?? null) ? $p['images'] : [];
-    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $title = trim((string)($p['title'] ?? ''));
+    if ($title === '') {
+        $title = 'Your Workflow with XR Doctor';
+    }
+    $subtitle = trim((string)($p['subtitle'] ?? ''));
+    if ($subtitle === '') {
+        $subtitle = 'Easy Start. Simple Steps. Next-GeN Reality.';
+    }
+    $footer = trim((string)($p['footer'] ?? ''));
+    if ($footer === '') {
+        $footer = 'Built for real professionals. Ready to be a part of your daily work.';
+    }
+
+    $legacyImgs = is_array($p['images'] ?? null) ? $p['images'] : [];
+    $legacyTabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $rawSteps = is_array($p['steps'] ?? null) ? $p['steps'] : [];
+    $steps = [];
+    for ($i = 0; $i < 6; $i++) {
+        $row = is_array($rawSteps[$i] ?? null) ? $rawSteps[$i] : [];
+        $legacy = is_array($legacyTabs[$i] ?? null) ? $legacyTabs[$i] : [];
+        $num = ['I.', 'II.', 'III.', 'IV.', 'V.', 'VI.'][$i] ?? (($i + 1) . '.');
+        $steps[] = [
+            'title' => trim((string)($row['title'] ?? ($legacy['label'] ?? ($num . ' Step')))),
+            'text' => trim((string)($row['text'] ?? ($legacy['body'] ?? ''))),
+            'image' => trim((string)($row['image'] ?? ($legacyImgs[$i] ?? ''))),
+        ];
+    }
     ?>
-    <div class="xr-tti">
-        <div class="xr-tti__imgs">
-            <?php foreach ($imgs as $u): ?>
-                <img src="<?= h((string) $u) ?>" alt="">
+    <div class="xr-workflow">
+        <h2 class="xr-workflow__title"><?= h($title) ?></h2>
+        <p class="xr-workflow__subtitle"><?= h($subtitle) ?></p>
+
+        <div class="xr-workflow__steps">
+            <?php foreach ($steps as $s): ?>
+                <article class="xr-workflow__step">
+                    <div class="xr-workflow__media">
+                        <?php if ($s['image'] !== ''): ?>
+                            <img src="<?= h($s['image']) ?>" alt="">
+                        <?php endif; ?>
+                    </div>
+                    <p class="xr-workflow__step-title"><?= h($s['title']) ?></p>
+                </article>
             <?php endforeach; ?>
         </div>
-        <div class="xr-tti__bar" role="tablist">
-            <?php foreach ($tabs as $i => $t): ?>
-                <?php if (!is_array($t)) {
-                    continue;
-                } ?>
-                <button type="button" class="xr-tti__tab<?= $i === 0 ? ' is-active' : '' ?>" data-xr-tab="tti" data-index="<?= (int) $i ?>"><?= h((string) ($t['label'] ?? '')) ?></button>
+
+        <div class="xr-workflow__line" aria-hidden="true"></div>
+        <div class="xr-workflow__dots" aria-hidden="true">
+            <?php foreach ($steps as $_): ?><span class="xr-workflow__dot"></span><?php endforeach; ?>
+        </div>
+
+        <div class="xr-workflow__notes">
+            <?php foreach ($steps as $s): ?>
+                <p><?= h($s['text']) ?></p>
             <?php endforeach; ?>
         </div>
-        <?php foreach ($tabs as $i => $t): ?>
-            <?php if (!is_array($t)) {
-                continue;
-            } ?>
-            <div class="xr-tti__panel<?= $i === 0 ? ' is-active' : '' ?>" data-xr-panel="tti" data-index="<?= (int) $i ?>">
-                <p><?= h((string) ($t['body'] ?? '')) ?></p>
-            </div>
-        <?php endforeach; ?>
+
+        <p class="xr-workflow__footer"><?= h($footer) ?></p>
     </div>
     <?php
 }
 
 function xr_block_pricing_creative(array $p, string $blockId = ''): void
 {
-    $plans = is_array($p['plans'] ?? null) ? $p['plans'] : [];
+    $eyebrow = trim((string)($p['eyebrow'] ?? ''));
+    if ($eyebrow === '') {
+        $eyebrow = 'XR Doctor knows what matters & designed plans that work for you';
+    }
+    $title = trim((string)($p['title'] ?? ''));
+    if ($title === '') {
+        $title = "Choose Your Plan\n& Let XR Doctor\nEmpower Your Every Day";
+    }
     ?>
-    <div class="xr-pricing">
-        <?php foreach ($plans as $pl): ?>
-            <?php if (!is_array($pl)) {
-                continue;
-            } ?>
-            <div class="xr-pricing__card<?= !empty($pl['highlight']) ? ' is-highlight' : '' ?>">
-                <h3><?= h((string) ($pl['name'] ?? '')) ?></h3>
-                <div class="xr-pricing__price"><?= h((string) ($pl['price'] ?? '')) ?></div>
-                <ul>
-                    <?php
-                    $feats = is_array($pl['features'] ?? null) ? $pl['features'] : [];
-                    foreach ($feats as $f) {
-                        echo '<li>' . h((string) $f) . '</li>';
-                    }
-                    ?>
-                </ul>
-            </div>
-        <?php endforeach; ?>
+    <div class="xr-plan-banner">
+        <div class="xr-plan-banner__noise" aria-hidden="true"></div>
+        <div class="xr-plan-banner__inner">
+            <p class="xr-plan-banner__eyebrow"><?= h($eyebrow) ?></p>
+            <h2 class="xr-plan-banner__title"><?= nl2br(h($title)) ?></h2>
+        </div>
     </div>
     <?php
 }
 
 function xr_block_coming_soon_anim(array $p, string $blockId = ''): void
 {
+    $title = trim((string)($p['title'] ?? ''));
+    if ($title === '') {
+        $title = "Affordable\nPrices for\nEveryone";
+    }
+    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    if ($tabs === []) {
+        $tabs = [
+            ['label' => 'Glasses Licence'],
+            ['label' => 'Content Cost'],
+        ];
+    }
+    $panels = is_array($p['panels'] ?? null) ? $p['panels'] : [];
+    if ($panels === []) {
+        $panels = [
+            [
+                'cards' => [
+                    [
+                        'badge' => 'VR Glasses',
+                        'price' => '$65 mo/$699 year',
+                        'items' => [
+                            'Inside a fully virtual space',
+                            'Work with interactive hologram',
+                            'Explore clinical and simulated cases',
+                            'Precise diagnosis and preparation',
+                        ],
+                        'cta' => 'Pre-Order',
+                    ],
+                    [
+                        'badge' => 'AR Glasses',
+                        'price' => '$95 mo/$999 year',
+                        'items' => [
+                            'Matched with the physical world',
+                            'Work with interactive mapped hologram',
+                            'Handle standard and complex cases',
+                            'Enhance diagnostics via real overlay',
+                        ],
+                        'cta' => 'Pre-Order',
+                    ],
+                ],
+            ],
+            [
+                'cards' => [
+                    [
+                        'badge' => 'FREE',
+                        'price' => '',
+                        'items' => [
+                            'Use your own 3D models',
+                            'Upload as many as you need',
+                            'Built to fit the platform',
+                            'Included in every plan',
+                            'No extra cost - start now',
+                        ],
+                    ],
+                    [
+                        'badge' => 'From $7',
+                        'price' => '',
+                        'items' => [
+                            'Standard CT-scans - $10',
+                            'Prepaid bundles: 10 CT-scans - $90',
+                            '25 CT-scans - $200',
+                            '50 CT-scans - $350',
+                            'Usage tracked in your account',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
     ?>
-    <div class="xr-cs-anim" data-cs-anim>
-        <p class="xr-cs-anim__a"><?= h((string) ($p['line1'] ?? '')) ?></p>
-        <p class="xr-cs-anim__b"><?= h((string) ($p['line2'] ?? '')) ?></p>
+    <div class="xr-afford" data-afford>
+        <div class="xr-afford__left">
+            <h2 class="xr-afford__title"><?= nl2br(h($title)) ?></h2>
+            <div class="xr-afford__tabs" role="tablist">
+                <?php foreach ($tabs as $i => $tab): ?>
+                    <?php $lbl = trim((string)($tab['label'] ?? '')); if ($lbl === '') continue; ?>
+                    <button type="button" class="xr-afford__tab<?= $i === 0 ? ' is-active' : '' ?>" data-afford-tab data-index="<?= (int)$i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"><?= h($lbl) ?></button>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="xr-afford__right">
+            <?php foreach ($panels as $pi => $panel): ?>
+                <?php
+                if (!is_array($panel)) {
+                    continue;
+                }
+                $cards = is_array($panel['cards'] ?? null) ? $panel['cards'] : [];
+                ?>
+                <div class="xr-afford__panel<?= $pi === 0 ? ' is-active' : '' ?>" data-afford-panel data-index="<?= (int)$pi ?>">
+                    <?php foreach ($cards as $card): ?>
+                        <?php if (!is_array($card)) continue; ?>
+                        <article class="xr-afford__card">
+                            <div class="xr-afford__badge"><?= h((string)($card['badge'] ?? '')) ?></div>
+                            <?php if (((string)($card['price'] ?? '')) !== ''): ?>
+                                <p class="xr-afford__price"><?= h((string)($card['price'] ?? '')) ?></p>
+                            <?php endif; ?>
+                            <?php $items = is_array($card['items'] ?? null) ? $card['items'] : []; ?>
+                            <?php if ($items !== []): ?>
+                                <ul class="xr-afford__list" role="list">
+                                    <?php foreach ($items as $it): ?>
+                                        <?php $txt = trim((string)$it); if ($txt === '') continue; ?>
+                                        <li><?= h($txt) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                            <?php if (((string)($card['cta'] ?? '')) !== ''): ?>
+                                <button type="button" class="xr-afford__cta"><?= h((string)($card['cta'] ?? '')) ?></button>
+                            <?php endif; ?>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
     <?php
 }
 
 function xr_block_stagger_lines(array $p, string $blockId = ''): void
 {
-    $pairs = is_array($p['pairs'] ?? null) ? $p['pairs'] : [];
+    $columns = is_array($p['columns'] ?? null) ? $p['columns'] : [];
+    if ($columns === []) {
+        $columns = [
+            [
+                'title' => 'World-Class Product',
+                'text' => 'XR Doctor - Next-GeN interactive holographic tool with AI support to leap your growth & boost success setting the new world standard',
+            ],
+            [
+                'title' => 'World-Wide Network',
+                'text' => 'Build a global network & become part of XR Doctor community for sharing expertise, hologram-guided telementoring via instant access to XR/AI-powered shared space',
+            ],
+            [
+                'title' => 'World-Level Mastery',
+                'text' => 'Achieve professional excellence & bring your skills to global standards with live layered mapped holograms & enhanced AI Clinical Assistance',
+            ],
+        ];
+    }
     ?>
     <div class="xr-stagger">
-        <?php foreach ($pairs as $pair): ?>
-            <?php if (!is_array($pair)) {
-                continue;
-            } ?>
-            <?php $lines = is_array($pair['lines'] ?? null) ? $pair['lines'] : []; ?>
-            <div class="xr-stagger__pair">
-                <?php foreach ($lines as $ln): ?>
-                    <p class="xr-stagger__line xr-reveal"><?= h((string) $ln) ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endforeach; ?>
+        <div class="xr-stagger__cols">
+            <?php foreach ($columns as $col): ?>
+                <?php if (!is_array($col)) continue; ?>
+                <article class="xr-stagger__col">
+                    <h3 class="xr-stagger__title"><?= h((string)($col['title'] ?? '')) ?></h3>
+                    <p class="xr-stagger__text"><?= h((string)($col['text'] ?? '')) ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+        <div class="xr-stagger__arc" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
     <?php
 }
 
 function xr_block_image_pulse_cta(array $p, string $blockId = ''): void
 {
+    $badge = trim((string)($p['badge'] ?? ''));
+    if ($badge === '') {
+        $badge = 'Stay tuned.';
+    }
+    $title = trim((string)($p['title'] ?? ''));
+    if ($title === '') {
+        $title = 'XR Doctor. Already Here.';
+    }
     ?>
-    <div class="xr-ipc">
-        <img src="<?= h((string) ($p['image'] ?? '')) ?>" alt="">
-        <div class="xr-ipc__cap">
-            <p><?= h((string) ($p['text'] ?? '')) ?></p>
-            <a class="btn btn--gradient xr-pulse-btn" href="<?= h((string) ($p['href'] ?? '#')) ?>"><?= h((string) ($p['button_label'] ?? '')) ?></a>
+    <div class="xr-ready">
+        <div class="xr-ready__inner">
+            <p class="xr-ready__badge"><?= h($badge) ?></p>
+            <h2 class="xr-ready__title"><?= h($title) ?></h2>
+        </div>
+        <div class="xr-ready__arc" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </div>
     <?php
@@ -2057,10 +2549,55 @@ function xr_block_image_pulse_cta(array $p, string $blockId = ''): void
 
 function xr_block_reveal_outro(array $p, string $blockId = ''): void
 {
+    $image = trim((string)($p['image'] ?? ''));
+    $text = trim((string)($p['text'] ?? ''));
+    if ($text === '') {
+        $oldTitle = trim((string)($p['title'] ?? ''));
+        $oldBody = trim((string)($p['body'] ?? ''));
+        $text = trim($oldTitle . ' ' . $oldBody);
+    }
+    if ($text === '') {
+        $text = 'Take the World into Your Hands. Unlock XR Doctor Power for Your Mastery & Edge.';
+    }
     ?>
     <div class="xr-outro">
-        <h2 class="xr-reveal"><?= h((string) ($p['title'] ?? '')) ?></h2>
-        <p class="xr-reveal"><?= h((string) ($p['body'] ?? '')) ?></p>
+        <div class="xr-outro__media">
+            <?php if ($image !== ''): ?>
+                <img src="<?= h($image) ?>" alt="">
+            <?php endif; ?>
+        </div>
+        <div class="xr-outro__copy">
+            <p><?= nl2br(h($text)) ?></p>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_preorder_banner(array $p, string $blockId = ''): void
+{
+    $title = trim((string)($p['title'] ?? ''));
+    if ($title === '') {
+        $title = "Leap into Your Next-GeN\nMedical Excellence";
+    }
+    $subtitle = trim((string)($p['subtitle'] ?? ''));
+    if ($subtitle === '') {
+        $subtitle = 'Pre-Order Now - Reserve Your Access';
+    }
+    $note = trim((string)($p['note'] ?? ''));
+    if ($note === '') {
+        $note = 'Get 3 Years Bonus - 1 Free Month Each Year';
+    }
+    $button = trim((string)($p['button_label'] ?? ''));
+    if ($button === '') {
+        $button = 'Pre-Order Now';
+    }
+    $href = trim((string)($p['href'] ?? '#'));
+    ?>
+    <div class="xr-preorder">
+        <h2 class="xr-preorder__title"><?= nl2br(h($title)) ?></h2>
+        <p class="xr-preorder__subtitle"><?= h($subtitle) ?></p>
+        <p class="xr-preorder__note"><?= h($note) ?></p>
+        <a class="xr-preorder__btn" href="<?= h($href) ?>"><?= h($button) ?></a>
     </div>
     <?php
 }
