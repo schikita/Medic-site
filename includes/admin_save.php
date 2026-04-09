@@ -496,6 +496,18 @@ function merge_site_from_post(array $current): array
                 }
                 $p['slides'] = $slides;
             }
+            if ($id === 'i-3-10') {
+                $imgA = trim((string)($_POST['inst_i310_image_a'] ?? ''));
+                $imgB = trim((string)($_POST['inst_i310_image_b'] ?? ''));
+                $columns = is_array($p['columns'] ?? null) ? $p['columns'] : [];
+                if ($imgA !== '' && isset($columns[0][0]) && is_array($columns[0][0])) {
+                    $columns[0][0]['image'] = $imgA;
+                }
+                if ($imgB !== '' && isset($columns[1][1]) && is_array($columns[1][1])) {
+                    $columns[1][1]['image'] = $imgB;
+                }
+                $p['columns'] = $columns;
+            }
             if ($id === 'i-3-4') {
                 $t = trim((string)($_POST['inst_care_title'] ?? ''));
                 if ($t !== '') $p['title'] = $t;
@@ -512,6 +524,91 @@ function merge_site_from_post(array $current): array
                     if ($sub !== '') $slides[$i]['subtitle'] = $sub;
                 }
                 $p['slides'] = $slides;
+            }
+            if ($id === 'i-3-7') {
+                $d1 = trim((string)($_POST['inst_discover_line_1'] ?? ''));
+                $d2 = trim((string)($_POST['inst_discover_line_2'] ?? ''));
+                $d3 = trim((string)($_POST['inst_discover_line_3'] ?? ''));
+                if ($d1 !== '') $p['line_1'] = $d1;
+                if ($d2 !== '') $p['line_2'] = $d2;
+                if ($d3 !== '') $p['line_3'] = $d3;
+            }
+            if ($id === 'i-3-8') {
+                $t = trim((string)($_POST['inst_orbit_intro_title'] ?? ''));
+                if ($t !== '') {
+                    $p['intro_title'] = $t;
+                }
+                $t = trim((string)($_POST['inst_orbit_intro_subtitle'] ?? ''));
+                if ($t !== '') {
+                    $p['intro_subtitle'] = $t;
+                }
+                $t = trim((string)($_POST['inst_orbit_intro_body'] ?? ''));
+                if ($t !== '') {
+                    $p['intro_body'] = $t;
+                }
+                $img = trim((string)($_POST['inst_orbit_center_image'] ?? ''));
+                if ($img !== '') {
+                    $p['center_image'] = $img;
+                }
+                $t = trim((string)($_POST['inst_orbit_center_label'] ?? ''));
+                if ($t !== '') {
+                    $p['center_label'] = $t;
+                }
+                $pillIcon = trim((string)($_POST['inst_orbit_pill_label_icon'] ?? ''));
+                if ($pillIcon !== '') {
+                    $p['pill_label_icon'] = $pillIcon;
+                }
+                $f0t = trim((string)($_POST['inst_orbit_f0_title'] ?? ''));
+                $f0x = trim((string)($_POST['inst_orbit_f0_text'] ?? ''));
+                if ($f0t !== '' || $f0x !== '') {
+                    if (!isset($p['features']) || !is_array($p['features'])) {
+                        $p['features'] = [[], []];
+                    }
+                    if (!isset($p['features'][0]) || !is_array($p['features'][0])) {
+                        $p['features'][0] = [];
+                    }
+                    if ($f0t !== '') {
+                        $p['features'][0]['title'] = $f0t;
+                    }
+                    if ($f0x !== '') {
+                        $p['features'][0]['text'] = $f0x;
+                    }
+                }
+                $f1t = trim((string)($_POST['inst_orbit_f1_title'] ?? ''));
+                $f1x = trim((string)($_POST['inst_orbit_f1_text'] ?? ''));
+                if ($f1t !== '' || $f1x !== '') {
+                    if (!isset($p['features']) || !is_array($p['features'])) {
+                        $p['features'] = [[], []];
+                    }
+                    if (!isset($p['features'][1]) || !is_array($p['features'][1])) {
+                        $p['features'][1] = [];
+                    }
+                    if ($f1t !== '') {
+                        $p['features'][1]['title'] = $f1t;
+                    }
+                    if ($f1x !== '') {
+                        $p['features'][1]['text'] = $f1x;
+                    }
+                }
+                $cards = is_array($p['cards'] ?? null) ? $p['cards'] : [];
+                for ($oi = 0; $oi < 8; $oi++) {
+                    $lab = trim((string)($_POST["inst_orbit_label_$oi"] ?? ''));
+                    if ($lab === '') {
+                        continue;
+                    }
+                    if (!isset($cards[$oi]) || !is_array($cards[$oi])) {
+                        $cards[$oi] = [];
+                    }
+                    $cards[$oi]['label'] = $lab;
+                    if (!array_key_exists('sub', $cards[$oi])) {
+                        $cards[$oi]['sub'] = '';
+                    }
+                }
+                $p['cards'] = $cards;
+                $sd = trim((string)($_POST['inst_orbit_stack_description'] ?? ''));
+                if ($sd !== '') {
+                    $p['stack_description'] = $sd;
+                }
             }
             if ($id === 'i-3-6') {
                 $ot = trim((string)($_POST['inst_ba_overlay_title'] ?? ''));

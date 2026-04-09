@@ -2782,6 +2782,31 @@ function xr_block_white_text_section(array $p, string $blockId = ''): void
         return;
     }
 
+    if ($blockId === 'i-3-9') {
+        $l1 = trim((string) ($p['line_1'] ?? ''));
+        $l2 = trim((string) ($p['line_2'] ?? ''));
+        $l3 = trim((string) ($p['line_3'] ?? ''));
+        if ($l1 === '') {
+            $l1 = 'ALL-IN-ONE';
+        }
+        if ($l2 === '') {
+            $l2 = 'XR Doctor Assistant';
+        }
+        if ($l3 === '') {
+            $l3 = 'Full-Cycle Clinical Product';
+        }
+        ?>
+        <div class="xr-stripe-banner">
+            <div class="xr-stripe-banner__inner">
+                <p class="xr-stripe-banner__line xr-stripe-banner__line--1 xr-reveal"><?= h($l1) ?></p>
+                <p class="xr-stripe-banner__line xr-stripe-banner__line--mid xr-reveal"><?= h($l2) ?></p>
+                <p class="xr-stripe-banner__line xr-stripe-banner__line--mid xr-reveal"><?= h($l3) ?></p>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     ?>
     <div class="xr-white-section">
         <div class="xr-white-section__inner">
@@ -2830,6 +2855,33 @@ function xr_block_before_after(array $p, string $blockId = ''): void
 
 function xr_block_saas_split(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-7') {
+        $l1 = trim((string) ($p['line_1'] ?? ''));
+        $l2 = trim((string) ($p['line_2'] ?? ''));
+        $l3 = trim((string) ($p['line_3'] ?? ''));
+        if ($l1 === '') {
+            $l1 = 'Discover How XR Doctor';
+        }
+        if ($l2 === '') {
+            $l2 = 'Redefines Care Delivery';
+        }
+        if ($l3 === '') {
+            $l3 = 'for Next-LeveL Excellence';
+        }
+        ?>
+        <div class="xr-discover-banner">
+            <div class="xr-discover-banner__noise" aria-hidden="true"></div>
+            <div class="xr-discover-banner__inner">
+                <h2 class="xr-discover-banner__title">
+                    <span class="xr-discover-banner__line"><?= h($l1) ?></span>
+                    <span class="xr-discover-banner__line"><?= h($l2) ?></span>
+                    <span class="xr-discover-banner__line"><?= h($l3) ?></span>
+                </h2>
+            </div>
+        </div>
+        <?php
+        return;
+    }
     ?>
     <div class="xr-saas">
         <div class="xr-saas__inner">
@@ -2845,27 +2897,384 @@ function xr_block_saas_split(array $p, string $blockId = ''): void
 function xr_block_orbit_cards(array $p, string $blockId = ''): void
 {
     $cards = is_array($p['cards'] ?? null) ? $p['cards'] : [];
+    $featuresRaw = is_array($p['features'] ?? null) ? $p['features'] : [];
+    $introTitle = trim((string) ($p['intro_title'] ?? ''));
+    $introSubtitle = trim((string) ($p['intro_subtitle'] ?? ''));
+    $introBody = trim((string) ($p['intro_body'] ?? ''));
+    $centerImage = trim((string) ($p['center_image'] ?? ''));
+    $centerLabel = trim((string) ($p['center_label'] ?? ''));
+    $pillLabelIcon = trim((string) ($p['pill_label_icon'] ?? ''));
+    $legacyTitle = trim((string) ($p['title'] ?? ''));
+    $stackDescription = trim((string) ($p['stack_description'] ?? ''));
+    $centerPillsRaw = is_array($p['center_pills'] ?? null) ? $p['center_pills'] : [];
+    $centerPills = [];
+    foreach ($centerPillsRaw as $pill) {
+        $t = trim((string) $pill);
+        if ($t !== '') {
+            $centerPills[] = $t;
+        }
+    }
+    $footerLineA = trim((string) ($p['footer_line_a'] ?? ''));
+    $footerLineB = trim((string) ($p['footer_line_b'] ?? ''));
+
+    $features = [];
+    foreach ($featuresRaw as $f) {
+        if (!is_array($f)) {
+            continue;
+        }
+        $features[] = [
+            'title' => trim((string) ($f['title'] ?? '')),
+            'text' => trim((string) ($f['text'] ?? '')),
+        ];
+    }
+    while (count($features) < 2) {
+        $features[] = ['title' => '', 'text' => ''];
+    }
+
+    $hasFeat = false;
+    foreach ($features as $f) {
+        if (($f['title'] ?? '') !== '' || ($f['text'] ?? '') !== '') {
+            $hasFeat = true;
+            break;
+        }
+    }
+    $useSplit = $introTitle !== '' || $introSubtitle !== '' || $introBody !== '' || $hasFeat || $centerImage !== '';
+    if ($blockId === 'i-3-11') {
+        $useSplit = true;
+    }
+
+    $orbitItems = [];
+    foreach ($cards as $c) {
+        if (!is_array($c)) {
+            continue;
+        }
+        $lab = trim((string) ($c['label'] ?? ''));
+        $sub = trim((string) ($c['sub'] ?? ''));
+        if ($lab === '' && $sub === '') {
+            continue;
+        }
+        $orbitItems[] = ['label' => $lab, 'sub' => $sub];
+    }
+    $nOrbit = max(1, count($orbitItems));
+
+    $rootClass = 'xr-orbit' . ($useSplit ? ' xr-orbit--split' : ' xr-orbit--stack');
+    if ($blockId === 'i-3-11') {
+        $rootClass .= ' xr-orbit--advantages';
+    }
+    $orbitSid = preg_replace('/[^a-zA-Z0-9_-]/', '-', $blockId !== '' ? $blockId : 'orbit');
     ?>
-    <div class="xr-orbit" data-orbit>
-        <h2 class="xr-orbit__title"><?= h((string) ($p['title'] ?? '')) ?></h2>
-        <div class="xr-orbit__stage">
-            <div class="xr-orbit__center"><?= h((string) ($p['center_label'] ?? '')) ?></div>
-            <?php foreach ($cards as $i => $c): ?>
-                <?php if (!is_array($c)) {
-                    continue;
-                } ?>
-                <div class="xr-orbit__card" style="--i: <?= (int) $i ?>; --n: <?= max(1, count($cards)) ?>">
-                    <span class="xr-orbit__card-label"><?= h((string) ($c['label'] ?? '')) ?></span>
-                    <span class="xr-orbit__card-sub"><?= h((string) ($c['sub'] ?? '')) ?></span>
+    <div class="<?= h($rootClass) ?>"<?= $useSplit ? '' : ' data-orbit' ?>>
+        <?php if ($useSplit): ?>
+            <div class="xr-orbit__split-inner">
+                <?php if ($blockId === 'i-3-11'): ?>
+                    <?php if ($introTitle !== '' || $introSubtitle !== ''): ?>
+                        <header class="xr-orbit__headline xr-orbit__headline--advantages">
+                            <?php if ($introTitle !== ''): ?>
+                                <h2 class="xr-orbit__section-title"><?= h($introTitle) ?></h2>
+                            <?php endif; ?>
+                            <?php if ($introSubtitle !== ''): ?>
+                                <p class="xr-orbit__subhead xr-orbit__subhead--advantages">
+                                    <?php
+                                    $subLines = preg_split('/\r\n|\r|\n/', $introSubtitle);
+                                    $firstLine = true;
+                                    foreach ($subLines as $subLine) {
+                                        $subLine = trim($subLine);
+                                        if ($subLine === '') {
+                                            continue;
+                                        }
+                                        if (!$firstLine) {
+                                            echo '<br>';
+                                        }
+                                        echo h($subLine);
+                                        $firstLine = false;
+                                    }
+                                    ?>
+                                </p>
+                            <?php endif; ?>
+                        </header>
+                    <?php endif; ?>
+                <?php elseif ($introTitle !== ''): ?>
+                    <h2 class="xr-orbit__section-title"><?= h($introTitle) ?></h2>
+                <?php endif; ?>
+                <?php
+                $skipIntroCol = $blockId === 'i-3-11' && !$hasFeat && $introBody === '';
+                $gridMod = $skipIntroCol ? ' xr-orbit__grid--visual-solo' : '';
+                ?>
+                <div class="xr-orbit__grid<?= h($gridMod) ?>">
+                    <?php if (!$skipIntroCol): ?>
+                    <div class="xr-orbit__intro">
+                        <?php if ($introSubtitle !== '' && $blockId !== 'i-3-11'): ?>
+                            <p class="xr-orbit__subhead">
+                                <?php
+                                $subLines = preg_split('/\r\n|\r|\n/', $introSubtitle);
+                                $firstLine = true;
+                                foreach ($subLines as $subLine) {
+                                    $subLine = trim($subLine);
+                                    if ($subLine === '') {
+                                        continue;
+                                    }
+                                    if (!$firstLine) {
+                                        echo '<br>';
+                                    }
+                                    echo h($subLine);
+                                    $firstLine = false;
+                                }
+                                ?>
+                            </p>
+                        <?php endif; ?>
+                        <?php if ($introBody !== ''): ?>
+                            <p class="xr-orbit__lede"><?= h($introBody) ?></p>
+                        <?php endif; ?>
+                        <?php if ($hasFeat): ?>
+                            <div class="xr-orbit__features">
+                                <?php foreach (array_slice($features, 0, 2) as $feat): ?>
+                                    <?php if ($feat['title'] === '' && $feat['text'] === '') {
+                                        continue;
+                                    } ?>
+                                    <article class="xr-orbit__feature">
+                                        <?php if ($feat['title'] !== ''): ?>
+                                            <h3 class="xr-orbit__feature-title"><?= h($feat['title']) ?></h3>
+                                        <?php endif; ?>
+                                        <?php if ($feat['text'] !== ''): ?>
+                                            <p class="xr-orbit__feature-text"><?= h($feat['text']) ?></p>
+                                        <?php endif; ?>
+                                    </article>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+                    <div class="xr-orbit__visual">
+                        <?php if ($centerPills !== []): ?>
+                            <div class="xr-orbit__center-strip" aria-hidden="true">
+                                <?php foreach ($centerPills as $pill): ?>
+                                    <span class="xr-orbit__center-strip-pill"><?= h($pill) ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="xr-orbit__stage" style="--n: <?= (int) $nOrbit ?>">
+                            <div class="xr-orbit__rotator">
+                                <div class="xr-orbit__rings"></div>
+                                <?php foreach ($orbitItems as $i => $c): ?>
+                                    <?php
+                                    $gid = 'xr-os-' . $orbitSid . '-' . (int) $i;
+                                    $driftVariant = random_int(0, 3);
+                                    $driftDelay = random_int(0, 2400);
+                                    $driftMs = random_int(13000, 28000);
+                                    ?>
+                                    <div class="xr-orbit__arm" style="--i: <?= (int) $i ?>">
+                                        <div class="xr-orbit__pill xr-orbit__pill--drift-<?= (int) $driftVariant ?>" style="--drift-delay: <?= (int) $driftDelay ?>ms; --drift-duration: <?= (int) $driftMs ?>ms;">
+                                            <div class="xr-orbit__pill-drift">
+                                                <span class="xr-orbit__pill-inner">
+                                                    <?php if ($pillLabelIcon !== ''): ?>
+                                                        <img class="xr-orbit__pill-icon" src="<?= h($pillLabelIcon) ?>" alt="" width="26" height="26" loading="lazy" decoding="async" aria-hidden="true">
+                                                    <?php else: ?>
+                                                        <svg class="xr-orbit__star" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <defs>
+                                                                <linearGradient id="<?= h($gid) ?>" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                                                    <stop stop-color="#4285f4"/>
+                                                                    <stop offset="1" stop-color="#c33cfe"/>
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill="url(#<?= h($gid) ?>)" d="M12 2l2.2 6.2h6.6l-5.3 4 2 6.3L12 16.3l-5.5 4.2 2-6.3-5.3-4h6.6L12 2z"/>
+                                                        </svg>
+                                                    <?php endif; ?>
+                                                    <span class="xr-orbit__pill-label"><?= h($c['label']) ?></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="xr-orbit__center">
+                                <?php
+                                $centerPicClass = 'xr-orbit__center-pic';
+                                if ($centerImage !== '') {
+                                    $centerPicClass .= ' xr-orbit__center-pic--has-image';
+                                }
+                                if ($centerImage === '' && $centerLabel !== '') {
+                                    $centerPicClass .= ' xr-orbit__center-pic--text-only';
+                                }
+                                ?>
+                                <div class="<?= h($centerPicClass) ?>">
+                                    <?php if ($centerImage !== ''): ?>
+                                        <div class="xr-orbit__center-img-shell">
+                                            <img class="xr-orbit__center-img" src="<?= h($centerImage) ?>" alt="" loading="lazy" decoding="async">
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($centerLabel !== ''): ?>
+                                        <span class="xr-orbit__center-label"><?= h($centerLabel) ?></span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            <?php endforeach; ?>
-        </div>
+                <?php if ($footerLineA !== '' || $footerLineB !== ''): ?>
+                    <div class="xr-orbit__footer-tagline xr-reveal">
+                        <?php if ($footerLineA !== ''): ?>
+                            <span class="xr-orbit__footer-tagline-a"><?= h($footerLineA) ?></span>
+                        <?php endif; ?>
+                        <?php if ($footerLineB !== ''): ?>
+                            <span class="xr-orbit__footer-tagline-b"><?= h($footerLineB) ?></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <?php
+            $stackShowCopy = $legacyTitle !== '' || $stackDescription !== '';
+            ?>
+            <div class="xr-orbit__stack-row<?= $stackShowCopy ? '' : ' xr-orbit__stack-row--orbit-only' ?>">
+                <?php if ($stackShowCopy): ?>
+                    <div class="xr-orbit__stack-copy">
+                        <?php if ($legacyTitle !== ''): ?>
+                            <h2 class="xr-orbit__title--stack"><?= h($legacyTitle) ?></h2>
+                        <?php endif; ?>
+                        <?php if ($stackDescription !== ''): ?>
+                            <p class="xr-orbit__stack-desc"><?= h($stackDescription) ?></p>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <div class="xr-orbit__stack-aside">
+                    <div class="xr-orbit__stage xr-orbit__stage--stack" style="--n: <?= (int) $nOrbit ?>">
+                        <div class="xr-orbit__center xr-orbit__center--stack">
+                            <?php if ($centerImage !== ''): ?>
+                                <img class="xr-orbit__center-img" src="<?= h($centerImage) ?>" alt="" loading="lazy" decoding="async">
+                            <?php endif; ?>
+                            <?php if ($centerLabel !== ''): ?>
+                                <span class="xr-orbit__center-txt"><?= h($centerLabel) ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <?php foreach ($orbitItems as $i => $c): ?>
+                            <div class="xr-orbit__card" style="--i: <?= (int) $i ?>">
+                                <span class="xr-orbit__card-line">
+                                    <?php if ($pillLabelIcon !== ''): ?>
+                                        <img class="xr-orbit__pill-icon" src="<?= h($pillLabelIcon) ?>" alt="" width="26" height="26" loading="lazy" decoding="async" aria-hidden="true">
+                                    <?php endif; ?>
+                                    <span class="xr-orbit__card-label"><?= h($c['label']) ?></span>
+                                </span>
+                                <?php if ($c['sub'] !== ''): ?>
+                                    <span class="xr-orbit__card-sub"><?= h($c['sub']) ?></span>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
+    <?php
+}
+
+/**
+ * Institutions i-3-10 — masonry feature cards (white / dark / summary).
+ *
+ * @param array<string, mixed> $card
+ */
+function xr_i310_render_card(array $card): void
+{
+    $variant = (string) ($card['variant'] ?? 'white');
+    if ($variant === 'summary') {
+        $lines = is_array($card['lines'] ?? null) ? $card['lines'] : [];
+        if ($lines === []) {
+            return;
+        }
+        ?>
+        <article class="xr-i310-card xr-i310-card--summary xr-reveal">
+            <div class="xr-i310-card__lines">
+                <?php foreach ($lines as $ln): ?>
+                    <p class="xr-i310-card__line"><?= h((string) $ln) ?></p>
+                <?php endforeach; ?>
+            </div>
+        </article>
+        <?php
+        return;
+    }
+
+    $ta = (string) ($card['title_a'] ?? '');
+    $tb = (string) ($card['title_b'] ?? '');
+    $tf = (string) ($card['title'] ?? '');
+    $isDark = $variant === 'dark';
+    $rootClass = 'xr-i310-card xr-reveal xr-i310-card--' . ($isDark ? 'dark' : 'white');
+    ?>
+    <article class="<?= h($rootClass) ?>">
+        <?php if ($isDark): ?>
+            <?php
+            $imgSrc = trim((string) ($card['image'] ?? ''));
+            if ($imgSrc === '') {
+                $imgSrc = xr_figma_asset('institutions', 'inst-310a', 'xrinst310a', 640, 360);
+            }
+            $alt = trim($ta . ' ' . $tb);
+            ?>
+            <figure class="xr-i310-card__fig">
+                <img
+                    src="<?= h($imgSrc) ?>"
+                    alt="<?= h($alt !== '' ? $alt : ' ') ?>"
+                    width="640"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                />
+            </figure>
+        <?php endif; ?>
+        <div class="xr-i310-card__body">
+            <?php if ($ta !== '' || $tb !== ''): ?>
+                <h3 class="xr-i310-card__title">
+                    <?php if ($ta !== ''): ?>
+                        <span class="xr-i310-card__title-a"><?= h($ta) ?></span><?php endif; ?><?php if ($tb !== ''): ?>
+                        <span class="xr-i310-card__title-b"><?= h($tb) ?></span><?php endif; ?>
+                </h3>
+            <?php elseif ($tf !== ''): ?>
+                <h3 class="xr-i310-card__title"><?= h($tf) ?></h3>
+            <?php endif; ?>
+            <?php if ((string) ($card['body'] ?? '') !== ''): ?>
+                <?php
+                $bodyRaw = trim((string) $card['body']);
+                $chunks = preg_split('/\r\n\r\n|\n\n/', $bodyRaw) ?: [];
+                $chunks = array_values(array_filter(array_map('trim', $chunks)));
+                if ($chunks === []) {
+                    $chunks = [$bodyRaw];
+                }
+                foreach ($chunks as $chunk): ?>
+                    <p class="xr-i310-card__text"><?= h($chunk) ?></p>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </article>
     <?php
 }
 
 function xr_block_white_planks(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-10') {
+        $columns = is_array($p['columns'] ?? null) ? $p['columns'] : [];
+        $heading = trim((string) ($p['title'] ?? ''));
+        ?>
+        <div class="xr-i310">
+            <?php if ($heading !== ''): ?>
+                <h2 class="xr-i310__heading xr-reveal"><?= h($heading) ?></h2>
+            <?php endif; ?>
+            <div class="xr-i310__wrap">
+                <?php foreach ($columns as $col): ?>
+                    <?php if (!is_array($col)) {
+                        continue;
+                    } ?>
+                    <div class="xr-i310__col">
+                        <?php foreach ($col as $card): ?>
+                            <?php if (!is_array($card)) {
+                                continue;
+                            } ?>
+                            <?php xr_i310_render_card($card); ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $planks = is_array($p['planks'] ?? null) ? $p['planks'] : [];
     $stagger = !empty($p['stagger']);
     $rootClass = 'xr-planks' . ($stagger ? ' xr-planks--stagger' : '');

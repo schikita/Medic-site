@@ -17,6 +17,8 @@ pro-11a  pro-11b  pro-11c
 pro-16
 
 --- institutions/ ---
+inst-310a  inst-310b
+inst-311
 inst-31a  inst-31b
 inst-32
 inst-35a  inst-35b  inst-35c

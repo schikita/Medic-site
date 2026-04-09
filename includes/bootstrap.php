@@ -25,14 +25,16 @@ function load_site(): array
     if (xr_site_uses_database()) {
         try {
             xr_site_db_ensure_installed();
-
-            return xr_normalize_site_for_seo(xr_db_load_site_merged($def, xr_db()));
+            $site = xr_db_load_site_merged($def, xr_db());
         } catch (Throwable $e) {
-            return xr_normalize_site_for_seo(load_site_from_json_only($def));
+            $site = load_site_from_json_only($def);
         }
+    } else {
+        $site = load_site_from_json_only($def);
     }
+    $site = xr_site_merge_blocks_with_defaults($def, $site);
 
-    return xr_normalize_site_for_seo(load_site_from_json_only($def));
+    return xr_normalize_site_for_seo($site);
 }
 
 function migrate_legacy_to_full(array $raw): array

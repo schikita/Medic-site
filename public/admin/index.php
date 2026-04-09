@@ -878,6 +878,37 @@ $token = csrf_token();
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Feature masonry (i-3-10) — тёмные карточки</legend>
+                    <p class="admin-hint">Картинки для блоков Diagnostic (кол. 1) и Tele-Mentoring (кол. 2). Можно вставить URL или загрузить файл (↑).</p>
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label">Diagnostic — изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="inst_i310_image_a" value="<?= h((string)($instState['i310_image_a'] ?? '')) ?>" placeholder="/uploads/... или /assets/img/figma/institutions/inst-310a.webp">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($instState['i310_image_a'] ?? '')) ?>" alt=""<?= ((string)($instState['i310_image_a'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="admin-label">Tele-Mentoring — изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="inst_i310_image_b" value="<?= h((string)($instState['i310_image_b'] ?? '')) ?>" placeholder="/uploads/... или /assets/img/figma/institutions/inst-310b.webp">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($instState['i310_image_b'] ?? '')) ?>" alt=""<?= ((string)($instState['i310_image_b'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Gallery (i-3-21-24)</legend>
                     <label class="admin-label">Заголовок галереи</label>
                     <input class="admin-input" name="inst_gallery_heading" value="<?= h($instState['gallery_heading']) ?>">
@@ -966,6 +997,70 @@ $token = csrf_token();
                                 <img class="admin-img-preview" src="<?= h((string)($instState['ba_after_image'] ?? '')) ?>" alt=""<?= ((string)($instState['ba_after_image'] ?? '')) === '' ? ' hidden' : '' ?>>
                             </div>
                         </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Discover banner (i-3-7)</legend>
+                    <p class="admin-hint">Три строки заголовка по центру на градиентном фоне.</p>
+                    <label class="admin-label">Строка 1</label>
+                    <input class="admin-input" name="inst_discover_line_1" value="<?= h((string)($instState['discover_line_1'] ?? '')) ?>">
+                    <label class="admin-label">Строка 2</label>
+                    <input class="admin-input" name="inst_discover_line_2" value="<?= h((string)($instState['discover_line_2'] ?? '')) ?>">
+                    <label class="admin-label">Строка 3</label>
+                    <input class="admin-input" name="inst_discover_line_3" value="<?= h((string)($instState['discover_line_3'] ?? '')) ?>">
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Orbit Assistant (i-3-8)</legend>
+                    <?php
+                    $orbitL = is_array($instState['orbit_label'] ?? null) ? $instState['orbit_label'] : array_fill(0, 8, '');
+                    ?>
+                    <p class="admin-hint">Текст слева, орбита справа. Центральное изображение — круг в блоке орбиты.</p>
+                    <label class="admin-label">Текст слева в режиме stack (если не заданы поля Assistant выше — две колонки как в Page Builder)</label>
+                    <textarea class="admin-textarea admin-textarea--sm" name="inst_orbit_stack_description" rows="3" placeholder="Короткий абзац под заголовком"><?= h((string)($instState['orbit_stack_description'] ?? '')) ?></textarea>
+                    <label class="admin-label">Заголовок (градиент)</label>
+                    <input class="admin-input" name="inst_orbit_intro_title" value="<?= h((string)($instState['orbit_intro_title'] ?? '')) ?>">
+                    <label class="admin-label">Подзаголовок (несколько строк — Enter для переноса)</label>
+                    <textarea class="admin-textarea admin-textarea--sm" name="inst_orbit_intro_subtitle" rows="3"><?= h((string)($instState['orbit_intro_subtitle'] ?? '')) ?></textarea>
+                    <label class="admin-label">Абзац</label>
+                    <textarea class="admin-input" name="inst_orbit_intro_body" rows="3"><?= h((string)($instState['orbit_intro_body'] ?? '')) ?></textarea>
+                    <div class="admin-grid2">
+                        <div>
+                            <label class="admin-label">Карточка 1 — заголовок</label>
+                            <input class="admin-input" name="inst_orbit_f0_title" value="<?= h((string)($instState['orbit_f0_title'] ?? '')) ?>">
+                            <label class="admin-label">Карточка 1 — текст</label>
+                            <textarea class="admin-textarea admin-textarea--sm" name="inst_orbit_f0_text" rows="2"><?= h((string)($instState['orbit_f0_text'] ?? '')) ?></textarea>
+                        </div>
+                        <div>
+                            <label class="admin-label">Карточка 2 — заголовок</label>
+                            <input class="admin-input" name="inst_orbit_f1_title" value="<?= h((string)($instState['orbit_f1_title'] ?? '')) ?>">
+                            <label class="admin-label">Карточка 2 — текст</label>
+                            <textarea class="admin-textarea admin-textarea--sm" name="inst_orbit_f1_text" rows="2"><?= h((string)($instState['orbit_f1_text'] ?? '')) ?></textarea>
+                        </div>
+                    </div>
+                    <label class="admin-label">Подпись внутри круга под фото (напр. XR DOCTOR)</label>
+                    <input class="admin-input" name="inst_orbit_center_label" value="<?= h((string)($instState['orbit_center_label'] ?? '')) ?>">
+                    <label class="admin-label">Иконка слева от меток на орбите (URL)</label>
+                    <input class="admin-input admin-img-url" name="inst_orbit_pill_label_icon" value="<?= h((string)($instState['orbit_pill_label_icon'] ?? '')) ?>" placeholder="/uploads/...">
+                    <label class="admin-label">Фото в центре круга</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="inst_orbit_center_image" value="<?= h((string)($instState['orbit_center_image'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($instState['orbit_center_image'] ?? '')) ?>" alt=""<?= ((string)($instState['orbit_center_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <p class="admin-hint" style="margin-top:1rem">Подписи на орбите (по часовой, до 8)</p>
+                    <div class="admin-grid2" style="grid-template-columns:repeat(4,1fr)">
+                        <?php for ($oi = 0; $oi < 8; $oi++): ?>
+                        <div>
+                            <label class="admin-label">Метка <?= $oi + 1 ?></label>
+                            <input class="admin-input" name="inst_orbit_label_<?= $oi ?>" value="<?= h((string)($orbitL[$oi] ?? '')) ?>" placeholder="Label">
+                        </div>
+                        <?php endfor; ?>
                     </div>
                 </fieldset>
 

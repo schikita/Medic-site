@@ -606,8 +606,6 @@
                 "type": "team_visioners",
                 "id": "block-1-11-team",
                 "props": {
-                    "title": "Bridging Expertise & Innovation",
-                    "subtitle": "XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession.",
                     "card_title": "Visioners",
                     "card_subtitle": "behind XR Doctor",
                     "achievements": [
@@ -670,6 +668,8 @@
                             "label": "engaged countries"
                         }
                     ],
+                    "title": "Bridging Expertise & Innovation",
+                    "subtitle": "XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession.",
                     "image": ""
                 }
             },
@@ -677,6 +677,8 @@
                 "type": "expertise_banner",
                 "id": "block-1-11",
                 "props": {
+                    "title": "Bridging Expertise & Innovation",
+                    "subtitle": "XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession.",
                     "card_title": "Visioners",
                     "card_subtitle": "behind XR Doctor",
                     "achievements": [
@@ -738,9 +740,7 @@
                             "value": "20+",
                             "label": "engaged countries"
                         }
-                    ],
-                    "title": "Bridging Expertise & Innovation",
-                    "subtitle": "XR Doctor unites cutting-edge technology with top medical expertise to deliver change and create pioneering XR Platform with built-in AI reshaping the medical profession."
+                    ]
                 }
             },
             {
@@ -978,16 +978,16 @@
                 "type": "starfield_cta",
                 "id": "block-1-19",
                 "props": {
+                    "infinity_symbol": "∞",
+                    "title": "Ready to see your first holographic case?",
+                    "button_label": "Request Demo",
+                    "href": "#hubspot-demo",
                     "line1": "Scale Your Success with XR Doctor",
                     "line2": "Next Level Starts Now",
                     "lines": [
                         "Precision. Presence. Scale.",
                         "XR Doctor brings teams into the same spatial truth."
-                    ],
-                    "infinity_symbol": "∞",
-                    "title": "Ready to see your first holographic case?",
-                    "button_label": "Request Demo",
-                    "href": "#hubspot-demo"
+                    ]
                 }
             },
             {
@@ -1038,6 +1038,9 @@
                 "type": "engage_split",
                 "id": "p-2-2",
                 "props": {
+                    "mp4": "https:\/\/www.w3schools.com\/html\/mov_bbb.mp4",
+                    "poster": "https:\/\/picsum.photos\/seed\/xrprof2\/1440\/800",
+                    "text": "Single-play cinematic intro — holds the last frame, then scroll to continue.",
                     "left_title": "Daily workflow",
                     "left_text": "Structured like block 1.8 — without tab chrome: clear columns and media.",
                     "right_image": "https:\/\/picsum.photos\/seed\/xrprof3\/700\/500",
@@ -1060,6 +1063,9 @@
                 "type": "reality_slider",
                 "id": "p-2-3",
                 "props": {
+                    "left_title": "Daily workflow",
+                    "left_text": "Structured like block 1.8 — without tab chrome: clear columns and media.",
+                    "right_image": "https:\/\/picsum.photos\/seed\/xrprof3\/700\/500",
                     "cards": [
                         {
                             "title": "Diagnostics",
@@ -1116,6 +1122,28 @@
                 "type": "equips_compare",
                 "id": "p-2-4",
                 "props": {
+                    "cards": [
+                        {
+                            "title": "Diagnostics",
+                            "text": "Layered holograms for rounds and planning.",
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof4a\/400\/240"
+                        },
+                        {
+                            "title": "Education",
+                            "text": "Repeatable scenarios with measurable outcomes.",
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof4b\/400\/240"
+                        },
+                        {
+                            "title": "Research",
+                            "text": "Shareable models for multi-site studies.",
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof4c\/400\/240"
+                        },
+                        {
+                            "title": "Operations",
+                            "text": "Deploy kits with enterprise controls.",
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof4d\/400\/240"
+                        }
+                    ],
                     "heading": "Walkthrough for clinical teams",
                     "youtube_id": "dQw4w9WgXcQ",
                     "title": "XR Doctor Equips What Matters",
@@ -1132,6 +1160,8 @@
                 "type": "growth_cards",
                 "id": "p-2-5",
                 "props": {
+                    "heading": "Walkthrough for clinical teams",
+                    "youtube_id": "dQw4w9WgXcQ",
                     "prefix": "XR Doctor for Every You.",
                     "rotating": [
                         "Your Vision.",
@@ -1176,6 +1206,27 @@
                 "type": "assistant_tabs_slider",
                 "id": "p-2-6",
                 "props": {
+                    "prefix": "XR Doctor for Every You.",
+                    "rotating": [
+                        "Your Vision.",
+                        "Your Tool.",
+                        "XR Doctor."
+                    ],
+                    "interval_ms": 2800,
+                    "panels": [
+                        {
+                            "label": "Clinicians",
+                            "text": "Same animated headline behavior on each horizontal tab."
+                        },
+                        {
+                            "label": "Educators",
+                            "text": "Bold segment cycles automatically for attention."
+                        },
+                        {
+                            "label": "Leaders",
+                            "text": "Swap copy per audience while motion stays consistent."
+                        }
+                    ],
                     "tabs": [
                         {
                             "label": "Doctor",
@@ -1222,34 +1273,40 @@
                 "type": "nextgen_image_slider",
                 "id": "p-2-7",
                 "props": {
-                    "title": "A Next-GeN Tool for Every You",
-                    "subtitle": "As block 1.3 — tuned for Professionals narrative.",
-                    "base_color": "#0d1b2a",
-                    "chip_left": "XR Doctor",
-                    "chip_right": "Exclusive",
                     "tabs": [
                         {
                             "label": "XR Doctor",
+                            "body": "Three horizontal tabs — reviews-style rhythm.",
                             "subtitle": "Immersive Interactive Exploring & Analyzing Data",
                             "image": "\/uploads\/2026\/04\/0226f3d04febe34bc9d82082.png"
                         },
                         {
                             "label": "Student",
+                            "body": "Link out to studies or PDFs from your CMS.",
                             "subtitle": "Seamless Teamwork in a Shared Holographic Workspace",
                             "image": "\/uploads\/2026\/04\/136f820d0f40277408e94574.png"
                         },
                         {
                             "label": "Researcher",
+                            "body": "Describe SSO, audit, and data residency.",
                             "subtitle": "Next-GeN Remote Holographic Collaboration & Telementoring",
                             "image": "\/uploads\/2026\/04\/5eb62513ee1aa91698d70906.jpg"
                         }
-                    ]
+                    ],
+                    "title": "A Next-GeN Tool for Every You",
+                    "subtitle": "As block 1.3 — tuned for Professionals narrative.",
+                    "base_color": "#0d1b2a",
+                    "chip_left": "XR Doctor",
+                    "chip_right": "Exclusive"
                 }
             },
             {
                 "type": "challenges_glasses",
                 "id": "p-2-8",
                 "props": {
+                    "title": "Solve Challenges with XR Doctor & AR\/VR Glasses",
+                    "subtitle": "As block 1.3 — tuned for Professionals narrative.",
+                    "base_color": "#0d1b2a",
                     "heading": "Hardware fit (auto carousel)",
                     "slides": [
                         {
@@ -1266,7 +1323,6 @@
                         }
                     ],
                     "interval_ms": 3500,
-                    "title": "Solve Challenges with XR Doctor & AR\/VR Glasses",
                     "device_image": "",
                     "device_caption": "Apple Vision Pro",
                     "columns": [
@@ -1347,6 +1403,22 @@
                 "type": "tele_mentoring_bullets",
                 "id": "p-2-9",
                 "props": {
+                    "heading": "Hardware fit (auto carousel)",
+                    "slides": [
+                        {
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof9a\/500\/400",
+                            "title": "Fit A"
+                        },
+                        {
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof9b\/500\/400",
+                            "title": "Fit B"
+                        },
+                        {
+                            "image": "https:\/\/picsum.photos\/seed\/xrprof9c\/500\/400",
+                            "title": "Fit C"
+                        }
+                    ],
+                    "interval_ms": 3500,
                     "headline": "Designed for accountable outcomes",
                     "paragraph": "Animated headline entrance + supporting copy for scanning.",
                     "title": "Tele-Mentoring XR Doctor - XR\/AI-Powered Medical Mentorship",
@@ -1358,18 +1430,15 @@
                         "Bringing top medical expertise without travel limitations into your daily practice"
                     ],
                     "footer_a": "Expert Guidance",
-                    "footer_b": "When and Where You Need It",
-                    "slides": [
-                        [],
-                        [],
-                        []
-                    ]
+                    "footer_b": "When and Where You Need It"
                 }
             },
             {
                 "type": "text_heading_anim",
                 "id": "p-2-10",
                 "props": {
+                    "headline": "Designed for accountable outcomes",
+                    "paragraph": "Animated headline entrance + supporting copy for scanning.",
                     "images": [
                         "https:\/\/picsum.photos\/seed\/xrprof11a\/320\/200",
                         "https:\/\/picsum.photos\/seed\/xrprof11b\/320\/200",
@@ -1388,15 +1457,48 @@
                             "label": "Step 3",
                             "body": "Tie to block 4.3 pinned article when you add that page."
                         }
-                    ],
-                    "headline": "Designed for accountable outcomes",
-                    "paragraph": "Animated headline entrance + supporting copy for scanning."
+                    ]
                 }
             },
             {
                 "type": "tabs_top_images",
                 "id": "p-2-11",
                 "props": {
+                    "title": "Your Workflow with XR Doctor",
+                    "subtitle": "Easy Start. Simple Steps. Next-GeN Reality.",
+                    "footer": "Built for real professionals. Ready to be a part of your daily work.",
+                    "steps": [
+                        {
+                            "title": "I. Login",
+                            "text": "Sign up in seconds and step into your XR workspace",
+                            "image": "\/uploads\/2026\/04\/f43241212327afa438d42008.png"
+                        },
+                        {
+                            "title": "II. Upload",
+                            "text": "Advancing holographic interactive visualization tools for medical excellence",
+                            "image": "\/uploads\/2026\/04\/8c4fe514ec8fb06a1059ca3d.png"
+                        },
+                        {
+                            "title": "III. Work",
+                            "text": "Apply pioneering professional hologram \r\ntools in daily work",
+                            "image": "\/uploads\/2026\/04\/889835aa381b7dedcd52df46.png"
+                        },
+                        {
+                            "title": "IV. Share",
+                            "text": "Collaborate seamlessly \r\nwith shared holograms \r\nonsite and remotely",
+                            "image": "\/uploads\/2026\/04\/696337d6eafb5cfbd33b24a8.png"
+                        },
+                        {
+                            "title": "V. Scale",
+                            "text": "Scale worldwide \r\nholographic work \r\nacross roles and tasks",
+                            "image": "\/uploads\/2026\/04\/14c7430fc16882030cb6db91.png"
+                        },
+                        {
+                            "title": "VI. Stream",
+                            "text": "Show view from \r\nglasses globally to any \r\nscreens and YouTube",
+                            "image": "\/uploads\/2026\/04\/d5772e10c18fa9969bd2a24a.png"
+                        }
+                    ],
                     "plans": [
                         {
                             "name": "Team",
@@ -1445,36 +1547,6 @@
                             "label": "Step 3",
                             "body": "Tie to block 4.3 pinned article when you add that page."
                         }
-                    ],
-                    "steps": [
-                        {
-                            "image": "\/uploads\/2026\/04\/f43241212327afa438d42008.png",
-                            "title": "I. Login"
-                        },
-                        {
-                            "image": "\/uploads\/2026\/04\/8c4fe514ec8fb06a1059ca3d.png",
-                            "title": "II. Upload"
-                        },
-                        {
-                            "image": "\/uploads\/2026\/04\/889835aa381b7dedcd52df46.png",
-                            "title": "III. Work",
-                            "text": "Apply pioneering professional hologram \r\ntools in daily work"
-                        },
-                        {
-                            "image": "\/uploads\/2026\/04\/696337d6eafb5cfbd33b24a8.png",
-                            "title": "IV. Share",
-                            "text": "Collaborate seamlessly \r\nwith shared holograms \r\nonsite and remotely"
-                        },
-                        {
-                            "image": "\/uploads\/2026\/04\/14c7430fc16882030cb6db91.png",
-                            "title": "V. Scale",
-                            "text": "Scale worldwide \r\nholographic work \r\nacross roles and tasks"
-                        },
-                        {
-                            "image": "\/uploads\/2026\/04\/d5772e10c18fa9969bd2a24a.png",
-                            "title": "VI. Stream",
-                            "text": "Show view from \r\nglasses globally to any \r\nscreens and YouTube"
-                        }
                     ]
                 }
             },
@@ -1482,6 +1554,8 @@
                 "type": "pricing_creative",
                 "id": "p-2-13",
                 "props": {
+                    "eyebrow": "XR Doctor knows what matters & designed plans that work for you",
+                    "title": "Choose Your Plan\n& Let XR Doctor\nEmpower Your Every Day",
                     "line1": "XRdoctor.",
                     "line2": "The next chapter of medical XR is shipping continuously.",
                     "plans": [
@@ -1520,6 +1594,69 @@
                 "type": "coming_soon_anim",
                 "id": "p-2-14",
                 "props": {
+                    "title": "Affordable\nPrices for\nEveryone",
+                    "tabs": [
+                        {
+                            "label": "Glasses Licence"
+                        },
+                        {
+                            "label": "Content Cost"
+                        }
+                    ],
+                    "panels": [
+                        {
+                            "cards": [
+                                {
+                                    "badge": "VR Glasses",
+                                    "price": "$65 mo\/$699 year",
+                                    "items": [
+                                        "Inside a fully virtual space",
+                                        "Work with interactive hologram",
+                                        "Explore clinical and simulated cases",
+                                        "Precise diagnosis and preparation",
+                                        "Immersive planning, executing, training"
+                                    ],
+                                    "cta": "Pre-Order"
+                                },
+                                {
+                                    "badge": "AR Glasses",
+                                    "price": "$95 mo\/$999 year",
+                                    "items": [
+                                        "Matched with the physical world",
+                                        "Work with interactive mapped hologram",
+                                        "Handle standard and complex cases",
+                                        "Enhance diagnostics via real overlay",
+                                        "Shared mapped hologram space"
+                                    ],
+                                    "cta": "Pre-Order"
+                                }
+                            ]
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "badge": "FREE",
+                                    "items": [
+                                        "Use your own 3D models",
+                                        "Upload as many as you need",
+                                        "Built to fit the platform",
+                                        "Included in every plan",
+                                        "No extra cost - start now"
+                                    ]
+                                },
+                                {
+                                    "badge": "From $7",
+                                    "items": [
+                                        "Standard CT-scans - $10",
+                                        "Prepaid bundles: 10 CT-scans - $90",
+                                        "25 CT-scans - $200",
+                                        "50 CT-scans - $350",
+                                        "Usage tracked in your account"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
                     "pairs": [
                         {
                             "lines": [
@@ -1542,6 +1679,20 @@
                 "type": "stagger_lines",
                 "id": "p-2-15",
                 "props": {
+                    "columns": [
+                        {
+                            "title": "World-Class Product",
+                            "text": "XR Doctor - Next-GeN interactive holographic tool with AI support to leap your growth & boost success setting the new world standard"
+                        },
+                        {
+                            "title": "World-Wide Network",
+                            "text": "Build a global network & become part of XR Doctor community for sharing expertise, hologram-guided telementoring via instant access to XR\/AI-powered shared space"
+                        },
+                        {
+                            "title": "World-Level Mastery",
+                            "text": "Achieve professional excellence & bring your skills to global standards with live layered mapped holograms & enhanced AI Clinical Assistance"
+                        }
+                    ],
                     "image": "https:\/\/picsum.photos\/seed\/xrprof16\/900\/500",
                     "text": "Pulsing CTA draws attention — hook your HubSpot demo form.",
                     "button_label": "Talk to us",
@@ -1566,6 +1717,7 @@
                 "type": "image_pulse_cta",
                 "id": "p-2-16",
                 "props": {
+                    "badge": "Stay tuned.",
                     "title": "Start with a guided pilot",
                     "body": "We help you pick cases, headsets, and success metrics — then scale.",
                     "image": "https:\/\/picsum.photos\/seed\/xrprof16\/900\/500",
@@ -1578,10 +1730,10 @@
                 "type": "reveal_outro",
                 "id": "p-2-17",
                 "props": {
-                    "title": "Start with a guided pilot",
-                    "body": "We help you pick cases, headsets, and success metrics — then scale.",
                     "image": "\/uploads\/2026\/04\/82bdbc11d93e75d7ab088086.png",
-                    "text": "Start with a guided pilot We help you pick cases, headsets, and success metrics — then scale."
+                    "text": "Start with a guided pilot We help you pick cases, headsets, and success metrics — then scale.",
+                    "title": "Start with a guided pilot",
+                    "body": "We help you pick cases, headsets, and success metrics — then scale."
                 }
             }
         ]
@@ -1605,6 +1757,9 @@
                 "id": "i-3-1",
                 "props": {
                     "heading": "Institutional rollout at a glance",
+                    "left_title": "Reinvent\nDaily Work\n& Education",
+                    "left_text": "Define Next-GeN Standard with\nXR Doctor ALL-IN-ONE Platform for\nClinics Practice\nMedical Education\nScientific Research",
+                    "right_footer": "Behind Next-GeN Edge",
                     "slides": [
                         {
                             "image": "\/uploads\/2026\/04\/f05e8f6ccaf10ff73ff5029c.png",
@@ -1625,7 +1780,10 @@
                 "props": {
                     "mp4": "https:\/\/www.w3schools.com\/html\/mov_bbb.mp4",
                     "poster": "https:\/\/picsum.photos\/seed\/xrinst32\/1440\/780",
-                    "text": "Block 3.2 — как 2.2: один проигрыш видео, затем последний кадр; на странице единая анимация появления текста."
+                    "text": "Block 3.2 — как 2.2: один проигрыш видео, затем последний кадр; на странице единая анимация появления текста.",
+                    "title": "ALL-IN-ONE",
+                    "line2": "XR Doctor Bring Together",
+                    "line3": "XR Doctor Assistant & Training"
                 }
             },
             {
@@ -1633,6 +1791,7 @@
                 "id": "i-3-3",
                 "props": {
                     "title": "Built for hospitals, health systems, and universities",
+                    "subtitle": "AI-powered XR Platform - tailored for your medical reality from hospitals to universities",
                     "body": "White content blocks (3.3, 3.9, 3.12, 3.14) — чистая типографика для политик, контрактов и программ обучения."
                 }
             },
@@ -1641,28 +1800,34 @@
                 "id": "i-3-4",
                 "props": {
                     "title": "Layered spatial stack",
-                    "subtitle": "Как блок 1.3: градиент, «звёздное» поле и текст по центру.",
-                    "base_color": "#12161c",
+                    "chip_a": "XR Doctor",
+                    "chip_b": "Exclusive",
+                    "interval_ms": 4200,
                     "slides": [
                         {
-                            "image": "\/uploads\/2026\/04\/e0b97dfc18db419c356612d2.png",
-                            "subtitle": "Leap Patient Care with Spatial Precision"
+                            "subtitle": "Leap Patient Care with Spatial Precision",
+                            "image": "\/uploads\/2026\/04\/e0b97dfc18db419c356612d2.png"
                         },
                         {
-                            "image": "\/uploads\/2026\/04\/9e9429043864f729cb6cfc58.png",
-                            "subtitle": "Boost  Mastery with True-to-Life Simulations"
+                            "subtitle": "Boost  Mastery with True-to-Life Simulations",
+                            "image": "\/uploads\/2026\/04\/9e9429043864f729cb6cfc58.png"
                         },
                         {
-                            "image": "\/uploads\/2026\/04\/e5ba57387a4802a01a9dd45c.png",
-                            "subtitle": "Harness Next-Gen Medical Infrastructure"
+                            "subtitle": "Harness Next-Gen Medical Infrastructure",
+                            "image": "\/uploads\/2026\/04\/e5ba57387a4802a01a9dd45c.png"
                         }
-                    ]
+                    ],
+                    "subtitle": "Как блок 1.3: градиент, «звёздное» поле и текст по центру.",
+                    "base_color": "#12161c"
                 }
             },
             {
                 "type": "tabs_youtube_loop",
                 "id": "i-3-5",
                 "props": {
+                    "eyebrow": "Meet the Next-GeN Tele-Prepresence Standard for daily work and education.",
+                    "title": "XR Doctor Tele-Mentoring",
+                    "subtitle": "Interactive Shared Holographic Space with AI support",
                     "heading": "Institutional walkthroughs",
                     "tabs": [
                         {
@@ -1700,13 +1865,17 @@
                     "after": {
                         "image": "\/uploads\/2026\/04\/6ef15bb950ecb79be176ac3a.jpg",
                         "label": "After"
-                    }
+                    },
+                    "title": "Before \/ After"
                 }
             },
             {
                 "type": "saas_split",
                 "id": "i-3-7",
                 "props": {
+                    "line_1": "Discover How XR Doctor",
+                    "line_2": "Redefines Care Delivery",
+                    "line_3": "for Next-LeveL Excellence",
                     "eyebrow": "SaaS-style hero",
                     "title": "Governance, uptime, and support in one pane",
                     "text": "Блок 3.7 — опора на SaaS-герой: крупный заголовок, градиентный фон, акцент на метрики внедрения.",
@@ -1719,23 +1888,54 @@
                 "id": "i-3-8",
                 "props": {
                     "title": "Programs on orbit",
+                    "intro_title": "XR Doctor Assistant",
+                    "intro_subtitle": "Bring Holographic Precision\r\nto Every Clinical Step",
+                    "intro_body": "From diagnostic to documentation – one tool ready to use anywhere in your workflow.",
+                    "center_image": "\/uploads\/2026\/04\/76572edbfcd4699cd3f8ab41.png",
                     "center_label": "XR Doctor",
+                    "pill_label_icon": "\/uploads\/2026\/04\/843d6a37f5f90bf58611dace.png",
+                    "features": [
+                        {
+                            "title": "Instant Deployment",
+                            "text": "Start using within hours, no change to infrastructure"
+                        },
+                        {
+                            "title": "Seamless Integration",
+                            "text": "Work with your existing system and imaging data"
+                        }
+                    ],
                     "cards": [
                         {
-                            "label": "SSO",
-                            "sub": "Identity"
+                            "label": "TeamWork",
+                            "sub": "SSO"
                         },
                         {
-                            "label": "LMS",
-                            "sub": "Hooks"
+                            "label": "Planning",
+                            "sub": "LMS"
                         },
                         {
-                            "label": "Audit",
-                            "sub": "Logs"
+                            "label": "Diagnostic",
+                            "sub": "Audit"
                         },
                         {
-                            "label": "SLA",
-                            "sub": "Support"
+                            "label": "Execution",
+                            "sub": "SLA"
+                        },
+                        {
+                            "label": "Tele-Mentoring",
+                            "sub": "Outcome Analysis"
+                        },
+                        {
+                            "label": "CaseRecords",
+                            "sub": "Patient Education"
+                        },
+                        {
+                            "label": "OutcomeAnalysis",
+                            "sub": "Team Work"
+                        },
+                        {
+                            "label": "PatientEducation",
+                            "sub": "Planning"
                         }
                     ]
                 }
@@ -1745,7 +1945,10 @@
                 "id": "i-3-9",
                 "props": {
                     "title": "Procurement-friendly packages",
-                    "body": "Повторяющийся белый блок 3.9 — описание лицензий, сроков пилота и расширения."
+                    "body": "Повторяющийся белый блок 3.9 — описание лицензий, сроков пилота и расширения.",
+                    "line_1": "ALL-IN-ONE",
+                    "line_2": "XR Doctor Assistant",
+                    "line_3": "Full-Cycle Clinical Product"
                 }
             },
             {
@@ -1753,6 +1956,72 @@
                 "id": "i-3-10",
                 "props": {
                     "title": "What teams get on day one",
+                    "columns": [
+                        [
+                            {
+                                "variant": "dark",
+                                "image": "\/uploads\/2026\/04\/e9fb70bda513976432ded3a6.png",
+                                "title_a": "Diag",
+                                "title_b": "nostic",
+                                "body": "Invest in XR Doctor — a scalable, world-changing solution with high returns. Enter a fast-growing market with massive revenue potential and a clear path to global impact."
+                            },
+                            {
+                                "variant": "white",
+                                "title_a": "Team",
+                                "title_b": "work",
+                                "body": "Unified shared holographic space offers unmatched opportunities for teamwork. Connecting any team size regardless of distance as if working side by side, it lets clinicians interact with the same hologram both for work and education – from local consultation to worldwide workshops and streaming. Expertise becomes an instantly shared and scalable asset across institutions and borders, establishing a cost-effective global standard."
+                            },
+                            {
+                                "variant": "summary",
+                                "lines": [
+                                    "World - Class Solution",
+                                    "World - Scale Product",
+                                    "World - Wide Connect"
+                                ]
+                            }
+                        ],
+                        [
+                            {
+                                "variant": "white",
+                                "title_a": "Treatment",
+                                "title_b": " Planning",
+                                "body": "Mapped holograms in real volume and size overlays on patient or manikin let clinicians compare incision, access routes or broader treatment pathways, help choose the optimal approach faster, rehearse complex cases individually or with the team across locations, and dramatically shorten planning time while reducing intraoperative risks."
+                            },
+                            {
+                                "variant": "dark",
+                                "image": "\/uploads\/2026\/04\/3fc569cb10d5ba1936d34763.png",
+                                "title_a": "Tele-",
+                                "title_b": "Mentoring",
+                                "body": "Our solutions are forward-thinking and rely on seamless connectivity across the world. Work with us to bring XR into real-world clinical use."
+                            },
+                            {
+                                "variant": "white",
+                                "title_a": "Case",
+                                "title_b": " Record",
+                                "body": "Real procedures become unique living case records with next-gen hologram visualisation — enrich patient history and become part of a clinical holographic library turning high-value, often inaccessible medical experience into inner clinic and global shared knowledge, strengthening clinical evidence, supporting insurance trust and opening new levels of education and training."
+                            }
+                        ],
+                        [
+                            {
+                                "variant": "white",
+                                "title_a": "Treatment",
+                                "title_b": " Execution",
+                                "body": "The interactive layered hologram set with mapped fixed real-size and scalable types combined with a powerful built-in measurement tool delivers next-level clinical support from high-risk surgeries to everyday interventional and non-invasive procedures, instead of heavy, slow-to-deploy equipment – light, affordable glasses, ready in seconds in any place."
+                            },
+                            {
+                                "variant": "white",
+                                "title_a": "Patient",
+                                "title_b": " Education",
+                                "body": "Understanding of diagnosis and treatment with holograms makes patient education clearer, faster and more trustworthy.\n\nTrue-to-life volumetric hologram visualization reduces patient fears, speeds up agreement to treatment, saves clinical time for more patients, earning lasting trust from both patients and insurance companies as strong diagnostic evidence."
+                            },
+                            {
+                                "variant": "white",
+                                "title_a": "Outcome",
+                                "title_b": " Analysis",
+                                "body": "XR Doctor creates a new layer of clinical intelligence – turns every case into a living shared knowledge system with AI support. Automatically collected outcome data builds a comprehensive view of treatments, reveals hidden patterns and risks, shows what methods work best and where complications too often occur. This evidence improves care and strengthens trust with both patients and insurers—saving lives and money."
+                            }
+                        ]
+                    ],
                     "planks": [
                         {
                             "title": "Playbooks",
@@ -1773,20 +2042,46 @@
                 "type": "orbit_cards",
                 "id": "i-3-11",
                 "props": {
-                    "title": "Ecosystem map (как 3.8)",
-                    "center_label": "Core",
+                    "title": "",
+                    "stack_description": "",
+                    "intro_title": "XR Doctor Assistant Brings",
+                    "intro_subtitle": "Uncover Advantages",
+                    "intro_body": "",
+                    "center_image": "https://picsum.photos/seed/xrinst311/640/640",
+                    "center_label": "",
+                    "pill_label_icon": "",
+                    "features": [],
+                    "center_pills": [
+                        "Clinical Assistant",
+                        "Training Coach",
+                        "Teamwork Mentor"
+                    ],
+                    "footer_line_a": "One Platform.",
+                    "footer_line_b": "Infinite Possibilities.",
                     "cards": [
                         {
-                            "label": "EHR",
-                            "sub": "Context"
+                            "label": "Unmatched Industry Edge",
+                            "sub": ""
                         },
                         {
-                            "label": "PACS",
-                            "sub": "Imaging"
+                            "label": "Up - Level Professionals",
+                            "sub": ""
                         },
                         {
-                            "label": "IdP",
-                            "sub": "Access"
+                            "label": "More Satisfied Patients",
+                            "sub": ""
+                        },
+                        {
+                            "label": "Smart and Efficient Learning",
+                            "sub": ""
+                        },
+                        {
+                            "label": "Time and Money Saving",
+                            "sub": ""
+                        },
+                        {
+                            "label": "Ground - Breaking Research",
+                            "sub": ""
                         }
                     ]
                 }

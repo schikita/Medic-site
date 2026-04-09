@@ -154,9 +154,112 @@ function xr_site_db_ensure_installed(): void
         if ($n === 0) {
             xr_db_persist_site($pdo, xr_site_seed_array_for_install());
         }
+        xr_db_migrate_orbit_i38_planning_label($pdo);
     } catch (Throwable $e) {
         xr_site_db_install();
     }
+}
+
+/**
+ * Content fixes for i-3-8 orbit cards when DB overrides site.json (same labels as merged defaults).
+ * Idempotent after each swap.
+ */
+function xr_db_migrate_orbit_i38_planning_label(PDO $pdo): void
+{
+    $stmt = $pdo->prepare('SELECT blocks_json FROM pages WHERE slug = ?');
+    $stmt->execute(['institutions']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+        return;
+    }
+    $blocks = json_decode((string) ($row['blocks_json'] ?? '[]'), true);
+    if (!is_array($blocks)) {
+        return;
+    }
+    $changed = false;
+    foreach ($blocks as $i => $b) {
+        if (!is_array($b) || ($b['id'] ?? '') !== 'i-3-8') {
+            continue;
+        }
+        $cards = $b['props']['cards'] ?? null;
+        if (!is_array($cards)) {
+            break;
+        }
+        if (isset($cards[0]) && is_array($cards[0])) {
+            $lab = trim((string) ($cards[0]['label'] ?? ''));
+            if (strcasecmp($lab, 'SSO') === 0) {
+                $blocks[$i]['props']['cards'][0]['label'] = "Team\nWork";
+                $blocks[$i]['props']['cards'][0]['sub'] = 'SSO';
+                $changed = true;
+            }
+        }
+        if (isset($cards[1]) && is_array($cards[1])) {
+            $lab = trim((string) ($cards[1]['label'] ?? ''));
+            if (strcasecmp($lab, 'LMS') === 0) {
+                $blocks[$i]['props']['cards'][1]['label'] = 'Planning';
+                $blocks[$i]['props']['cards'][1]['sub'] = 'LMS';
+                $changed = true;
+            }
+        }
+        if (isset($cards[2]) && is_array($cards[2])) {
+            $lab = trim((string) ($cards[2]['label'] ?? ''));
+            if (strcasecmp($lab, 'Audit') === 0) {
+                $blocks[$i]['props']['cards'][2]['label'] = 'Diagnostic';
+                $blocks[$i]['props']['cards'][2]['sub'] = 'Audit';
+                $changed = true;
+            }
+        }
+        if (isset($cards[3]) && is_array($cards[3])) {
+            $lab = trim((string) ($cards[3]['label'] ?? ''));
+            if (strcasecmp($lab, 'SLA') === 0) {
+                $blocks[$i]['props']['cards'][3]['label'] = 'Execution';
+                $blocks[$i]['props']['cards'][3]['sub'] = 'SLA';
+                $changed = true;
+            }
+        }
+        if (isset($cards[4]) && is_array($cards[4])) {
+            $lab = trim((string) ($cards[4]['label'] ?? ''));
+            if (strcasecmp($lab, 'Outcome Analysis') === 0) {
+                $blocks[$i]['props']['cards'][4]['label'] = "Tele-\nMentoring";
+                $blocks[$i]['props']['cards'][4]['sub'] = 'Outcome Analysis';
+                $changed = true;
+            }
+        }
+        if (isset($cards[5]) && is_array($cards[5])) {
+            $lab = trim((string) ($cards[5]['label'] ?? ''));
+            if (strcasecmp($lab, 'Patient Education') === 0) {
+                $blocks[$i]['props']['cards'][5]['label'] = "Case\nRecords";
+                $blocks[$i]['props']['cards'][5]['sub'] = 'Patient Education';
+                $changed = true;
+            }
+        }
+        if (isset($cards[6]) && is_array($cards[6])) {
+            $lab = trim((string) ($cards[6]['label'] ?? ''));
+            if (strcasecmp($lab, 'Team Work') === 0) {
+                $blocks[$i]['props']['cards'][6]['label'] = "Outcome\nAnalysis";
+                $blocks[$i]['props']['cards'][6]['sub'] = 'Team Work';
+                $changed = true;
+            }
+        }
+        if (isset($cards[7]) && is_array($cards[7])) {
+            $lab = trim((string) ($cards[7]['label'] ?? ''));
+            if (strcasecmp($lab, 'Planning') === 0) {
+                $blocks[$i]['props']['cards'][7]['label'] = "Patient\nEducation";
+                $blocks[$i]['props']['cards'][7]['sub'] = 'Planning';
+                $changed = true;
+            }
+        }
+        break;
+    }
+    if (!$changed) {
+        return;
+    }
+    $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false) {
+        return;
+    }
+    $up = $pdo->prepare('UPDATE pages SET blocks_json = ? WHERE slug = ?');
+    $up->execute([$json, 'institutions']);
 }
 
 function load_site_from_json_only(array $def): array
@@ -410,4 +513,55 @@ function xr_media_list(int $limit = 200): array
     } catch (Throwable $e) {
         return [];
     }
+}
+
+/**
+ * Merge saved page blocks with defaults by block id so new props from PHP defaults
+ * appear even when SQLite/JSON was saved before those keys existed.
+ *
+ * @param list<array<string, mixed>> $defaultBlocks
+ * @param list<array<string, mixed>> $savedBlocks
+ * @return list<array<string, mixed>>
+ */
+function xr_merge_page_blocks_with_defaults(array $defaultBlocks, array $savedBlocks): array
+{
+    $defById = [];
+    foreach ($defaultBlocks as $b) {
+        if (is_array($b) && isset($b['id'])) {
+            $defById[(string) $b['id']] = $b;
+        }
+    }
+    $out = [];
+    foreach ($savedBlocks as $b) {
+        if (!is_array($b)) {
+            continue;
+        }
+        $id = (string) ($b['id'] ?? '');
+        if ($id !== '' && isset($defById[$id])) {
+            $out[] = array_replace_recursive($defById[$id], $b);
+        } else {
+            $out[] = $b;
+        }
+    }
+
+    return $out;
+}
+
+/**
+ * @param array<string, mixed> $def  from default_site()
+ * @param array<string, mixed> $site merged site array
+ * @return array<string, mixed>
+ */
+function xr_site_merge_blocks_with_defaults(array $def, array $site): array
+{
+    foreach (XR_PAGE_SLUGS as $slug) {
+        $defBlocks = $def[$slug]['blocks'] ?? null;
+        $savedBlocks = $site[$slug]['blocks'] ?? null;
+        if (!is_array($defBlocks) || $defBlocks === [] || !is_array($savedBlocks) || $savedBlocks === []) {
+            continue;
+        }
+        $site[$slug]['blocks'] = xr_merge_page_blocks_with_defaults($defBlocks, $savedBlocks);
+    }
+
+    return $site;
 }

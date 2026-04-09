@@ -277,6 +277,9 @@ function xr_institutions_state(array $site): array
     $carousel = xr_find_block_props_by_id($blocks, 'i-3-1');
     $care     = xr_find_block_props_by_id($blocks, 'i-3-4');
     $beforeAfter = xr_find_block_props_by_id($blocks, 'i-3-6');
+    $discover    = xr_find_block_props_by_id($blocks, 'i-3-7');
+    $orbitI38    = xr_find_block_props_by_id($blocks, 'i-3-8');
+    $i310       = xr_find_block_props_by_id($blocks, 'i-3-10');
     $gallery  = xr_find_block_props_by_id($blocks, 'i-3-21-24');
     $careSlides = is_array($care['slides'] ?? null) ? $care['slides'] : [];
     $careRows = [];
@@ -287,6 +290,14 @@ function xr_institutions_state(array $site): array
             'subtitle' => (string)($r['subtitle'] ?? ''),
         ];
     }
+    $i310Cols = is_array($i310['columns'] ?? null) ? $i310['columns'] : [];
+    $i310c0 = is_array($i310Cols[0] ?? null) ? $i310Cols[0] : [];
+    $i310c1 = is_array($i310Cols[1] ?? null) ? $i310Cols[1] : [];
+    $i310cardDiag = is_array($i310c0[0] ?? null) ? $i310c0[0] : [];
+    $i310cardTele = is_array($i310c1[1] ?? null) ? $i310c1[1] : [];
+    $i310a = (string)($i310cardDiag['image'] ?? '');
+    $i310b = (string)($i310cardTele['image'] ?? '');
+
     return [
         'carousel_heading' => (string)($carousel['heading'] ?? ''),
         'carousel_slides'  => xr_slides_state($carousel),
@@ -298,6 +309,32 @@ function xr_institutions_state(array $site): array
         'ba_overlay_text'  => (string)($beforeAfter['overlay_text'] ?? ''),
         'ba_before_image'  => (string)(is_array($beforeAfter['before'] ?? null) ? ($beforeAfter['before']['image'] ?? '') : ''),
         'ba_after_image'   => (string)(is_array($beforeAfter['after'] ?? null) ? ($beforeAfter['after']['image'] ?? '') : ''),
+        'i310_image_a'     => $i310a,
+        'i310_image_b'     => $i310b,
+        'discover_line_1'  => (string)($discover['line_1'] ?? ''),
+        'discover_line_2'  => (string)($discover['line_2'] ?? ''),
+        'discover_line_3'  => (string)($discover['line_3'] ?? ''),
+        'orbit_intro_title'    => (string)($orbitI38['intro_title'] ?? ''),
+        'orbit_intro_subtitle' => (string)($orbitI38['intro_subtitle'] ?? ''),
+        'orbit_intro_body'     => (string)($orbitI38['intro_body'] ?? ''),
+        'orbit_center_image'   => (string)($orbitI38['center_image'] ?? ''),
+        'orbit_center_label'   => (string)($orbitI38['center_label'] ?? ''),
+        'orbit_pill_label_icon' => (string)($orbitI38['pill_label_icon'] ?? ''),
+        'orbit_f0_title'       => (string)(is_array($orbitI38['features'][0] ?? null) ? ($orbitI38['features'][0]['title'] ?? '') : ''),
+        'orbit_f0_text'        => (string)(is_array($orbitI38['features'][0] ?? null) ? ($orbitI38['features'][0]['text'] ?? '') : ''),
+        'orbit_f1_title'       => (string)(is_array($orbitI38['features'][1] ?? null) ? ($orbitI38['features'][1]['title'] ?? '') : ''),
+        'orbit_f1_text'        => (string)(is_array($orbitI38['features'][1] ?? null) ? ($orbitI38['features'][1]['text'] ?? '') : ''),
+        'orbit_stack_description' => (string)($orbitI38['stack_description'] ?? ''),
+        'orbit_label'          => (static function (array $orbitProps): array {
+            $oc = is_array($orbitProps['cards'] ?? null) ? $orbitProps['cards'] : [];
+            $out = [];
+            for ($i = 0; $i < 8; $i++) {
+                $row = is_array($oc[$i] ?? null) ? $oc[$i] : [];
+                $out[] = (string)($row['label'] ?? '');
+            }
+
+            return $out;
+        })($orbitI38),
         'gallery_heading'  => (string)($gallery['heading'] ?? ''),
         'gallery_slides'   => xr_slides_state($gallery),
     ];
