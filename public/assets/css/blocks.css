@@ -2450,24 +2450,26 @@
 }
 
 .xr-stories__card-icon {
-    width: 58px;
-    height: 58px;
+    width: 87px;
+    height: 87px;
     border-radius: 50%;
     background: #202040;
     border: 1px solid #4a4a80;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 36px;
     flex-shrink: 0;
     overflow: hidden;
 }
 
 .xr-stories__card-icon img {
-    width: 46px;
-    height: 46px;
+    width: 69px;
+    height: 69px;
+    max-width: none;
     object-fit: contain;
     display: block;
+    box-sizing: border-box;
 }
 
 .xr-stories__card-text {
@@ -2505,9 +2507,10 @@
 }
 
 .xr-stories__card-stars {
-    font-size: 13px;
+    font-size: 16px;
     color: #f5c518;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    line-height: 1;
 }
 
 /* Modal */
@@ -2577,16 +2580,25 @@
 }
 
 .xr-stories__micon {
-    width: 60px;
-    height: 60px;
+    width: 87px;
+    height: 87px;
     border-radius: 50%;
     background: #202040;
     border: 1px solid #4a4a80;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 36px;
     margin-bottom: 8px;
+}
+
+.xr-stories__micon img {
+    width: 69px;
+    height: 69px;
+    max-width: none;
+    object-fit: contain;
+    display: block;
+    box-sizing: border-box;
 }
 
 .xr-stories__mtag {
@@ -6384,14 +6396,20 @@
         radial-gradient(ellipse 90% 60% at 50% 0%, rgba(124, 58, 237, 0.25) 0%, transparent 55%),
         linear-gradient(180deg, #07070c 0%, #12121c 100%);
     color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    min-height: clamp(520px, 72vh, 900px);
 }
 
 .xr-orbit--advantages .xr-orbit__split-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    min-height: 0;
     width: 100%;
     max-width: min(1188px, 100%);
+    margin-inline: auto;
 }
 
 .xr-orbit--advantages .xr-orbit__grid {
@@ -6410,6 +6428,7 @@
 }
 
 .xr-orbit--advantages .xr-orbit__headline--advantages {
+    flex-shrink: 0;
     text-align: center;
     margin: 0 auto clamp(20px, 3vw, 36px);
     max-width: 960px;
@@ -6430,26 +6449,52 @@
     text-align: center;
 }
 
-.xr-orbit--advantages .xr-orbit__grid--visual-solo {
+/* Split grid sets align-items: start later in file — override so solo column centers its child on both axes */
+.xr-orbit--advantages.xr-orbit--split .xr-orbit__grid.xr-orbit__grid--visual-solo {
     grid-template-columns: 1fr;
+    align-items: center;
     justify-items: center;
-    max-width: min(720px, 100%);
+    place-items: center;
+    justify-content: center;
+    align-content: center;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: min(1024px, 100%);
     margin-inline: auto;
 }
 
+.xr-orbit--advantages.xr-orbit--split .xr-orbit__grid.xr-orbit__grid--visual-solo > .xr-orbit__visual {
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    max-width: min(920px, 100%);
+}
+
 .xr-orbit--advantages .xr-orbit__visual {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
     width: 100%;
-    max-width: min(646px, 100%);
+    max-width: min(920px, 100%);
     margin-inline: auto;
+    box-sizing: border-box;
 }
 
-.xr-orbit--advantages .xr-orbit__stage {
-    margin-left: auto;
-    margin-right: auto;
+/* Stage + rotator: centered in .xr-orbit__visual (no translate — keeps geometry aligned to parent midline) */
+.xr-orbit--advantages.xr-orbit--split .xr-orbit__stage {
+    --orbit-r: min(292px, 36vw);
+    width: min(100%, 840px);
+    max-width: 840px;
+    max-height: 840px;
+    margin-inline: auto;
+    transform: none;
+}
+
+.xr-orbit--advantages .xr-orbit__pill {
+    max-width: min(288px, 62vw);
 }
 
 .xr-orbit__center-strip {
@@ -6471,9 +6516,49 @@
     white-space: nowrap;
 }
 
-.xr-orbit--advantages .xr-orbit__rings::before,
-.xr-orbit--advantages .xr-orbit__rings::after {
-    border-color: rgba(148, 163, 184, 0.32);
+/* i-3-11: радиальные «черточки» (SVG), не dashed по дуге; псевдоэлементы отключены */
+.xr-orbit--advantages.xr-orbit--split .xr-orbit__rings::before,
+.xr-orbit--advantages.xr-orbit--split .xr-orbit__rings::after {
+    content: none !important;
+    border: none;
+    animation: none;
+}
+
+.xr-orbit--advantages .xr-orbit__rings-ticks-svg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.xr-orbit--advantages .xr-orbit__rings-tick-band--inner {
+    transform-origin: 100px 100px;
+    animation: xr-orbit-adv-ticks-inner-spin 88s linear infinite;
+}
+
+.xr-orbit--advantages .xr-orbit__rings-tick-band--outer {
+    transform-origin: 100px 100px;
+    animation: xr-orbit-adv-ticks-outer-spin 120s linear infinite reverse;
+}
+
+.xr-orbit__rings-tick--inner {
+    fill: none;
+    stroke: rgb(203, 213, 225);
+    stroke-opacity: 0.8;
+    stroke-width: 0.55;
+    stroke-linecap: butt;
+}
+
+.xr-orbit__rings-tick--outer {
+    fill: none;
+    stroke: rgb(203, 213, 225);
+    stroke-opacity: 0.4;
+    stroke-width: 0.45;
+    stroke-linecap: butt;
 }
 
 .xr-orbit--advantages .xr-orbit__pill-inner {
@@ -6506,7 +6591,8 @@
 }
 
 .xr-orbit--advantages .xr-orbit__footer-tagline {
-    margin-top: clamp(56px, 9vw, 120px);
+    flex-shrink: 0;
+    margin-top: clamp(28px, 5vw, 64px);
 }
 
 .xr-orbit__footer-tagline-a {
@@ -6875,6 +6961,23 @@
 @media (prefers-reduced-motion: reduce) {
     .xr-orbit--split .xr-orbit__pill-drift {
         animation: none !important;
+    }
+
+    .xr-orbit--advantages .xr-orbit__rings-tick-band--inner,
+    .xr-orbit--advantages .xr-orbit__rings-tick-band--outer {
+        animation: none !important;
+    }
+}
+
+@keyframes xr-orbit-adv-ticks-inner-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes xr-orbit-adv-ticks-outer-spin {
+    to {
+        transform: rotate(360deg);
     }
 }
 
@@ -7305,6 +7408,14 @@
         --orbit-r: min(170px, 36vw);
     }
 
+    .xr-orbit--advantages.xr-orbit--split .xr-orbit__stage {
+        --orbit-r: min(220px, 36vw);
+        transform: none;
+        width: min(100%, min(720px, 100vw - 28px));
+        max-width: min(720px, 100vw - 28px);
+        max-height: min(720px, 100vw - 28px);
+    }
+
     .xr-orbit--stack .xr-orbit__stack-row {
         flex-direction: column;
         text-align: center;
@@ -7334,6 +7445,11 @@
 
     .xr-orbit--split .xr-orbit__stage {
         --orbit-r: min(128px, 34vw);
+    }
+
+    .xr-orbit--advantages.xr-orbit--split .xr-orbit__stage {
+        transform: translateX(0);
+        --orbit-r: min(132px, 34vw);
     }
 
     .xr-orbit__stage--stack {

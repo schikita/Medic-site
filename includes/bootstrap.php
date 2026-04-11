@@ -33,6 +33,7 @@ function load_site(): array
         $site = load_site_from_json_only($def);
     }
     $site = xr_site_merge_blocks_with_defaults($def, $site);
+    $site = xr_site_heal_missing_upload_urls($site);
 
     return xr_normalize_site_for_seo($site);
 }

@@ -565,3 +565,44 @@ function xr_site_merge_blocks_with_defaults(array $def, array $site): array
 
     return $site;
 }
+
+/**
+ * After git clone/pull, paths like /uploads/... from SQLite or JSON often point to files
+ * that were never committed. Replace missing local files with deterministic picsum URLs.
+ *
+ * @param array<string, mixed> $site
+ * @return array<string, mixed>
+ */
+function xr_site_heal_missing_upload_urls(array $site): array
+{
+    return xr_heal_upload_urls_in_value($site);
+}
+
+/**
+ * @param mixed $v
+ * @return mixed
+ */
+function xr_heal_upload_urls_in_value(mixed $v): mixed
+{
+    if (is_string($v)) {
+        if (str_starts_with($v, '/uploads/')) {
+            $local = ROOT . '/public' . $v;
+            if (!is_readable($local)) {
+                $seed = 'xrup' . substr(hash('sha256', $v), 0, 12);
+
+                return 'https://picsum.photos/seed/' . rawurlencode($seed) . '/1400/900';
+            }
+        }
+
+        return $v;
+    }
+    if (is_array($v)) {
+        foreach ($v as $k => $child) {
+            $v[$k] = xr_heal_upload_urls_in_value($child);
+        }
+
+        return $v;
+    }
+
+    return $v;
+}

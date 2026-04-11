@@ -34,6 +34,14 @@ function xr_block_hero_fullscreen(array $p, string $blockId = ''): void
             $mp4  = '';
         }
     }
+    $hasHeroVideo = $ytId !== '' || $mp4 !== '' || $webm !== '';
+    $overlayLines = $p['overlay_lines'] ?? [];
+    if ($hasHeroVideo && is_array($overlayLines)) {
+        $hiddenWhenVideo = ['Автоплей', 'Зацикленное видео'];
+        $overlayLines = array_values(array_filter($overlayLines, static function ($line) use ($hiddenWhenVideo): bool {
+            return !in_array(trim((string) $line), $hiddenWhenVideo, true);
+        }));
+    }
     ?>
     <div class="xr-hero-full">
         <div class="xr-hero-full__media">
@@ -60,7 +68,7 @@ function xr_block_hero_fullscreen(array $p, string $blockId = ''): void
         </div>
         <?php
         $note = trim((string) ($p['overlay_note'] ?? ''));
-        $lines = $p['overlay_lines'] ?? [];
+        $lines = $overlayLines;
         if ($note !== '' || (is_array($lines) && $lines !== [])):
             ?>
             <div class="xr-hero-full__labels">
@@ -3053,8 +3061,55 @@ function xr_block_orbit_cards(array $p, string $blockId = ''): void
                             </div>
                         <?php endif; ?>
                         <div class="xr-orbit__stage" style="--n: <?= (int) $nOrbit ?>">
-                            <div class="xr-orbit__rotator">
-                                <div class="xr-orbit__rings"></div>
+                                <div class="xr-orbit__rotator">
+                                <div class="xr-orbit__rings" aria-hidden="true">
+                                    <?php if ($blockId === 'i-3-11'): ?>
+                                        <svg class="xr-orbit__rings-ticks-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                            <g class="xr-orbit__rings-tick-band xr-orbit__rings-tick-band--inner">
+                                                <?php
+                                                $tickCx = 100.0;
+                                                $tickCy = 100.0;
+                                                for ($tickDeg = 0.0; $tickDeg < 360.0; $tickDeg += 3.6) {
+                                                    $tickRad = $tickDeg * M_PI / 180.0;
+                                                    $tc = cos($tickRad);
+                                                    $ts = sin($tickRad);
+                                                    $x1 = $tickCx + 50.0 * $tc;
+                                                    $y1 = $tickCy + 50.0 * $ts;
+                                                    $x2 = $tickCx + 53.8 * $tc;
+                                                    $y2 = $tickCy + 53.8 * $ts;
+                                                    echo sprintf(
+                                                        '<line class="xr-orbit__rings-tick xr-orbit__rings-tick--inner" x1="%.3f" y1="%.3f" x2="%.3f" y2="%.3f" />',
+                                                        $x1,
+                                                        $y1,
+                                                        $x2,
+                                                        $y2
+                                                    );
+                                                }
+                                                ?>
+                                            </g>
+                                            <g class="xr-orbit__rings-tick-band xr-orbit__rings-tick-band--outer">
+                                                <?php
+                                                for ($tickDeg = 0.0; $tickDeg < 360.0; $tickDeg += 3.6) {
+                                                    $tickRad = $tickDeg * M_PI / 180.0;
+                                                    $tc = cos($tickRad);
+                                                    $ts = sin($tickRad);
+                                                    $x1 = $tickCx + 76.2 * $tc;
+                                                    $y1 = $tickCy + 76.2 * $ts;
+                                                    $x2 = $tickCx + 80.0 * $tc;
+                                                    $y2 = $tickCy + 80.0 * $ts;
+                                                    echo sprintf(
+                                                        '<line class="xr-orbit__rings-tick xr-orbit__rings-tick--outer" x1="%.3f" y1="%.3f" x2="%.3f" y2="%.3f" />',
+                                                        $x1,
+                                                        $y1,
+                                                        $x2,
+                                                        $y2
+                                                    );
+                                                }
+                                                ?>
+                                            </g>
+                                        </svg>
+                                    <?php endif; ?>
+                                </div>
                                 <?php foreach ($orbitItems as $i => $c): ?>
                                     <?php
                                     $gid = 'xr-os-' . $orbitSid . '-' . (int) $i;

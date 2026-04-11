@@ -481,7 +481,7 @@
                     "subheading": "Saving Patients and Empowering Doctors",
                     "stories": [
                         {
-                            "icon": "<img src=\"\/assets\/img\/home\/icon-pediatric-cardiology.png\" alt=\"Pediatric Cardiology\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-pediatric-cardiology.png\" alt=\"Pediatric Cardiology\">",
                             "tags": [
                                 "Traumatology Orthopaedics",
                                 "Endoprosthesis"
@@ -495,7 +495,7 @@
                             "footer": "Interactive holographic measurement changed the outcome of the surgery"
                         },
                         {
-                            "icon": "<img src=\"\/assets\/img\/home\/icon-traumathology.png\" alt=\"Traumathology\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-traumathology.png\" alt=\"Traumathology\">",
                             "tags": [
                                 "Maxillofacial Otolaryngology",
                                 "Plastic Surgery"
@@ -509,7 +509,7 @@
                             "footer": "First in the world maxillofacial surgery with using holograms on an open skull!"
                         },
                         {
-                            "icon": "<img src=\"\/assets\/img\/home\/icon-dentistry.png\" alt=\"Dentistry\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-dentistry.png\" alt=\"Dentistry\">",
                             "tags": [
                                 "Dentistry",
                                 "Mental Health"
@@ -523,7 +523,7 @@
                             "footer": "Dentist Fascinated By Using Holograms During Treatment And Joined XR DOCTOR Team"
                         },
                         {
-                            "icon": "<img src=\"\/assets\/img\/home\/icon-dentistry-2.png\" alt=\"Dentistry\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-dentistry-2.png\" alt=\"Dentistry\">",
                             "tags": [
                                 "Oncology",
                                 "Traumatology"
@@ -537,7 +537,7 @@
                             "footer": "Surgeons gained access to the tumour in 30 minutes instead of the 3 hours initially planned"
                         },
                         {
-                            "icon": "<img src=\"\/assets\/img\/home\/icon-oncology.png\" alt=\"Oncology\" style=\"width:46px;height:46px;object-fit:contain;display:block\">",
+                            "icon": "<img src=\"\/assets\/img\/home\/icon-oncology.png\" alt=\"Oncology\">",
                             "tags": [
                                 "Pediatric",
                                 "Cardiac Surgery"
@@ -1762,14 +1762,13 @@
                     "right_footer": "Behind Next-GeN Edge",
                     "slides": [
                         {
-                            "image": "\/uploads\/2026\/04\/f05e8f6ccaf10ff73ff5029c.png",
+                            "image": "https:\/\/picsum.photos\/seed\/xrinst31a\/1200\/680",
                             "caption": "Campus-wide deployment"
                         },
                         {
-                            "image": "\/uploads\/2026\/04\/1cebdd529b8c0fa7a4b7eee6.png",
+                            "image": "https:\/\/picsum.photos\/seed\/xrinst31b\/1200\/680",
                             "caption": "Clinical integration"
-                        },
-                        []
+                        }
                     ],
                     "interval_ms": 4500
                 }
@@ -1806,15 +1805,15 @@
                     "slides": [
                         {
                             "subtitle": "Leap Patient Care with Spatial Precision",
-                            "image": "\/uploads\/2026\/04\/e0b97dfc18db419c356612d2.png"
+                            "image": "https:\/\/picsum.photos\/seed\/xrinst34a\/1600\/960"
                         },
                         {
                             "subtitle": "Boost  Mastery with True-to-Life Simulations",
-                            "image": "\/uploads\/2026\/04\/9e9429043864f729cb6cfc58.png"
+                            "image": "https:\/\/picsum.photos\/seed\/xrinst34b\/1600\/960"
                         },
                         {
                             "subtitle": "Harness Next-Gen Medical Infrastructure",
-                            "image": "\/uploads\/2026\/04\/e5ba57387a4802a01a9dd45c.png"
+                            "image": "https:\/\/picsum.photos\/seed\/xrinst34c\/1600\/960"
                         }
                     ],
                     "subtitle": "Как блок 1.3: градиент, «звёздное» поле и текст по центру.",
@@ -1859,11 +1858,11 @@
                     "overlay_title": "Collaborate Globally for All",
                     "overlay_text": "Both the same with Real – or – Digital Patient. Move & See",
                     "before": {
-                        "image": "\/uploads\/2026\/04\/869135ab0f87246255f5961b.jpg",
+                        "image": "https:\/\/picsum.photos\/seed\/xrinst36a\/900\/560",
                         "label": "Before"
                     },
                     "after": {
-                        "image": "\/uploads\/2026\/04\/6ef15bb950ecb79be176ac3a.jpg",
+                        "image": "https:\/\/picsum.photos\/seed\/xrinst36b\/900\/560",
                         "label": "After"
                     },
                     "title": "Before \/ After"
@@ -1891,9 +1890,9 @@
                     "intro_title": "XR Doctor Assistant",
                     "intro_subtitle": "Bring Holographic Precision\r\nto Every Clinical Step",
                     "intro_body": "From diagnostic to documentation – one tool ready to use anywhere in your workflow.",
-                    "center_image": "\/uploads\/2026\/04\/76572edbfcd4699cd3f8ab41.png",
+                    "center_image": "https:\/\/picsum.photos\/seed\/xrinst38ctr\/720\/720",
                     "center_label": "XR Doctor",
-                    "pill_label_icon": "\/uploads\/2026\/04\/843d6a37f5f90bf58611dace.png",
+                    "pill_label_icon": "https:\/\/picsum.photos\/seed\/xrinst38pill\/160\/160",
                     "features": [
                         {
                             "title": "Instant Deployment",
@@ -1960,7 +1959,7 @@
                         [
                             {
                                 "variant": "dark",
-                                "image": "\/uploads\/2026\/04\/e9fb70bda513976432ded3a6.png",
+                                "image": "https:\/\/picsum.photos\/seed\/xrinst310a\/640\/360",
                                 "title_a": "Diag",
                                 "title_b": "nostic",
                                 "body": "Invest in XR Doctor — a scalable, world-changing solution with high returns. Enter a fast-growing market with massive revenue potential and a clear path to global impact."
@@ -1989,7 +1988,7 @@
                             },
                             {
                                 "variant": "dark",
-                                "image": "\/uploads\/2026\/04\/3fc569cb10d5ba1936d34763.png",
+                                "image": "https:\/\/picsum.photos\/seed\/xrinst310b\/640\/360",
                                 "title_a": "Tele-",
                                 "title_b": "Mentoring",
                                 "body": "Our solutions are forward-thinking and rely on seamless connectivity across the world. Work with us to bring XR into real-world clinical use."
@@ -2049,7 +2048,7 @@
                     "intro_body": "",
                     "center_image": "https://picsum.photos/seed/xrinst311/640/640",
                     "center_label": "",
-                    "pill_label_icon": "",
+                    "pill_label_icon": "\/uploads\/2026\/04\/3f348185804549cc5b8f5299.png",
                     "features": [],
                     "center_pills": [
                         "Clinical Assistant",

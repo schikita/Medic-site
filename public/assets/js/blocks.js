@@ -550,6 +550,20 @@
         });
     }
 
+    /** Hologram stories: icon HTML may carry legacy inline width/height (e.g. from DB); CSS should control size. */
+    function xrStoriesStripIconImgSizing(scope) {
+        qsa("img", scope).forEach(function (im) {
+            im.style.removeProperty("width");
+            im.style.removeProperty("height");
+            im.removeAttribute("width");
+            im.removeAttribute("height");
+            var st = (im.getAttribute("style") || "").trim();
+            if (st === "" || st === ";") {
+                im.removeAttribute("style");
+            }
+        });
+    }
+
     function initHologramStories() {
         qsa("[data-stories-root]").forEach(function (root) {
             var jsonEl = qs("[data-stories-json]", root);
@@ -583,6 +597,7 @@
                         '<div class="xr-stories__card-tags">' + tagsHtml + "</div>" +
                         '<div class="xr-stories__card-stars" aria-hidden="true">★★★★★</div>';
                     track.appendChild(card);
+                    xrStoriesStripIconImgSizing(qs(".xr-stories__card-icon", card) || card);
                 });
                 qsa("[data-ridx]", track).forEach(function (btn) {
                     btn.addEventListener("click", function () { openModal(parseInt(btn.getAttribute("data-ridx"), 10)); });
@@ -630,7 +645,10 @@
             function fillModal(idx) {
                 var s = stories[idx];
                 if (!s) return;
-                if (mIcon)   mIcon.innerHTML = s.icon || "";
+                if (mIcon) {
+                    mIcon.innerHTML = s.icon || "";
+                    xrStoriesStripIconImgSizing(mIcon);
+                }
                 if (mTag)    mTag.innerHTML    = Array.isArray(s.tags) ? s.tags.join("<br>") : "";
                 if (mTitle)  mTitle.textContent = s.title || "";
                 if (mBody) {
