@@ -155,6 +155,7 @@ function xr_site_db_ensure_installed(): void
             xr_db_persist_site($pdo, xr_site_seed_array_for_install());
         }
         xr_db_migrate_orbit_i38_planning_label($pdo);
+        xr_db_migrate_institutions_pricing_blocks_i313_i314($pdo);
     } catch (Throwable $e) {
         xr_site_db_install();
     }
@@ -254,6 +255,89 @@ function xr_db_migrate_orbit_i38_planning_label(PDO $pdo): void
     if (!$changed) {
         return;
     }
+    $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false) {
+        return;
+    }
+    $up = $pdo->prepare('UPDATE pages SET blocks_json = ? WHERE slug = ?');
+    $up->execute([$json, 'institutions']);
+}
+
+/**
+ * Institutions page blocks i-3-13 / i-3-14: SQLite stores full blocks_json and wins over
+ * defaults in xr_merge_page_blocks_with_defaults — old DB rows kept white_text_section /
+ * legacy pricing props after git pull. Replace with canonical blocks from default_site()
+ * when still on outdated shape (idempotent).
+ */
+function xr_db_migrate_institutions_pricing_blocks_i313_i314(PDO $pdo): void
+{
+    $def = default_site();
+    $canonical = [];
+    foreach (($def['institutions']['blocks'] ?? []) as $b) {
+        if (!is_array($b)) {
+            continue;
+        }
+        $id = (string) ($b['id'] ?? '');
+        if ($id === 'i-3-13' || $id === 'i-3-14') {
+            $canonical[$id] = $b;
+        }
+    }
+    if ($canonical === []) {
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT blocks_json FROM pages WHERE slug = ?');
+    $stmt->execute(['institutions']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+        return;
+    }
+
+    $blocks = json_decode((string) ($row['blocks_json'] ?? '[]'), true);
+    if (!is_array($blocks)) {
+        return;
+    }
+
+    $changed = false;
+    foreach ($blocks as $i => $b) {
+        if (!is_array($b)) {
+            continue;
+        }
+        $id = (string) ($b['id'] ?? '');
+        if (!isset($canonical[$id])) {
+            continue;
+        }
+
+        $need = false;
+        if ($id === 'i-3-13') {
+            $p = is_array($b['props'] ?? null) ? $b['props'] : [];
+            if (isset($p['plans'])) {
+                $need = true;
+            } elseif (!isset($p['headlines']) || !is_array($p['headlines']) || count($p['headlines']) < 2) {
+                $need = true;
+            }
+        } elseif ($id === 'i-3-14') {
+            if (($b['type'] ?? '') !== 'pricing_three_tiers') {
+                $need = true;
+            } else {
+                $p = is_array($b['props'] ?? null) ? $b['props'] : [];
+                $tiers = $p['tiers'] ?? null;
+                if (!is_array($tiers) || count($tiers) < 2) {
+                    $need = true;
+                }
+            }
+        }
+
+        if ($need) {
+            $blocks[$i] = $canonical[$id];
+            $changed = true;
+        }
+    }
+
+    if (!$changed) {
+        return;
+    }
+
     $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     if ($json === false) {
         return;

@@ -2815,6 +2815,35 @@ function xr_block_white_text_section(array $p, string $blockId = ''): void
         return;
     }
 
+    if ($blockId === 'i-3-12') {
+        $title = trim((string) ($p['title'] ?? ''));
+        $headline = trim((string) ($p['headline'] ?? ''));
+        $body = trim((string) ($p['body'] ?? ''));
+        $display = $headline !== '' ? $headline : $title;
+        $kicker = ($headline !== '' && $title !== '') ? $title : '';
+        ?>
+        <div class="xr-white-section xr-white-section--hero">
+            <div class="xr-white-section__hero-inner">
+                <?php if ($kicker !== ''): ?>
+                    <p class="xr-white-section__hero-kicker"><?= h($kicker) ?></p>
+                <?php endif; ?>
+                <?php if ($display !== ''): ?>
+                    <h2 class="xr-white-section__hero-display"><?= h($display) ?></h2>
+                <?php endif; ?>
+                <?php if ($body !== ''): ?>
+                    <p class="xr-white-section__hero-body"><?= h($body) ?></p>
+                <?php endif; ?>
+            </div>
+            <div class="xr-white-section__hero-arc" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     ?>
     <div class="xr-white-section">
         <div class="xr-white-section__inner">
@@ -2965,9 +2994,13 @@ function xr_block_orbit_cards(array $p, string $blockId = ''): void
     }
     $nOrbit = max(1, count($orbitItems));
 
+    $orbitSvgTickRings = ($blockId === 'i-3-11' || $blockId === 'i-3-8');
     $rootClass = 'xr-orbit' . ($useSplit ? ' xr-orbit--split' : ' xr-orbit--stack');
     if ($blockId === 'i-3-11') {
         $rootClass .= ' xr-orbit--advantages';
+    }
+    if ($orbitSvgTickRings) {
+        $rootClass .= ' xr-orbit--svg-tick-rings';
     }
     $orbitSid = preg_replace('/[^a-zA-Z0-9_-]/', '-', $blockId !== '' ? $blockId : 'orbit');
     ?>
@@ -3063,7 +3096,7 @@ function xr_block_orbit_cards(array $p, string $blockId = ''): void
                         <div class="xr-orbit__stage" style="--n: <?= (int) $nOrbit ?>">
                                 <div class="xr-orbit__rotator">
                                 <div class="xr-orbit__rings" aria-hidden="true">
-                                    <?php if ($blockId === 'i-3-11'): ?>
+                                    <?php if ($orbitSvgTickRings): ?>
                                         <svg class="xr-orbit__rings-ticks-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" focusable="false">
                                             <g class="xr-orbit__rings-tick-band xr-orbit__rings-tick-band--inner">
                                                 <?php
@@ -3353,30 +3386,126 @@ function xr_block_white_planks(array $p, string $blockId = ''): void
 
 function xr_block_pricing_swapped(array $p, string $blockId = ''): void
 {
-    $heading = (string) ($p['heading'] ?? '');
-    $plans = is_array($p['plans'] ?? null) ? $p['plans'] : [];
+    $g = 'ph' . preg_replace('/[^a-z0-9]/i', '', $blockId);
+    $tagline = (string) ($p['tagline'] ?? '');
+    $headlines = is_array($p['headlines'] ?? null) ? $p['headlines'] : [];
+    $defaultSubtitle = (string) ($p['subtitle'] ?? '');
+    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $ariaTabs = (string) ($p['tabs_aria'] ?? 'Plan category');
     ?>
-    <div class="xr-pricing xr-pricing--swapped">
-        <?php if ($heading !== ''): ?>
-            <h2 class="xr-pricing__page-title"><?= h($heading) ?></h2>
-        <?php endif; ?>
-        <?php foreach ($plans as $pl): ?>
-            <?php if (!is_array($pl)) {
-                continue;
-            } ?>
-            <div class="xr-pricing__card<?= !empty($pl['highlight']) ? ' is-highlight' : '' ?>">
-                <h3><?= h((string) ($pl['name'] ?? '')) ?></h3>
-                <div class="xr-pricing__price"><?= h((string) ($pl['price'] ?? '')) ?></div>
-                <ul>
-                    <?php
-                    $feats = is_array($pl['features'] ?? null) ? $pl['features'] : [];
-                    foreach ($feats as $f) {
-                        echo '<li>' . h((string) $f) . '</li>';
-                    }
-                    ?>
-                </ul>
-            </div>
-        <?php endforeach; ?>
+    <div class="xr-plan-hero">
+        <div class="xr-plan-hero__inner">
+            <?php if ($tabs !== []): ?>
+                <div class="xr-plan-hero__tabs" role="tablist" aria-label="<?= h($ariaTabs) ?>">
+                    <?php foreach ($tabs as $i => $t): ?>
+                        <?php if (!is_array($t)) {
+                            continue;
+                        } ?>
+                        <button type="button" role="tab" class="xr-plan-hero__tab<?= $i === 0 ? ' is-active' : '' ?>"
+                                id="tab-<?= h($g) ?>-<?= (int) $i ?>"
+                                data-xr-tab="<?= h($g) ?>" data-index="<?= (int) $i ?>"
+                                aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"><?= h((string) ($t['label'] ?? '')) ?></button>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($tagline !== ''): ?>
+                <p class="xr-plan-hero__tagline"><?= h($tagline) ?></p>
+            <?php endif; ?>
+            <?php if ($headlines !== []): ?>
+                <h2 class="xr-plan-hero__head">
+                    <?php foreach ($headlines as $line): ?>
+                        <span class="xr-plan-hero__line"><?= h((string) $line) ?></span>
+                    <?php endforeach; ?>
+                </h2>
+            <?php endif; ?>
+            <?php if ($tabs !== []): ?>
+                <?php foreach ($tabs as $i => $t): ?>
+                    <?php if (!is_array($t)) {
+                        continue;
+                    } ?>
+                    <?php $sub = (string) ($t['subtitle'] ?? $defaultSubtitle); ?>
+                    <div class="xr-plan-hero__panel<?= $i === 0 ? ' is-active' : '' ?>" role="tabpanel"
+                         data-xr-panel="<?= h($g) ?>" data-index="<?= (int) $i ?>"
+                         aria-labelledby="tab-<?= h($g) ?>-<?= (int) $i ?>">
+                        <?php if ($sub !== ''): ?>
+                            <p class="xr-plan-hero__sub"><?= h($sub) ?></p>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php elseif ($defaultSubtitle !== ''): ?>
+                <p class="xr-plan-hero__sub"><?= h($defaultSubtitle) ?></p>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_pricing_three_tiers(array $p, string $blockId = ''): void
+{
+    $ctaLabel = (string) ($p['cta_label'] ?? 'Reserve Access');
+    $ctaNote = (string) ($p['cta_note'] ?? 'No payment required now – your place will be saved');
+    $tiers = is_array($p['tiers'] ?? null) ? $p['tiers'] : [];
+    ?>
+    <div class="xr-tier-pricing">
+        <div class="xr-tier-pricing__grid">
+            <?php foreach ($tiers as $tier): ?>
+                <?php if (!is_array($tier)) {
+                    continue;
+                } ?>
+                <?php
+                $href = (string) ($tier['cta_href'] ?? '#');
+                $pill = (string) ($tier['pill'] ?? '');
+                $name = (string) ($tier['name'] ?? '');
+                $pm = (string) ($tier['price_month'] ?? '');
+                $py = (string) ($tier['price_year'] ?? '');
+                $users = (string) ($tier['users'] ?? '');
+                $fn = (string) ($tier['footnote'] ?? '');
+                $feats = is_array($tier['features'] ?? null) ? $tier['features'] : [];
+                $rec = !empty($tier['recommended']);
+                ?>
+                <article class="xr-tier-pricing__card<?= $rec ? ' is-recommended' : '' ?>">
+                    <?php if ($pill !== ''): ?>
+                        <span class="xr-tier-pricing__pill"><span class="xr-tier-pricing__pill-text"><?= h($pill) ?></span></span>
+                    <?php endif; ?>
+                    <?php if ($name !== ''): ?>
+                        <h3 class="xr-tier-pricing__name"><?= h($name) ?></h3>
+                    <?php endif; ?>
+                    <?php if ($pm !== '' || $py !== ''): ?>
+                        <div class="xr-tier-pricing__price" aria-label="<?= h(trim($pm . ' per month, ' . $py . ' per year')) ?>">
+                            <?php if ($pm !== ''): ?>
+                                <span class="xr-tier-pricing__price-m"><?= h($pm) ?></span>
+                            <?php endif; ?>
+                            <span class="xr-tier-pricing__price-mo"> mo</span>
+                            <span class="xr-tier-pricing__price-sep"> / </span>
+                            <?php if ($py !== ''): ?>
+                                <span class="xr-tier-pricing__price-y"><?= h($py) ?> year</span>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($users !== ''): ?>
+                        <p class="xr-tier-pricing__users"><?= h($users) ?></p>
+                    <?php endif; ?>
+                    <?php if ($feats !== []): ?>
+                        <ul class="xr-tier-pricing__features">
+                            <?php foreach ($feats as $f): ?>
+                                <li><?= h((string) $f) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                    <div class="xr-tier-pricing__tail">
+                        <?php if ($fn !== ''): ?>
+                            <p class="xr-tier-pricing__fn"><?= h($fn) ?></p>
+                        <?php endif; ?>
+                        <?php if ($ctaNote !== ''): ?>
+                            <p class="xr-tier-pricing__cta-note"><?= h($ctaNote) ?></p>
+                        <?php endif; ?>
+                        <?php if ($ctaLabel !== ''): ?>
+                            <a class="xr-tier-pricing__cta" href="<?= h($href) ?>"><?= h($ctaLabel) ?></a>
+                        <?php endif; ?>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
     </div>
     <?php
 }
