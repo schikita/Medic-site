@@ -626,6 +626,32 @@ function merge_site_from_post(array $current): array
                 $p['before'] = $before;
                 $p['after'] = $after;
             }
+            if ($id === 'i-3-18') {
+                $b['type'] = 'nextgen_hands_training';
+                $p['title_lines'] = [
+                    trim((string)($_POST['inst_nx_title_l0'] ?? '')),
+                    trim((string)($_POST['inst_nx_title_l1'] ?? '')),
+                    trim((string)($_POST['inst_nx_title_l2'] ?? '')),
+                ];
+                $p['nav_items'] = [
+                    trim((string)($_POST['inst_nx_nav_0'] ?? '')),
+                    trim((string)($_POST['inst_nx_nav_1'] ?? '')),
+                    trim((string)($_POST['inst_nx_nav_2'] ?? '')),
+                ];
+                $p['card_heading'] = trim((string)($_POST['inst_nx_card_heading'] ?? ''));
+                $p['center_image'] = trim((string)($_POST['inst_nx_center_image'] ?? ''));
+                $p['center_label'] = trim((string)($_POST['inst_nx_center_label'] ?? ''));
+                $p['center_brand'] = trim((string)($_POST['inst_nx_center_brand'] ?? ''));
+                $mods = is_array($p['modules'] ?? null) ? $p['modules'] : [];
+                for ($nxi = 0; $nxi < 4; $nxi++) {
+                    if (!is_array($mods[$nxi] ?? null)) {
+                        $mods[$nxi] = [];
+                    }
+                    $mods[$nxi]['label'] = trim((string)($_POST['inst_nx_mod_' . $nxi . '_label'] ?? ''));
+                    $mods[$nxi]['image'] = trim((string)($_POST['inst_nx_mod_' . $nxi . '_image'] ?? ''));
+                }
+                $p['modules'] = $mods;
+            }
             if ($id === 'i-3-21-24') {
                 $h = trim((string)($_POST['inst_gallery_heading'] ?? ''));
                 if ($h !== '') $p['heading'] = $h;

@@ -2184,179 +2184,145 @@
                 }
             },
             {
-                "type": "tabs_dual_carousel",
+                "type": "premier_xr_programs",
                 "id": "i-3-15",
                 "props": {
-                    "heading": "Tabs with rotating pairs (как 1.8, горизонтальная смена)",
-                    "tabs": [
-                        {
-                            "label": "Clinical",
-                            "slides": [
-                                {
-                                    "image": "https:\/\/picsum.photos\/seed\/xrinst315a\/700\/420",
-                                    "text": "Rounds hologram — читаемый интервал.",
-                                    "interval_ms": 5000
-                                },
-                                {
-                                    "image": "https:\/\/picsum.photos\/seed\/xrinst315b\/700\/420",
-                                    "text": "Surgical planning view — вторая вставка.",
-                                    "interval_ms": 5000
-                                }
-                            ]
-                        },
-                        {
-                            "label": "Education",
-                            "slides": [
-                                {
-                                    "image": "https:\/\/picsum.photos\/seed\/xrinst315c\/700\/420",
-                                    "text": "Аудитория + AR.",
-                                    "interval_ms": 4500
-                                },
-                                {
-                                    "mp4": "https:\/\/www.w3schools.com\/html\/mov_bbb.mp4",
-                                    "text": "Короткий клип — длительность по видео.",
-                                    "interval_ms": 8000
-                                }
-                            ]
-                        },
-                        {
-                            "label": "Research",
-                            "slides": [
-                                {
-                                    "image": "https:\/\/picsum.photos\/seed\/xrinst315d\/700\/420",
-                                    "text": "Мультисайтовый кейс.",
-                                    "interval_ms": 5000
-                                },
-                                {
-                                    "image": "https:\/\/picsum.photos\/seed\/xrinst315e\/700\/420",
-                                    "text": "Публикации и данные.",
-                                    "interval_ms": 5000
-                                }
-                            ]
-                        }
-                    ]
+                    "headline_lines": [
+                        "Boost Your",
+                        "Leap with",
+                        "Premier",
+                        "XR Doctor",
+                        "Programs"
+                    ],
+                    "subtext_lines": [
+                        "Beyond the Plan Unlocks",
+                        "Where the Real Leap Starts —",
+                        "Join Right Now!"
+                    ],
+                    "vip": {
+                        "pill": "Be VIP. Grow Fast.",
+                        "title": "VIP ACCESS",
+                        "levels": [
+                            {
+                                "title": "Level 1 - Personal start",
+                                "desc": "Guide onboarding with XR Doctor staff"
+                            },
+                            {
+                                "title": "Level 2- Invite Guest",
+                                "desc": "External experts access via AR\/VR Glasses"
+                            },
+                            {
+                                "title": "Level 3 - Personal Manager",
+                                "desc": "Priority assistance & direct communication"
+                            },
+                            {
+                                "title": "Level 4 - Customisation",
+                                "desc": "Tailored setup for working with holograms"
+                            },
+                            {
+                                "title": "Level 5 – Integration",
+                                "desc": "Connect XR Doctor with internal systems"
+                            }
+                        ],
+                        "cta_label": "Start VIP Journey",
+                        "cta_href": "#"
+                    },
+                    "priority": {
+                        "pill": "Be First. Get More.",
+                        "title": "PRIORITY EXCLUSIVE",
+                        "items": [
+                            {
+                                "title": "1. FINANCIAL BENEFITS",
+                                "desc": "20% off pre-order monthly for 1 year, 15% off pre-order for 3 years"
+                            },
+                            {
+                                "title": "2. PRIORITY ACCESS",
+                                "desc": "Access to closed Pilot program, Early access to New features"
+                            },
+                            {
+                                "title": "3. STRATEGIC ADVANTAGES",
+                                "desc": "Pre-launch Roadmap setup, Executive & Strategic session"
+                            },
+                            {
+                                "title": "4. XR DOCTOR COMMUNITY",
+                                "desc": "Top-Expert workshops & private events, Join live XR cases & insights exchange"
+                            }
+                        ],
+                        "cta_label": "Pre-Order Right Now",
+                        "cta_href": "#"
+                    }
                 }
             },
             {
-                "type": "product_tabs",
+                "type": "training_headline",
                 "id": "i-3-16",
                 "props": {
-                    "tabs": [
-                        "Вкладка 1",
-                        "Вкладка 2",
-                        "Вкладка 3"
-                    ],
-                    "active_tab": 0,
-                    "panels": [
-                        {
-                            "title": "Institutional workspace",
-                            "lead": "Блок 3.16 — по аналогии с 1.8: три вкладки, разный контент.",
-                            "body": "Единые политики доступа, роли преподавателей и клиницистов.",
-                            "emphasis": "Один контракт — несколько площадок.",
-                            "sidebar": "Масштабирование сессий и отчётность для руководства.",
-                            "features": [
-                                {
-                                    "label": "Multi-site"
-                                },
-                                {
-                                    "label": "RBAC"
-                                },
-                                {
-                                    "label": "Analytics"
-                                }
-                            ],
-                            "bottom_title": "Deeper dive",
-                            "bottom_link": {
-                                "label": "Download one-pager",
-                                "href": "#"
-                            }
-                        },
-                        {
-                            "title": "Teaching at scale",
-                            "lead": "Сценарии для групп и индивидуальных треков.",
-                            "body": "Импорт кейсов, оценка прогресса, связка с LMS.",
-                            "emphasis": "Повторяемость без потери качества.",
-                            "sidebar": "Шаблоны курсов и библиотека моделей.",
-                            "features": [
-                                {
-                                    "label": "LMS"
-                                },
-                                {
-                                    "label": "Rubrics"
-                                },
-                                {
-                                    "label": "Exports"
-                                }
-                            ],
-                            "bottom_title": "Curriculum office",
-                            "bottom_link": {
-                                "label": "Contact us",
-                                "href": "#hubspot-demo"
-                            }
-                        },
-                        {
-                            "title": "Research & innovation",
-                            "lead": "Совместные исследования и песочницы.",
-                            "body": "Обезличенные наборы, версионирование моделей, шэринг с партнёрами.",
-                            "emphasis": "От пилота к публикации.",
-                            "sidebar": "Соглашения о данных и этике.",
-                            "features": [
-                                {
-                                    "label": "Data use"
-                                },
-                                {
-                                    "label": "Collaboration"
-                                },
-                                {
-                                    "label": "Archiving"
-                                }
-                            ],
-                            "bottom_title": "Office of research",
-                            "bottom_link": {
-                                "label": "Request workflow",
-                                "href": "#"
-                            }
-                        }
+                    "theme": "light",
+                    "lines": [
+                        "See How XR Doctor Training",
+                        "Break Boundaries, Builds Expertise &",
+                        "Multiplies Real-World Impact"
                     ]
                 }
             },
             {
-                "type": "tabs_two_plain",
+                "type": "training_mode_hero",
                 "id": "i-3-17",
                 "props": {
                     "tabs": [
                         {
-                            "label": "Implementation",
-                            "body": "Две вкладки как 2.7, без градиентного «хвоста» внизу блока."
+                            "label": "XR Doctor",
+                            "headline_lines": [
+                                "XR Doctor Training -",
+                                "Tools to Build Unique Expertise"
+                            ],
+                            "subtitle": "Study Deeper. Train Smarter. Grow Faster."
                         },
                         {
-                            "label": "Adoption",
-                            "body": "Фокус на смене процессов и KPI внедрения."
+                            "label": "Exclusive",
+                            "headline_lines": [
+                                "Exclusive XR Programs",
+                                "Built for Leading Institutions"
+                            ],
+                            "subtitle": "Priority access, roadmap sessions, and a private expert community."
                         }
                     ]
                 }
             },
             {
-                "type": "progress_bars_block",
+                "type": "nextgen_hands_training",
                 "id": "i-3-18",
                 "props": {
-                    "title": "Readiness indicators",
-                    "bars": [
+                    "title_lines": [
+                        "Next-Gen",
+                        "Hands-On",
+                        "Training"
+                    ],
+                    "nav_items": [
+                        "Hologram Library",
+                        "Case Simulation",
+                        "Test & Masterskills"
+                    ],
+                    "card_heading": "Your Clinical Reality in AR/VR Glasses",
+                    "center_image": "https://picsum.photos/seed/xrinst318hub/360/360",
+                    "center_label": "All-in-One",
+                    "center_brand": "XR DOCTOR",
+                    "modules": [
                         {
-                            "label": "IT readiness",
-                            "value": 88
+                            "label": "Digital Patient & On-Off Layers",
+                            "image": "https://picsum.photos/seed/xrinst318tl/560/400"
                         },
                         {
-                            "label": "Faculty trained",
-                            "value": 72
+                            "label": "True-to-Life Organ Holograms",
+                            "image": "https://picsum.photos/seed/xrinst318tr/560/400"
                         },
                         {
-                            "label": "Headset fleet",
-                            "value": 64
+                            "label": "Medical Equipment & Tools",
+                            "image": "https://picsum.photos/seed/xrinst318bl/560/400"
                         },
                         {
-                            "label": "Content library",
-                            "value": 91
+                            "label": "Patient Panel & Clinical Case Data",
+                            "image": "https://picsum.photos/seed/xrinst318br/560/400"
                         }
                     ]
                 }

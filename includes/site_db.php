@@ -156,6 +156,10 @@ function xr_site_db_ensure_installed(): void
         }
         xr_db_migrate_orbit_i38_planning_label($pdo);
         xr_db_migrate_institutions_pricing_blocks_i313_i314($pdo);
+        xr_db_migrate_institutions_premier_block_i315($pdo);
+        xr_db_migrate_institutions_training_headline_i316($pdo);
+        xr_db_migrate_institutions_training_mode_hero_i317($pdo);
+        xr_db_migrate_institutions_nextgen_hands_i318($pdo);
     } catch (Throwable $e) {
         xr_site_db_install();
     }
@@ -332,6 +336,220 @@ function xr_db_migrate_institutions_pricing_blocks_i313_i314(PDO $pdo): void
             $blocks[$i] = $canonical[$id];
             $changed = true;
         }
+    }
+
+    if (!$changed) {
+        return;
+    }
+
+    $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false) {
+        return;
+    }
+    $up = $pdo->prepare('UPDATE pages SET blocks_json = ? WHERE slug = ?');
+    $up->execute([$json, 'institutions']);
+}
+
+/**
+ * Block i-3-15: SQLite keeps full blocks_json; old rows still had tabs_dual_carousel after
+ * the block was replaced by premier_xr_programs in defaults/site.json. Force canonical
+ * block when type is not premier_xr_programs (idempotent).
+ */
+function xr_db_migrate_institutions_premier_block_i315(PDO $pdo): void
+{
+    $def = default_site();
+    $canonical = null;
+    foreach (($def['institutions']['blocks'] ?? []) as $b) {
+        if (is_array($b) && (string) ($b['id'] ?? '') === 'i-3-15') {
+            $canonical = $b;
+            break;
+        }
+    }
+    if ($canonical === null || !is_array($canonical)) {
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT blocks_json FROM pages WHERE slug = ?');
+    $stmt->execute(['institutions']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+        return;
+    }
+
+    $blocks = json_decode((string) ($row['blocks_json'] ?? '[]'), true);
+    if (!is_array($blocks)) {
+        return;
+    }
+
+    $changed = false;
+    foreach ($blocks as $i => $b) {
+        if (!is_array($b) || (string) ($b['id'] ?? '') !== 'i-3-15') {
+            continue;
+        }
+        if (($b['type'] ?? '') !== 'premier_xr_programs') {
+            $blocks[$i] = $canonical;
+            $changed = true;
+        }
+        break;
+    }
+
+    if (!$changed) {
+        return;
+    }
+
+    $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false) {
+        return;
+    }
+    $up = $pdo->prepare('UPDATE pages SET blocks_json = ? WHERE slug = ?');
+    $up->execute([$json, 'institutions']);
+}
+
+/**
+ * Block i-3-16: replace legacy product_tabs with training_headline (SQLite idempotent).
+ */
+function xr_db_migrate_institutions_training_headline_i316(PDO $pdo): void
+{
+    $def = default_site();
+    $canonical = null;
+    foreach (($def['institutions']['blocks'] ?? []) as $b) {
+        if (is_array($b) && (string) ($b['id'] ?? '') === 'i-3-16') {
+            $canonical = $b;
+            break;
+        }
+    }
+    if ($canonical === null || !is_array($canonical)) {
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT blocks_json FROM pages WHERE slug = ?');
+    $stmt->execute(['institutions']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+        return;
+    }
+
+    $blocks = json_decode((string) ($row['blocks_json'] ?? '[]'), true);
+    if (!is_array($blocks)) {
+        return;
+    }
+
+    $changed = false;
+    foreach ($blocks as $i => $b) {
+        if (!is_array($b) || (string) ($b['id'] ?? '') !== 'i-3-16') {
+            continue;
+        }
+        if (($b['type'] ?? '') !== 'training_headline') {
+            $blocks[$i] = $canonical;
+            $changed = true;
+        }
+        break;
+    }
+
+    if (!$changed) {
+        return;
+    }
+
+    $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false) {
+        return;
+    }
+    $up = $pdo->prepare('UPDATE pages SET blocks_json = ? WHERE slug = ?');
+    $up->execute([$json, 'institutions']);
+}
+
+/**
+ * Block i-3-17: replace tabs_two_plain with training_mode_hero (SQLite idempotent).
+ */
+function xr_db_migrate_institutions_training_mode_hero_i317(PDO $pdo): void
+{
+    $def = default_site();
+    $canonical = null;
+    foreach (($def['institutions']['blocks'] ?? []) as $b) {
+        if (is_array($b) && (string) ($b['id'] ?? '') === 'i-3-17') {
+            $canonical = $b;
+            break;
+        }
+    }
+    if ($canonical === null || !is_array($canonical)) {
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT blocks_json FROM pages WHERE slug = ?');
+    $stmt->execute(['institutions']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+        return;
+    }
+
+    $blocks = json_decode((string) ($row['blocks_json'] ?? '[]'), true);
+    if (!is_array($blocks)) {
+        return;
+    }
+
+    $changed = false;
+    foreach ($blocks as $i => $b) {
+        if (!is_array($b) || (string) ($b['id'] ?? '') !== 'i-3-17') {
+            continue;
+        }
+        if (($b['type'] ?? '') !== 'training_mode_hero') {
+            $blocks[$i] = $canonical;
+            $changed = true;
+        }
+        break;
+    }
+
+    if (!$changed) {
+        return;
+    }
+
+    $json = json_encode($blocks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false) {
+        return;
+    }
+    $up = $pdo->prepare('UPDATE pages SET blocks_json = ? WHERE slug = ?');
+    $up->execute([$json, 'institutions']);
+}
+
+/**
+ * Block i-3-18: replace progress_bars_block with nextgen_hands_training (SQLite idempotent).
+ */
+function xr_db_migrate_institutions_nextgen_hands_i318(PDO $pdo): void
+{
+    $def = default_site();
+    $canonical = null;
+    foreach (($def['institutions']['blocks'] ?? []) as $b) {
+        if (is_array($b) && (string) ($b['id'] ?? '') === 'i-3-18') {
+            $canonical = $b;
+            break;
+        }
+    }
+    if ($canonical === null || !is_array($canonical)) {
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT blocks_json FROM pages WHERE slug = ?');
+    $stmt->execute(['institutions']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+        return;
+    }
+
+    $blocks = json_decode((string) ($row['blocks_json'] ?? '[]'), true);
+    if (!is_array($blocks)) {
+        return;
+    }
+
+    $changed = false;
+    foreach ($blocks as $i => $b) {
+        if (!is_array($b) || (string) ($b['id'] ?? '') !== 'i-3-18') {
+            continue;
+        }
+        if (($b['type'] ?? '') !== 'nextgen_hands_training') {
+            $blocks[$i] = $canonical;
+            $changed = true;
+        }
+        break;
     }
 
     if (!$changed) {

@@ -909,6 +909,69 @@ $token = csrf_token();
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Next-Gen Hands-On Training (i-3-18)</legend>
+                    <p class="admin-hint">Инфографика: заголовок слева, карточка справа. Четыре изображения модулей и центр (гарнитура) — URL или загрузка (↑). Розовая сетка из макета в вёрстку не входит.</p>
+                    <label class="admin-label">Заголовок — строка 1</label>
+                    <input class="admin-input" name="inst_nx_title_l0" value="<?= h((string)($instState['nx_title_l0'] ?? '')) ?>">
+                    <label class="admin-label">Заголовок — строка 2</label>
+                    <input class="admin-input" name="inst_nx_title_l1" value="<?= h((string)($instState['nx_title_l1'] ?? '')) ?>">
+                    <label class="admin-label">Заголовок — строка 3</label>
+                    <input class="admin-input" name="inst_nx_title_l2" value="<?= h((string)($instState['nx_title_l2'] ?? '')) ?>">
+                    <div class="admin-grid2" style="margin-top:12px">
+                        <div>
+                            <label class="admin-label">Навигация — пункт 1 (под ним градиентная линия)</label>
+                            <input class="admin-input" name="inst_nx_nav_0" value="<?= h((string)($instState['nx_nav_0'] ?? '')) ?>">
+                        </div>
+                        <div>
+                            <label class="admin-label">Навигация — пункт 2</label>
+                            <input class="admin-input" name="inst_nx_nav_1" value="<?= h((string)($instState['nx_nav_1'] ?? '')) ?>">
+                        </div>
+                    </div>
+                    <label class="admin-label">Навигация — пункт 3</label>
+                    <input class="admin-input" name="inst_nx_nav_2" value="<?= h((string)($instState['nx_nav_2'] ?? '')) ?>">
+                    <label class="admin-label">Заголовок в карточке (AR/VR)</label>
+                    <input class="admin-input" name="inst_nx_card_heading" value="<?= h((string)($instState['nx_card_heading'] ?? '')) ?>">
+                    <label class="admin-label">Центр — подпись на визоре (бренд)</label>
+                    <input class="admin-input" name="inst_nx_center_brand" value="<?= h((string)($instState['nx_center_brand'] ?? '')) ?>">
+                    <label class="admin-label">Центр — подпись под изображением</label>
+                    <input class="admin-input" name="inst_nx_center_label" value="<?= h((string)($instState['nx_center_label'] ?? '')) ?>">
+                    <label class="admin-label">Центр — изображение (гарнитура)</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="inst_nx_center_image" value="<?= h((string)($instState['nx_center_image'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($instState['nx_center_image'] ?? '')) ?>" alt=""<?= ((string)($instState['nx_center_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <p class="admin-hint" style="margin-top:16px">Модули карточки (сверху-слева → сверху-справа → снизу-слева → снизу-справа):</p>
+                    <div class="admin-grid2" style="grid-template-columns:repeat(2,1fr)">
+                        <?php
+                        $nxMods = $instState['nx_modules'] ?? [];
+                        $nxSlotNames = ['Вверху слева', 'Вверху справа', 'Внизу слева', 'Внизу справа'];
+                        for ($nxi = 0; $nxi < 4; $nxi++):
+                            $nm = is_array($nxMods[$nxi] ?? null) ? $nxMods[$nxi] : ['label' => '', 'image' => ''];
+                            ?>
+                        <div>
+                            <label class="admin-label"><?= h($nxSlotNames[$nxi]) ?> — подпись</label>
+                            <input class="admin-input" name="inst_nx_mod_<?= $nxi ?>_label" value="<?= h((string)($nm['label'] ?? '')) ?>">
+                            <label class="admin-label"><?= h($nxSlotNames[$nxi]) ?> — изображение</label>
+                            <div class="admin-img-wrap">
+                                <div class="admin-img-row">
+                                    <input class="admin-input admin-img-url" name="inst_nx_mod_<?= $nxi ?>_image" value="<?= h((string)($nm['image'] ?? '')) ?>" placeholder="/uploads/...">
+                                    <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                    <span class="admin-img-spin" hidden>…</span>
+                                </div>
+                                <input type="file" class="admin-img-file" accept="image/*" hidden>
+                                <img class="admin-img-preview" src="<?= h((string)($nm['image'] ?? '')) ?>" alt=""<?= ((string)($nm['image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Gallery (i-3-21-24)</legend>
                     <label class="admin-label">Заголовок галереи</label>
                     <input class="admin-input" name="inst_gallery_heading" value="<?= h($instState['gallery_heading']) ?>">

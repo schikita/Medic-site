@@ -615,6 +615,58 @@ function xr_block_video_freeze_center_image(array $p, string $blockId = ''): voi
     <?php
 }
 
+function xr_block_training_headline(array $p, string $blockId = ''): void
+{
+    $lines = is_array($p['lines'] ?? null) ? $p['lines'] : [
+        'See How XR Doctor Training',
+        'Break Boundaries, Builds Expertise &',
+        'Multiplies Real-World Impact',
+    ];
+    $lines = array_values(array_filter(
+        $lines,
+        static fn($ln): bool => is_string($ln) && trim($ln) !== ''
+    ));
+    $themeRaw = strtolower(trim((string) ($p['theme'] ?? 'light')));
+    $theme = in_array($themeRaw, ['dark', 'light'], true) ? $themeRaw : 'light';
+    $waveGradId = 'xrTrainWave_' . preg_replace('/[^a-z0-9]/i', '', $blockId !== '' ? $blockId : 'w');
+    ?>
+    <div class="xr-train-head xr-train-head--<?= h($theme) ?>">
+        <div class="xr-train-head__inner">
+            <?php if ($lines !== []): ?>
+                <h2 class="xr-train-head__title">
+                    <?php foreach ($lines as $line): ?>
+                        <span class="xr-train-head__line"><?= h(trim($line)) ?></span>
+                    <?php endforeach; ?>
+                </h2>
+            <?php endif; ?>
+        </div>
+        <div class="xr-train-head__wave" aria-hidden="true">
+            <svg viewBox="0 0 1440 70" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="<?= h($waveGradId) ?>" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#7e79ff"/>
+                        <stop offset="48%" stop-color="#b76bff"/>
+                        <stop offset="100%" stop-color="#ff5db7"/>
+                    </linearGradient>
+                </defs>
+                <path
+                    class="xr-train-head__wave-fill"
+                    d="M0,38 C150,70 310,65 480,44 C660,22 760,16 920,30 C1080,44 1225,64 1440,32 L1440,70 L0,70 Z"
+                />
+                <path
+                    class="xr-train-head__wave-edge"
+                    d="M0,38 C150,70 310,65 480,44 C660,22 760,16 920,30 C1080,44 1225,64 1440,32"
+                    fill="none"
+                    stroke="url(#<?= h($waveGradId) ?>)"
+                    stroke-width="4"
+                    opacity="0.95"
+                />
+            </svg>
+        </div>
+    </div>
+    <?php
+}
+
 function xr_block_product_tabs(array $p, string $blockId = ''): void
 {
     $tabs   = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
@@ -3510,53 +3562,307 @@ function xr_block_pricing_three_tiers(array $p, string $blockId = ''): void
     <?php
 }
 
-function xr_block_tabs_dual_carousel(array $p, string $blockId = ''): void
+function xr_premier_level_title_parts(string $title): array
 {
-    $tabs = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
-    $g = 'g' . preg_replace('/[^a-z0-9]/i', '', $blockId);
+    if (preg_match('/^(Level\s+\d+\s*[-–]\s*)(.+)$/iu', trim($title), $m)) {
+        return [$m[1], $m[2]];
+    }
+
+    return [trim($title) . ' ', ''];
+}
+
+/** @return list<string> */
+function xr_premier_desc_display_lines(array $row): array
+{
+    if (isset($row['desc_lines']) && is_array($row['desc_lines'])) {
+        $out = [];
+        foreach ($row['desc_lines'] as $ln) {
+            if (is_string($ln) && $ln !== '') {
+                $out[] = $ln;
+            }
+        }
+
+        return $out;
+    }
+    $d = (string) ($row['desc'] ?? '');
+    if ($d === '') {
+        return [];
+    }
+    $parts = preg_split('/,\s*/', $d, 2);
+    if (is_array($parts) && count($parts) === 2) {
+        return [trim($parts[0]), trim($parts[1])];
+    }
+
+    return [$d];
+}
+
+function xr_premier_priority_title_display(string $title): string
+{
+    $t = trim($title);
+
+    return (string) preg_replace('/^(\d+)\.\s+/u', '$1.', $t);
+}
+
+function xr_block_premier_xr_programs(array $p, string $blockId = ''): void
+{
+    $headlineLines = is_array($p['headline_lines'] ?? null) ? $p['headline_lines'] : [];
+    if ($headlineLines === []) {
+        $headlineLines = [
+            'Boost Your',
+            'Leap with',
+            'Premier',
+            'XR Doctor',
+            'Programs',
+        ];
+    }
+    $headlineLines = array_values(array_filter(
+        $headlineLines,
+        static fn($line): bool => is_string($line) && $line !== ''
+    ));
+
+    $subLines = is_array($p['subtext_lines'] ?? null) ? $p['subtext_lines'] : [
+        'Beyond the Plan Unlocks',
+        'Where the Real Leap Starts —',
+        'Join Right Now!',
+    ];
+    $subClean = array_values(array_filter(
+        $subLines,
+        static fn($line): bool => is_string($line) && $line !== ''
+    ));
+
+    $vip = is_array($p['vip'] ?? null) ? $p['vip'] : [];
+    $pri = is_array($p['priority'] ?? null) ? $p['priority'] : [];
+
+    $vipPill = (string) ($vip['pill'] ?? 'Be VIP. Grow Fast.');
+    $vipTitle = (string) ($vip['title'] ?? 'VIP ACCESS');
+    $vipTitleLines = is_array($vip['title_lines'] ?? null)
+        ? array_values(array_filter($vip['title_lines'], static fn($x): bool => is_string($x) && $x !== ''))
+        : (preg_split('/\s+/', trim($vipTitle), -1, PREG_SPLIT_NO_EMPTY) ?: ['VIP', 'ACCESS']);
+
+    $vipLevels = is_array($vip['levels'] ?? null) ? $vip['levels'] : [
+        ['title' => 'Level 1 - Personal start', 'desc' => 'Guide onboarding with XR Doctor staff'],
+        ['title' => 'Level 2- Invite Guest', 'desc' => 'External experts access via AR/VR Glasses'],
+        ['title' => 'Level 3 - Personal Manager', 'desc' => 'Priority assistance & direct communication'],
+        ['title' => 'Level 4 - Customisation', 'desc' => 'Tailored setup for working with holograms'],
+        ['title' => 'Level 5 – Integration', 'desc' => 'Connect XR Doctor with internal systems'],
+    ];
+    $vipCta = (string) ($vip['cta_label'] ?? 'Start VIP Journey');
+    $vipHref = (string) ($vip['cta_href'] ?? '#');
+
+    $priPill = (string) ($pri['pill'] ?? 'Be First. Get More.');
+    $priTitle = (string) ($pri['title'] ?? 'PRIORITY EXCLUSIVE');
+    $priTitleLines = is_array($pri['title_lines'] ?? null)
+        ? array_values(array_filter($pri['title_lines'], static fn($x): bool => is_string($x) && $x !== ''))
+        : (preg_split('/\s+/', trim($priTitle), -1, PREG_SPLIT_NO_EMPTY) ?: ['PRIORITY', 'EXCLUSIVE']);
+
+    $priItems = is_array($pri['items'] ?? null) ? $pri['items'] : [
+        ['title' => '1. FINANCIAL BENEFITS', 'desc' => '20% off pre-order monthly for 1 year, 15% off pre-order for 3 years'],
+        ['title' => '2. PRIORITY ACCESS', 'desc' => 'Access to closed Pilot program, Early access to New features'],
+        ['title' => '3. STRATEGIC ADVANTAGES', 'desc' => 'Pre-launch Roadmap setup, Executive & Strategic session'],
+        ['title' => '4. XR DOCTOR COMMUNITY', 'desc' => 'Top-Expert workshops & private events, Join live XR cases & insights exchange'],
+    ];
+    $priCta = (string) ($pri['cta_label'] ?? 'Pre-Order Right Now');
+    $priHref = (string) ($pri['cta_href'] ?? '#');
+
+    $waveGradId = 'xrPremierWave_' . preg_replace('/[^a-z0-9]/i', '', $blockId !== '' ? $blockId : 'w');
     ?>
-    <div class="xr-dual-tabs">
-        <?php if (!empty($p['heading'])): ?>
-            <h2 class="xr-dual-tabs__head"><?= h((string) $p['heading']) ?></h2>
-        <?php endif; ?>
-        <div class="xr-dual-tabs__bar" role="tablist">
-            <?php foreach ($tabs as $i => $t): ?>
-                <?php if (!is_array($t)) {
-                    continue;
-                } ?>
-                <button type="button" role="tab" class="xr-dual-tabs__tab<?= $i === 0 ? ' is-active' : '' ?>"
-                        data-xr-tab="<?= h($g) ?>" data-index="<?= (int) $i ?>"><?= h((string) ($t['label'] ?? '')) ?></button>
+    <div class="xr-premier-programs">
+        <div class="xr-premier-programs__shell">
+            <div class="xr-premier-programs__inner">
+                <div class="xr-premier-programs__promo">
+                    <?php if ($headlineLines !== []): ?>
+                        <h2 class="xr-premier-programs__promo-title">
+                            <?php foreach ($headlineLines as $i => $hl): ?>
+                                <span class="xr-premier-programs__grad"><?= h($hl) ?></span><?= $i < count($headlineLines) - 1 ? "<br />\n" : '' ?>
+                            <?php endforeach; ?>
+                        </h2>
+                    <?php endif; ?>
+                    <?php if ($subClean !== []): ?>
+                        <div class="xr-premier-programs__promo-copy">
+                            <?php foreach ($subClean as $i => $line): ?>
+                                <?= $i > 0 ? "<br />\n" : '' ?><?= h($line) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <article class="xr-premier-programs__card xr-premier-programs__card--vip">
+                    <div class="xr-premier-programs__heading-frame">
+                        <div class="xr-premier-programs__label-pill"><?= h($vipPill) ?></div>
+                        <h3 class="xr-premier-programs__big-title">
+                            <?php foreach ($vipTitleLines as $i => $tl): ?>
+                                <?= h($tl) ?><?= $i < count($vipTitleLines) - 1 ? "<br />\n" : '' ?>
+                            <?php endforeach; ?>
+                        </h3>
+                    </div>
+                    <div class="xr-premier-programs__vip-list">
+                        <?php foreach ($vipLevels as $row): ?>
+                            <?php if (!is_array($row)) {
+                                continue;
+                            } ?>
+                            <?php [$lvlPre, $lvlAccent] = xr_premier_level_title_parts((string) ($row['title'] ?? '')); ?>
+                            <div class="xr-premier-programs__vip-item">
+                                <p class="xr-premier-programs__vip-item-title">
+                                    <?= h($lvlPre) ?><?php if ($lvlAccent !== ''): ?><span class="xr-premier-programs__accent"><?= h($lvlAccent) ?></span><?php endif; ?>
+                                </p>
+                                <?php $dLines = xr_premier_desc_display_lines($row); ?>
+                                <?php if ($dLines !== []): ?>
+                                    <p class="xr-premier-programs__vip-item-copy">
+                                        <?php foreach ($dLines as $j => $dl): ?>
+                                            <?= $j > 0 ? "<br />\n" : '' ?><?= h($dl) ?>
+                                        <?php endforeach; ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-premier-programs__cta-wrap">
+                        <a class="xr-premier-programs__cta" href="<?= h($vipHref) ?>"><?= h($vipCta) ?></a>
+                    </div>
+                </article>
+                <article class="xr-premier-programs__card xr-premier-programs__card--priority">
+                    <div class="xr-premier-programs__heading-frame">
+                        <div class="xr-premier-programs__label-pill"><?= h($priPill) ?></div>
+                        <h3 class="xr-premier-programs__big-title">
+                            <?php foreach ($priTitleLines as $i => $tl): ?>
+                                <?= h($tl) ?><?= $i < count($priTitleLines) - 1 ? "<br />\n" : '' ?>
+                            <?php endforeach; ?>
+                        </h3>
+                    </div>
+                    <div class="xr-premier-programs__priority-list">
+                        <?php foreach ($priItems as $row): ?>
+                            <?php if (!is_array($row)) {
+                                continue;
+                            } ?>
+                            <div class="xr-premier-programs__priority-item">
+                                <p class="xr-premier-programs__priority-item-title"><?= h(xr_premier_priority_title_display((string) ($row['title'] ?? ''))) ?></p>
+                                <?php $pLines = xr_premier_desc_display_lines($row); ?>
+                                <?php if ($pLines !== []): ?>
+                                    <p class="xr-premier-programs__priority-item-copy">
+                                        <?php foreach ($pLines as $j => $pl): ?>
+                                            <?= $j > 0 ? "<br />\n" : '' ?><?= h($pl) ?>
+                                        <?php endforeach; ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-premier-programs__cta-wrap">
+                        <a class="xr-premier-programs__cta" href="<?= h($priHref) ?>"><?= h($priCta) ?></a>
+                    </div>
+                </article>
+            </div>
+            <div class="xr-premier-programs__wave" aria-hidden="true">
+                <svg viewBox="0 0 1440 70" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="<?= h($waveGradId) ?>" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#7e79ff"/>
+                            <stop offset="48%" stop-color="#b76bff"/>
+                            <stop offset="100%" stop-color="#ff5db7"/>
+                        </linearGradient>
+                    </defs>
+                    <path
+                        d="M0,38 C150,70 310,65 480,44 C660,22 760,16 920,30 C1080,44 1225,64 1440,32 L1440,70 L0,70 Z"
+                        fill="#f4f4f6"
+                    />
+                    <path
+                        d="M0,38 C150,70 310,65 480,44 C660,22 760,16 920,30 C1080,44 1225,64 1440,32"
+                        fill="none"
+                        stroke="url(#<?= h($waveGradId) ?>)"
+                        stroke-width="4"
+                        opacity="0.95"
+                    />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function xr_block_training_mode_hero(array $p, string $blockId = ''): void
+{
+    $tabsIn = is_array($p['tabs'] ?? null) ? $p['tabs'] : [];
+    $tabs = [];
+    foreach ($tabsIn as $t) {
+        if (!is_array($t)) {
+            continue;
+        }
+        $label = trim((string) ($t['label'] ?? ''));
+        if ($label === '') {
+            continue;
+        }
+        $rawLines = is_array($t['headline_lines'] ?? null) ? $t['headline_lines'] : [];
+        $headlineLines = array_values(array_filter(
+            $rawLines,
+            static fn($ln): bool => is_string($ln) && trim($ln) !== ''
+        ));
+        if ($headlineLines === []) {
+            $one = trim((string) ($t['headline'] ?? ''));
+            if ($one !== '') {
+                $headlineLines = preg_split('/\r\n|\n|\r/', $one) ?: [$one];
+                $headlineLines = array_values(array_filter(
+                    array_map('trim', $headlineLines),
+                    static fn(string $s): bool => $s !== ''
+                ));
+            }
+        }
+        $tabs[] = [
+            'label' => $label,
+            'headline_lines' => $headlineLines,
+            'subtitle' => trim((string) ($t['subtitle'] ?? '')),
+        ];
+    }
+    if ($tabs === []) {
+        $tabs = [
+            [
+                'label' => 'XR Doctor',
+                'headline_lines' => [
+                    'XR Doctor Training -',
+                    'Tools to Build Unique Expertise',
+                ],
+                'subtitle' => 'Study Deeper. Train Smarter. Grow Faster.',
+            ],
+            [
+                'label' => 'Exclusive',
+                'headline_lines' => [
+                    'Exclusive XR Programs',
+                    'Built for Leading Institutions',
+                ],
+                'subtitle' => 'Priority access, roadmap sessions, and a private expert community.',
+            ],
+        ];
+    }
+    $g = 'tmh' . preg_replace('/[^a-z0-9]/i', '', $blockId);
+    ?>
+    <div class="xr-tmhero">
+        <div class="xr-tmhero__inner">
+            <div class="xr-tmhero__bar" role="tablist">
+                <?php foreach ($tabs as $i => $tab): ?>
+                    <button type="button"
+                            class="xr-tmhero__tab<?= $i === 0 ? ' is-active' : '' ?>"
+                            role="tab"
+                            aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"
+                            data-xr-tab="<?= h($g) ?>"
+                            data-index="<?= (int) $i ?>"><?= h($tab['label']) ?></button>
+                <?php endforeach; ?>
+            </div>
+            <?php foreach ($tabs as $i => $tab): ?>
+                <div class="xr-tmhero__panel<?= $i === 0 ? ' is-active' : '' ?>"
+                     data-xr-panel="<?= h($g) ?>"
+                     data-index="<?= (int) $i ?>"
+                     role="tabpanel">
+                    <?php if ($tab['headline_lines'] !== []): ?>
+                        <h2 class="xr-tmhero__title">
+                            <?php foreach ($tab['headline_lines'] as $ln): ?>
+                                <span class="xr-tmhero__balloon-line"><?= h(trim($ln)) ?></span>
+                            <?php endforeach; ?>
+                        </h2>
+                    <?php endif; ?>
+                    <?php if ($tab['subtitle'] !== ''): ?>
+                        <p class="xr-tmhero__subtitle"><?= h($tab['subtitle']) ?></p>
+                    <?php endif; ?>
+                </div>
             <?php endforeach; ?>
         </div>
-        <?php foreach ($tabs as $i => $t): ?>
-            <?php if (!is_array($t)) {
-                continue;
-            } ?>
-            <?php $slides = is_array($t['slides'] ?? null) ? $t['slides'] : []; ?>
-            <div class="xr-dual-tabs__panel<?= $i === 0 ? ' is-active' : '' ?>" data-xr-panel="<?= h($g) ?>" data-index="<?= (int) $i ?>">
-                <div class="xr-inner-carousel" data-inner-carousel>
-                    <?php foreach ($slides as $j => $sl): ?>
-                        <?php if (!is_array($sl)) {
-                            continue;
-                        } ?>
-                        <?php
-                        $iv = (int) ($sl['interval_ms'] ?? 5000);
-                        $mp4 = (string) ($sl['mp4'] ?? '');
-                        ?>
-                        <div class="xr-inner-carousel__slide<?= $j === 0 ? ' is-active' : '' ?>" data-inner-slide data-interval="<?= $iv ?>">
-                            <?php if ($mp4 !== ''): ?>
-                                <video class="xr-inner-carousel__vid" muted playsinline loop>
-                                    <source src="<?= h($mp4) ?>" type="video/mp4">
-                                </video>
-                            <?php else: ?>
-                                <img src="<?= h((string) ($sl['image'] ?? '')) ?>" alt="">
-                            <?php endif; ?>
-                            <p class="xr-inner-carousel__cap"><?= h((string) ($sl['text'] ?? '')) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php endforeach; ?>
     </div>
     <?php
 }
@@ -3584,6 +3890,133 @@ function xr_block_tabs_two_plain(array $p, string $blockId = ''): void
                 <p><?= h((string) ($t['body'] ?? '')) ?></p>
             </div>
         <?php endforeach; ?>
+    </div>
+    <?php
+}
+
+function xr_block_nextgen_hands_training(array $p, string $blockId = ''): void
+{
+    $defTitle = ['Next-Gen', 'Hands-On', 'Training'];
+    $rawTitle = is_array($p['title_lines'] ?? null) ? $p['title_lines'] : [];
+    $titleLines = [];
+    foreach ($rawTitle as $ln) {
+        if (is_string($ln) && trim($ln) !== '') {
+            $titleLines[] = trim($ln);
+        }
+    }
+    while (count($titleLines) < 3) {
+        $titleLines[] = $defTitle[count($titleLines)];
+    }
+    $titleLines = array_slice($titleLines, 0, 3);
+
+    $defNav = ['Hologram Library', 'Case Simulation', 'Test & Masterskills'];
+    $rawNav = is_array($p['nav_items'] ?? null) ? $p['nav_items'] : [];
+    $navItems = [];
+    foreach ($rawNav as $n) {
+        if (is_string($n) && trim($n) !== '') {
+            $navItems[] = trim($n);
+        }
+    }
+    while (count($navItems) < 3) {
+        $navItems[] = $defNav[count($navItems)];
+    }
+    $navItems = array_slice($navItems, 0, 3);
+
+    $cardHeading = trim((string) ($p['card_heading'] ?? 'Your Clinical Reality in AR/VR Glasses'));
+    $centerImage = trim((string) ($p['center_image'] ?? ''));
+    $centerLabel = trim((string) ($p['center_label'] ?? 'All-in-One'));
+    $centerBrand = trim((string) ($p['center_brand'] ?? 'XR DOCTOR'));
+
+    $defModLabels = [
+        'Digital Patient & On-Off Layers',
+        'True-to-Life Organ Holograms',
+        'Medical Equipment & Tools',
+        'Patient Panel & Clinical Case Data',
+    ];
+    $rawMods = is_array($p['modules'] ?? null) ? $p['modules'] : [];
+    $modules = [];
+    for ($mi = 0; $mi < 4; $mi++) {
+        $m = is_array($rawMods[$mi] ?? null) ? $rawMods[$mi] : [];
+        $modules[] = [
+            'label' => trim((string) ($m['label'] ?? '')) !== ''
+                ? trim((string) ($m['label'] ?? ''))
+                : $defModLabels[$mi],
+            'image' => trim((string) ($m['image'] ?? '')),
+        ];
+    }
+
+    $gStroke = 'nxhStroke_' . preg_replace('/[^a-z0-9]/i', '', $blockId !== '' ? $blockId : 'x');
+    ?>
+    <div class="xr-nxhands">
+        <div class="xr-nxhands__layout">
+            <aside class="xr-nxhands__aside">
+                <h2 class="xr-nxhands__title">
+                    <?php foreach ($titleLines as $tl): ?>
+                        <span class="xr-nxhands__title-line"><?= h($tl) ?></span>
+                    <?php endforeach; ?>
+                </h2>
+                <ul class="xr-nxhands__nav">
+                    <?php foreach ($navItems as $ni => $nv): ?>
+                        <li class="xr-nxhands__nav-item<?= $ni === 0 ? ' xr-nxhands__nav-item--ruled' : '' ?>"><?= h($nv) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </aside>
+            <div class="xr-nxhands__card">
+                <?php if ($cardHeading !== ''): ?>
+                    <p class="xr-nxhands__card-heading"><?= h($cardHeading) ?></p>
+                <?php endif; ?>
+                <div class="xr-nxhands__stage">
+                    <div class="xr-nxhands__ribbons" aria-hidden="true">
+                        <svg class="xr-nxhands__ribbons-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <linearGradient id="<?= h($gStroke) ?>" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+                                    <stop offset="48%" stop-color="#c084fc" stop-opacity="0.5"/>
+                                    <stop offset="100%" stop-color="#f472b6" stop-opacity="0.55"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="xr-nxhands__ribbon-path" d="M200,200 C165,165 110,95 48,52" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                            <path class="xr-nxhands__ribbon-path" d="M200,200 C235,165 290,95 352,52" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                            <path class="xr-nxhands__ribbon-path" d="M200,200 C165,235 110,305 48,348" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                            <path class="xr-nxhands__ribbon-path" d="M200,200 C235,235 290,305 352,348" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                            <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q155,175 95,185" fill="none" stroke="rgba(244, 114, 182, 0.32)" stroke-width="2"/>
+                            <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q245,175 305,185" fill="none" stroke="rgba(244, 114, 182, 0.32)" stroke-width="2"/>
+                            <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q200,245 200,305" fill="none" stroke="rgba(167, 139, 250, 0.32)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="xr-nxhands__quadrants">
+                        <?php foreach ($modules as $qx): ?>
+                            <div class="xr-nxhands__cell">
+                                <div class="xr-nxhands__cell-media">
+                                    <?php if ($qx['image'] !== ''): ?>
+                                        <img src="<?= h($qx['image']) ?>" alt="" loading="lazy" decoding="async">
+                                    <?php else: ?>
+                                        <div class="xr-nxhands__cell-ph"></div>
+                                    <?php endif; ?>
+                                </div>
+                                <p class="xr-nxhands__cell-label"><?= h($qx['label']) ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-nxhands__hub">
+                        <div class="xr-nxhands__hub-inner">
+                            <div class="xr-nxhands__hub-glow" aria-hidden="true"></div>
+                            <?php if ($centerImage !== ''): ?>
+                                <img class="xr-nxhands__hub-img" src="<?= h($centerImage) ?>" alt="" loading="lazy" decoding="async">
+                            <?php else: ?>
+                                <div class="xr-nxhands__hub-ph" aria-hidden="true"></div>
+                            <?php endif; ?>
+                            <?php if ($centerBrand !== ''): ?>
+                                <span class="xr-nxhands__hub-brand"><?= h($centerBrand) ?></span>
+                            <?php endif; ?>
+                            <?php if ($centerLabel !== ''): ?>
+                                <span class="xr-nxhands__hub-label"><?= h($centerLabel) ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <?php
 }

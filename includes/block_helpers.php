@@ -298,6 +298,25 @@ function xr_institutions_state(array $site): array
     $i310a = (string)($i310cardDiag['image'] ?? '');
     $i310b = (string)($i310cardTele['image'] ?? '');
 
+    $i318 = xr_find_block_props_by_id($blocks, 'i-3-18');
+    $nxTitle = is_array($i318['title_lines'] ?? null) ? $i318['title_lines'] : [];
+    $nxNav = is_array($i318['nav_items'] ?? null) ? $i318['nav_items'] : [];
+    $nxModsRaw = is_array($i318['modules'] ?? null) ? $i318['modules'] : [];
+    $nxMods = [];
+    $nxDefLab = [
+        'Digital Patient & On-Off Layers',
+        'True-to-Life Organ Holograms',
+        'Medical Equipment & Tools',
+        'Patient Panel & Clinical Case Data',
+    ];
+    for ($nxi = 0; $nxi < 4; $nxi++) {
+        $nm = is_array($nxModsRaw[$nxi] ?? null) ? $nxModsRaw[$nxi] : [];
+        $nxMods[] = [
+            'label' => (string)($nm['label'] ?? $nxDefLab[$nxi]),
+            'image' => (string)($nm['image'] ?? ''),
+        ];
+    }
+
     return [
         'carousel_heading' => (string)($carousel['heading'] ?? ''),
         'carousel_slides'  => xr_slides_state($carousel),
@@ -337,6 +356,17 @@ function xr_institutions_state(array $site): array
         })($orbitI38),
         'gallery_heading'  => (string)($gallery['heading'] ?? ''),
         'gallery_slides'   => xr_slides_state($gallery),
+        'nx_title_l0'      => (string)($nxTitle[0] ?? 'Next-Gen'),
+        'nx_title_l1'      => (string)($nxTitle[1] ?? 'Hands-On'),
+        'nx_title_l2'      => (string)($nxTitle[2] ?? 'Training'),
+        'nx_nav_0'         => (string)($nxNav[0] ?? 'Hologram Library'),
+        'nx_nav_1'         => (string)($nxNav[1] ?? 'Case Simulation'),
+        'nx_nav_2'         => (string)($nxNav[2] ?? 'Test & Masterskills'),
+        'nx_card_heading'  => (string)($i318['card_heading'] ?? 'Your Clinical Reality in AR/VR Glasses'),
+        'nx_center_image'  => (string)($i318['center_image'] ?? ''),
+        'nx_center_label'  => (string)($i318['center_label'] ?? 'All-in-One'),
+        'nx_center_brand'  => (string)($i318['center_brand'] ?? 'XR DOCTOR'),
+        'nx_modules'       => $nxMods,
     ];
 }
 
