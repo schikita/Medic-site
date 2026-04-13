@@ -698,6 +698,10 @@ function merge_site_from_post(array $current): array
             if ($id === 'block-4-1') {
                 $img = trim((string)($_POST['blog_hero_image'] ?? ''));
                 if ($img !== '') $p['image'] = $img;
+                $visualImg = trim((string)($_POST['blog_hero_visual_image'] ?? ''));
+                if ($visualImg !== '') {
+                    $p['visual_image'] = $visualImg;
+                }
                 $t = trim((string)($_POST['blog_hero_title'] ?? ''));
                 if ($t !== '') $p['title'] = $t;
                 $s = trim((string)($_POST['blog_hero_subtitle'] ?? ''));
@@ -714,7 +718,24 @@ function merge_site_from_post(array $current): array
                     if ($tit !== '') $posts[$i]['title'] = $tit;
                     if ($exc !== '') $posts[$i]['excerpt'] = $exc;
                 }
+                for ($i = 0; $i < 4; $i++) {
+                    if (!is_array($posts[$i] ?? null)) {
+                        $posts[$i] = [];
+                    }
+                    $showcaseImg = trim((string)($_POST["blog_showcase_image_$i"] ?? ''));
+                    if ($showcaseImg !== '') {
+                        $posts[$i]['image'] = $showcaseImg;
+                    }
+                }
                 $p['posts'] = $posts;
+                $socialIcons = is_array($p['social_icons'] ?? null) ? $p['social_icons'] : [];
+                for ($i = 0; $i < 5; $i++) {
+                    $icon = trim((string)($_POST["blog_showcase_social_icon_$i"] ?? ''));
+                    if ($icon !== '') {
+                        $socialIcons[$i] = $icon;
+                    }
+                }
+                $p['social_icons'] = $socialIcons;
             }
         }
         unset($b);
@@ -746,6 +767,23 @@ function merge_site_from_post(array $current): array
                 $mp4 = trim((string)($_POST['par_sv1_mp4'] ?? ''));
                 if ($mp4 !== '') $p['mp4'] = $mp4;
             }
+            if ($id === 'block-5-3') {
+                $visual = trim((string)($_POST['par_lead_visual_image'] ?? ''));
+                if ($visual !== '') {
+                    $p['lead_visual_image'] = $visual;
+                }
+                $cards = is_array($p['lead_cards'] ?? null) ? $p['lead_cards'] : [];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($cards[$i] ?? null)) {
+                        $cards[$i] = [];
+                    }
+                    $icon = trim((string)($_POST["par_lead_icon_$i"] ?? ''));
+                    if ($icon !== '') {
+                        $cards[$i]['icon'] = $icon;
+                    }
+                }
+                $p['lead_cards'] = $cards;
+            }
             if ($id === 'block-5-8') {
                 $t = trim((string)($_POST['par_sv2_title'] ?? ''));
                 if ($t !== '') $p['title'] = $t;
@@ -770,6 +808,44 @@ function merge_site_from_post(array $current): array
                     if ($txt !== '')  $items[$i]['text']     = $txt;
                 }
                 $p['items'] = $items;
+                $profitVisual = trim((string)($_POST['par_profit_visual_image'] ?? ''));
+                if ($profitVisual !== '') {
+                    $p['profit_visual_image'] = $profitVisual;
+                }
+                $profitCards = is_array($p['profit_cards'] ?? null) ? $p['profit_cards'] : [];
+                for ($i = 0; $i < 3; $i++) {
+                    if (!is_array($profitCards[$i] ?? null)) {
+                        $profitCards[$i] = [];
+                    }
+                    $icon = trim((string)($_POST["par_profit_icon_$i"] ?? ''));
+                    if ($icon !== '') {
+                        $profitCards[$i]['icon'] = $icon;
+                    }
+                }
+                $p['profit_cards'] = $profitCards;
+            }
+            if ($id === 'block-5-7') {
+                $chart = trim((string)($_POST['par_global_chart_image'] ?? ''));
+                if ($chart !== '') {
+                    $p['global_chart_image'] = $chart;
+                }
+                $cards = is_array($p['global_cards'] ?? null) ? $p['global_cards'] : [];
+                for ($i = 0; $i < 7; $i++) {
+                    if (!is_array($cards[$i] ?? null)) {
+                        $cards[$i] = [];
+                    }
+                    $icon = trim((string)($_POST["par_global_icon_$i"] ?? ''));
+                    if ($icon !== '') {
+                        $cards[$i]['icon'] = $icon;
+                    }
+                }
+                $p['global_cards'] = $cards;
+            }
+            if ($id === 'block-5-10') {
+                $stage = trim((string)($_POST['par_foundation_stage_image'] ?? ''));
+                if ($stage !== '') {
+                    $p['foundation_stage_image'] = $stage;
+                }
             }
         }
         unset($b);

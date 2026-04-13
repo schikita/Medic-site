@@ -381,6 +381,7 @@ function xr_blog_state(array $site): array
     $hero   = xr_find_block_props_by_id($blocks, 'block-4-1');
     $grid   = xr_find_block_props_by_id($blocks, 'block-4-2-grid');
     $rawPosts = is_array($grid['posts'] ?? null) ? $grid['posts'] : [];
+    $rawSocialIcons = is_array($grid['social_icons'] ?? null) ? $grid['social_icons'] : [];
     $posts = [];
     for ($i = 0; $i < 5; $i++) {
         $p = is_array($rawPosts[$i] ?? null) ? $rawPosts[$i] : [];
@@ -390,11 +391,17 @@ function xr_blog_state(array $site): array
             'excerpt' => (string)($p['excerpt'] ?? ''),
         ];
     }
+    $socialIcons = [];
+    for ($i = 0; $i < 5; $i++) {
+        $socialIcons[] = (string)($rawSocialIcons[$i] ?? '');
+    }
     return [
         'hero_image'    => (string)($hero['image'] ?? ''),
+        'hero_visual_image' => (string)($hero['visual_image'] ?? ''),
         'hero_title'    => (string)($hero['title'] ?? ''),
         'hero_subtitle' => (string)($hero['subtitle'] ?? ''),
         'posts'         => $posts,
+        'social_icons'  => $socialIcons,
     ];
 }
 
@@ -404,7 +411,10 @@ function xr_partners_state(array $site): array
     $hero   = xr_find_block_props_by_id($blocks, 'block-5-1');
     $sv1    = xr_find_block_props_by_id($blocks, 'block-5-4');
     $sv2    = xr_find_block_props_by_id($blocks, 'block-5-8');
+    $lead53 = xr_find_block_props_by_id($blocks, 'block-5-3');
     $icons  = xr_find_block_props_by_id($blocks, 'block-5-5');
+    $global57 = xr_find_block_props_by_id($blocks, 'block-5-7');
+    $foundation510 = xr_find_block_props_by_id($blocks, 'block-5-10');
     $rawItems = is_array($icons['items'] ?? null) ? $icons['items'] : [];
     $iconItems = [];
     for ($i = 0; $i < 4; $i++) {
@@ -413,6 +423,36 @@ function xr_partners_state(array $site): array
             'label'    => (string)($it['label'] ?? ''),
             'dashicon' => (string)($it['dashicon'] ?? ''),
             'text'     => (string)($it['text'] ?? ''),
+        ];
+    }
+    $rawLeadCards = is_array($lead53['lead_cards'] ?? null) ? $lead53['lead_cards'] : [];
+    $leadCards = [];
+    for ($i = 0; $i < 3; $i++) {
+        $card = is_array($rawLeadCards[$i] ?? null) ? $rawLeadCards[$i] : [];
+        $leadCards[] = [
+            'title' => (string)($card['title'] ?? ''),
+            'text'  => (string)($card['text'] ?? ''),
+            'icon'  => (string)($card['icon'] ?? ''),
+        ];
+    }
+    $rawProfitCards = is_array($icons['profit_cards'] ?? null) ? $icons['profit_cards'] : [];
+    $profitCards = [];
+    for ($i = 0; $i < 3; $i++) {
+        $card = is_array($rawProfitCards[$i] ?? null) ? $rawProfitCards[$i] : [];
+        $profitCards[] = [
+            'title' => (string)($card['title'] ?? ''),
+            'text'  => (string)($card['text'] ?? ''),
+            'icon'  => (string)($card['icon'] ?? ''),
+        ];
+    }
+    $rawGlobalCards = is_array($global57['global_cards'] ?? null) ? $global57['global_cards'] : [];
+    $globalCards = [];
+    for ($i = 0; $i < 7; $i++) {
+        $card = is_array($rawGlobalCards[$i] ?? null) ? $rawGlobalCards[$i] : [];
+        $globalCards[] = [
+            'title' => (string)($card['title'] ?? ''),
+            'text'  => (string)($card['text'] ?? ''),
+            'icon'  => (string)($card['icon'] ?? ''),
         ];
     }
     return [
@@ -427,6 +467,13 @@ function xr_partners_state(array $site): array
         'sv2_body'   => (string)($sv2['body'] ?? ''),
         'sv2_poster' => (string)($sv2['poster'] ?? ''),
         'sv2_mp4'    => (string)($sv2['mp4'] ?? ''),
+        'lead_visual_image' => (string)($lead53['lead_visual_image'] ?? ''),
+        'lead_cards' => $leadCards,
+        'profit_visual_image' => (string)($icons['profit_visual_image'] ?? ''),
+        'profit_cards' => $profitCards,
+        'global_chart_image' => (string)($global57['global_chart_image'] ?? ''),
+        'global_cards' => $globalCards,
+        'foundation_stage_image' => (string)($foundation510['foundation_stage_image'] ?? ''),
         'icons_title' => (string)($icons['title'] ?? ''),
         'icon_items'  => $iconItems,
     ];

@@ -1190,6 +1190,48 @@ $token = csrf_token();
                         <input type="file" class="admin-img-file" accept="image/*" hidden>
                         <img class="admin-img-preview" src="<?= h($blogState['hero_image']) ?>" alt=""<?= $blogState['hero_image'] === '' ? ' hidden' : '' ?>>
                     </div>
+                    <label class="admin-label">Изображение справа (xr-blog-hero__visual)</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="blog_hero_visual_image" value="<?= h($blogState['hero_visual_image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($blogState['hero_visual_image']) ?>" alt=""<?= $blogState['hero_visual_image'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Сетка 4 карточки (block-4-2-grid)</legend>
+                    <?php for ($si = 0; $si < 4; $si++): ?>
+                    <label class="admin-label">Изображение карточки <?= $si + 1 ?></label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="blog_showcase_image_<?= $si ?>" value="<?= h($blogState['posts'][$si]['image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($blogState['posts'][$si]['image']) ?>" alt=""<?= $blogState['posts'][$si]['image'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php endfor; ?>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Соц-иконки sidebar (block-4-2-grid)</legend>
+                    <?php for ($si = 0; $si < 5; $si++): ?>
+                    <label class="admin-label">PNG иконка <?= $si + 1 ?></label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="blog_showcase_social_icon_<?= $si ?>" value="<?= h($blogState['social_icons'][$si] ?? '') ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($blogState['social_icons'][$si] ?? '') ?>" alt=""<?= ($blogState['social_icons'][$si] ?? '') === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php endfor; ?>
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
@@ -1246,6 +1288,32 @@ $token = csrf_token();
                 </fieldset>
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Lead Section (block-5-3)</legend>
+                    <label class="admin-label">Картинка справа</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="par_lead_visual_image" value="<?= h($parState['lead_visual_image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($parState['lead_visual_image']) ?>" alt=""<?= $parState['lead_visual_image'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php for ($li = 0; $li < 3; $li++): ?>
+                        <label class="admin-label">Иконка карточки <?= $li + 1 ?></label>
+                        <div class="admin-img-wrap">
+                            <div class="admin-img-row">
+                                <input class="admin-input admin-img-url" name="par_lead_icon_<?= $li ?>" value="<?= h($parState['lead_cards'][$li]['icon']) ?>" placeholder="/assets/img/...">
+                                <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                                <span class="admin-img-spin" hidden>…</span>
+                            </div>
+                            <input type="file" class="admin-img-file" accept="image/*" hidden>
+                            <img class="admin-img-preview" src="<?= h($parState['lead_cards'][$li]['icon']) ?>" alt=""<?= $parState['lead_cards'][$li]['icon'] === '' ? ' hidden' : '' ?>>
+                        </div>
+                    <?php endfor; ?>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Split Video 1 (block-5-4)</legend>
                     <label class="admin-label">Заголовок</label>
                     <input class="admin-input" name="par_sv1_title" value="<?= h($parState['sv1_title']) ?>">
@@ -1287,6 +1355,28 @@ $token = csrf_token();
 
                 <fieldset class="admin-fieldset admin-fieldset--flat">
                     <legend>Partner Icons (block-5-5)</legend>
+                    <label class="admin-label">Картинка справа (profit visual)</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="par_profit_visual_image" value="<?= h($parState['profit_visual_image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($parState['profit_visual_image']) ?>" alt=""<?= $parState['profit_visual_image'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php for ($pi = 0; $pi < 3; $pi++): ?>
+                    <label class="admin-label">Иконка карточки Profit <?= $pi + 1 ?></label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="par_profit_icon_<?= $pi ?>" value="<?= h($parState['profit_cards'][$pi]['icon']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($parState['profit_cards'][$pi]['icon']) ?>" alt=""<?= $parState['profit_cards'][$pi]['icon'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php endfor; ?>
                     <label class="admin-label">Заголовок секции</label>
                     <input class="admin-input" name="par_icons_title" value="<?= h($parState['icons_title']) ?>">
                     <?php for ($ii = 0; $ii < 4; $ii++): ?>
@@ -1304,6 +1394,46 @@ $token = csrf_token();
                         </div>
                     </div>
                     <?php endfor; ?>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Global Cards (block-5-7)</legend>
+                    <label class="admin-label">Картинка chart-блока</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="par_global_chart_image" value="<?= h($parState['global_chart_image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($parState['global_chart_image']) ?>" alt=""<?= $parState['global_chart_image'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php for ($gi = 0; $gi < 7; $gi++): ?>
+                    <label class="admin-label">Иконка Global Card <?= $gi + 1 ?></label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="par_global_icon_<?= $gi ?>" value="<?= h($parState['global_cards'][$gi]['icon']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($parState['global_cards'][$gi]['icon']) ?>" alt=""<?= $parState['global_cards'][$gi]['icon'] === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <?php endfor; ?>
+                </fieldset>
+
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Foundation Stage (block-5-10)</legend>
+                    <label class="admin-label">Центральная картинка секции</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="par_foundation_stage_image" value="<?= h($parState['foundation_stage_image']) ?>" placeholder="/assets/img/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h($parState['foundation_stage_image']) ?>" alt=""<?= $parState['foundation_stage_image'] === '' ? ' hidden' : '' ?>>
+                    </div>
                 </fieldset>
 
             </div>

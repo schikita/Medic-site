@@ -102,6 +102,48 @@ function xr_block_intro_gradient(array $p, string $blockId = ''): void
             trim((string) ($p['headline_line1'] ?? '')) . ' ' . trim((string) ($p['headline_line2'] ?? ''))
         );
     }
+    if ($blockId === 'block-4-2-intro') {
+        $eyebrow = 'The way we practice medicine is evolving faster than ever';
+        $headline = "XR and AI are no longer the future - they're\ntransforming healthcare today and (r)evolutionizing\nhow we work, educate and connect";
+        $body = 'Unlock breakthrough innovations, explore game-changing applications, master the tools reshaping medical practice and integrate XR with AI into your daily professional life';
+        $headlineLines = preg_split('/\r\n|\r|\n/', $headline) ?: [];
+        $headlineLines = array_values(array_filter(array_map('trim', $headlineLines), static fn ($v) => $v !== ''));
+        ?>
+        <div class="xr-intro-gradient xr-intro-gradient--blog-highlight">
+            <div class="xr-page-grid xr-intro-gradient__grid">
+                <p class="xr-intro-gradient__eyebrow xr-reveal"><?= h($eyebrow) ?></p>
+                <h2 class="xr-intro-gradient__headline">
+                    <?php foreach ($headlineLines as $line): ?>
+                        <span class="xr-intro-gradient__line xr-reveal"><?= h($line) ?></span>
+                    <?php endforeach; ?>
+                </h2>
+                <p class="xr-intro-gradient__body xr-reveal"><?= h($body) ?></p>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+    if ($blockId === 'block-5-2') {
+        $eyebrow = 'The worldwide Next-GeN medical movement is shaping the new global standard';
+        $headline = "Join XR Doctor. Embark on your journey\nto global medical excellence and\nindustry-leading success";
+        $body = 'You instantly unlock the power of XR solutions to boost your career, expand your influence, drive business growth';
+        $headlineLines = preg_split('/\r\n|\r|\n/', $headline) ?: [];
+        $headlineLines = array_values(array_filter(array_map('trim', $headlineLines), static fn ($v) => $v !== ''));
+        ?>
+        <div class="xr-intro-gradient xr-intro-gradient--partners-move">
+            <div class="xr-page-grid xr-intro-gradient__grid">
+                <p class="xr-intro-gradient__eyebrow xr-reveal"><?= h($eyebrow) ?></p>
+                <h2 class="xr-intro-gradient__headline">
+                    <?php foreach ($headlineLines as $line): ?>
+                        <span class="xr-intro-gradient__line xr-reveal"><?= h($line) ?></span>
+                    <?php endforeach; ?>
+                </h2>
+                <p class="xr-intro-gradient__body xr-reveal"><?= h($body) ?></p>
+            </div>
+        </div>
+        <?php
+        return;
+    }
     ?>
     <div class="xr-intro-gradient">
         <div class="xr-page-grid xr-intro-gradient__grid">
@@ -397,6 +439,59 @@ function xr_block_tabs_youtube_loop(array $p, string $blockId = ''): void
         <?php
         return;
     }
+    if ($blockId === 'block-4-4') {
+        ?>
+        <section class="xr-blog-join">
+            <div class="xr-blog-join__inner">
+                <h2 class="xr-blog-join__title xr-reveal">Join XR Doctor Community</h2>
+                <p class="xr-blog-join__lead xr-reveal">Gain exclusive insights, expert case studies,<br>real-world use of XR Doctor solutions</p>
+                <p class="xr-blog-join__sub xr-reveal">The future of Healthcare is being built today.<br>Be a part of it!</p>
+                <a class="xr-blog-join__btn xr-reveal" href="#">Get Early Access!</a>
+            </div>
+        </section>
+        <?php
+        return;
+    }
+    if ($blockId === 'block-5-6') {
+        ?>
+        <section class="xr-partner-multiply">
+            <div class="xr-partner-multiply__inner">
+                <div class="xr-partner-multiply__copy">
+                    <h2 class="xr-partner-multiply__title">Be a Growth Partner -<br>Invest in Your Global Scalable Success.<br>Stronger together</h2>
+                    <p class="xr-partner-multiply__sub">Work with XR Doctor to turn rapidly emerging cutting-edge opportunities into highly scalable real-world solutions with exponential and enduring profitability.</p>
+                </div>
+                <a class="xr-partner-multiply__btn" href="#hubspot-demo">Multiply<br>Your Success</a>
+            </div>
+        </section>
+        <?php
+        return;
+    }
+    if ($blockId === 'block-5-10') {
+        $labels = ['Patient Care', 'Telementoring', 'Teamwork', 'Patient Education', 'Treatment Simulation', 'Medical Training', 'Case Conference', 'Remote Education'];
+        $stageImage = trim((string) ($p['foundation_stage_image'] ?? ''));
+        ?>
+        <section class="xr-partner-foundation">
+            <div class="xr-partner-foundation__inner">
+                <h2 class="xr-partner-foundation__title">Establish the Foundation Layer<br>for the Next-GeN<br>Medical Infrastructure</h2>
+                <p class="xr-partner-foundation__sub">A unified environment where holograms and physical reality<br>form one instantly scalable workspace - accessible from anywhere</p>
+                <?php if ($stageImage !== ''): ?>
+                    <div class="xr-partner-foundation__stage xr-partner-foundation__stage--image" aria-hidden="true">
+                        <img class="xr-partner-foundation__stage-image" src="<?= h($stageImage) ?>" alt="" loading="lazy" decoding="async">
+                    </div>
+                <?php else: ?>
+                    <div class="xr-partner-foundation__stage" aria-hidden="true">
+                        <div class="xr-partner-foundation__core">XR DOCTOR</div>
+                        <?php foreach ($labels as $i => $label): ?>
+                            <span class="xr-partner-foundation__node xr-partner-foundation__node--<?= (int) ($i + 1) ?>"><?= h($label) ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <p class="xr-partner-foundation__bottom">XR Doctor is designed to scale,<br>connect &amp; define the standards for what<br>comes next in healthcare</p>
+            </div>
+        </section>
+        <?php
+        return;
+    }
 
     $heading = (string) ($p['heading'] ?? '');
     $subheading = trim((string) ($p['subheading'] ?? ''));
@@ -643,6 +738,9 @@ function xr_block_video_freeze_section(array $p, string $blockId = ''): void
 
 function xr_block_video_freeze_center_image(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'block-5-9') {
+        return;
+    }
     $mp4 = (string) ($p['mp4'] ?? '');
     $poster = (string) ($p['poster'] ?? '');
     $caption = (string) ($p['caption'] ?? '');
@@ -2038,8 +2136,14 @@ function xr_block_hero_twinkle(array $p, string $blockId = ''): void
     $img = (string) ($p['image'] ?? '');
     $title = (string) ($p['title'] ?? '');
     $sub = (string) ($p['subtitle'] ?? '');
+    $rootClass = 'xr-hero-twinkle';
+    if ($blockId === 'block-5-1') {
+        $rootClass .= ' xr-hero-twinkle--partners';
+        $title = 'Growth with XR Doctor';
+        $sub = 'Partnership built for Success';
+    }
     ?>
-    <div class="xr-hero-twinkle">
+    <div class="<?= h($rootClass) ?>">
         <div class="xr-hero-twinkle__media">
             <img src="<?= h($img) ?>" alt="">
             <canvas class="xr-hero-twinkle__tw" data-twinkle-overlay width="1600" height="900" aria-hidden="true"></canvas>
@@ -2165,6 +2269,34 @@ function xr_block_blue_video_freeze(array $p, string $blockId = ''): void
 
 function xr_block_partner_split_video(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'block-5-8') {
+        ?>
+        <section class="xr-partner-synergy">
+            <div class="xr-partner-synergy__inner">
+                <div class="xr-partner-synergy__copy">
+                    <h2 class="xr-partner-synergy__title">Embark on an innovation journey with us,<br>when collaboration sparks brilliance,<br>redefining the future of medicine</h2>
+                    <p class="xr-partner-synergy__sub">Let's take the next step together<br>toward stronger partnerships and bigger impact.</p>
+                </div>
+                <a class="xr-partner-synergy__btn" href="#hubspot-demo">Unlock<br>Synergic Growth</a>
+            </div>
+        </section>
+        <?php
+        return;
+    }
+    if ($blockId === 'block-5-4') {
+        ?>
+        <section class="xr-partner-ambassador">
+            <div class="xr-partner-ambassador__inner">
+                <div class="xr-partner-ambassador__copy">
+                    <h2 class="xr-partner-ambassador__title">Became an Ambassador<br>for a Next-GeN Healthcare Standard.<br>Your Voice Matters</h2>
+                    <p class="xr-partner-ambassador__sub">Lead your field with XR/AI technology - gain early access to innovations, connect with top experts, help shape the future of medicine.</p>
+                </div>
+                <a class="xr-partner-ambassador__btn" href="#hubspot-demo">Start<br>Leading Today</a>
+            </div>
+        </section>
+        <?php
+        return;
+    }
     $mp4 = (string) ($p['mp4'] ?? '');
     $poster = (string) ($p['poster'] ?? '');
     $title = (string) ($p['title'] ?? '');
@@ -2200,6 +2332,74 @@ function xr_block_partner_split_video(array $p, string $blockId = ''): void
 
 function xr_block_partner_wp_icons(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'block-5-5') {
+        $baseCards = [
+            [
+                'title' => 'Implement innovation',
+                'text' => 'Embrace innovative products, reinvent medical practice and training,create new treatment methods for profound impact',
+                'icon' => '⚡',
+            ],
+            [
+                'title' => 'Gain advantages',
+                'text' => 'Lead the HealthTech evolution through industry-defining breakthroughs that open new opportunities for growth.',
+                'icon' => '▲',
+            ],
+            [
+                'title' => 'Earn income',
+                'text' => 'Build an income generation engine by turning high-end expertise into training and expanding it globally.',
+                'icon' => '⚡',
+            ],
+        ];
+        $cardsRaw = is_array($p['profit_cards'] ?? null) ? $p['profit_cards'] : [];
+        $cards = [];
+        for ($ci = 0; $ci < 3; $ci++) {
+            $card = is_array($cardsRaw[$ci] ?? null) ? $cardsRaw[$ci] : [];
+            $cards[] = [
+                'title' => trim((string) ($card['title'] ?? $baseCards[$ci]['title'])),
+                'text'  => trim((string) ($card['text'] ?? $baseCards[$ci]['text'])),
+                'icon'  => trim((string) ($card['icon'] ?? $baseCards[$ci]['icon'])),
+            ];
+        }
+        $visualImage = trim((string) ($p['profit_visual_image'] ?? ''));
+        ?>
+        <section class="xr-partner-profit">
+            <div class="xr-partner-profit__inner">
+                <h2 class="xr-partner-profit__title">Leverage XR Doctor Solutions to Scale Smarter,<br>Boost Efficiency &amp; Maximize Profits</h2>
+                <div class="xr-partner-profit__layout">
+                    <div class="xr-partner-profit__cards">
+                        <?php foreach ($cards as $card): ?>
+                            <article class="xr-partner-profit__card xr-reveal">
+                                <div class="xr-partner-profit__icon" aria-hidden="true">
+                                    <?php $icon = trim((string) ($card['icon'] ?? '')); ?>
+                                    <?php if ($icon !== '' && (str_starts_with($icon, '/') || str_starts_with($icon, 'http'))): ?>
+                                        <img src="<?= h($icon) ?>" alt="" loading="lazy" decoding="async">
+                                    <?php else: ?>
+                                        <?= h($icon !== '' ? $icon : '•') ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="xr-partner-profit__copy">
+                                    <h3><?= h($card['title']) ?></h3>
+                                    <p><?= h($card['text']) ?></p>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-partner-profit__visual<?= $visualImage !== '' ? ' xr-partner-profit__visual--has-image' : '' ?>" aria-hidden="true">
+                        <div class="xr-partner-profit__chart">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                        <?php if ($visualImage !== ''): ?>
+                            <img class="xr-partner-profit__visual-img" src="<?= h($visualImage) ?>" alt="" loading="lazy" decoding="async">
+                        <?php endif; ?>
+                        <div class="xr-partner-profit__figure"></div>
+                        <div class="xr-partner-profit__coins">$ € £</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?php
+        return;
+    }
     $title = (string) ($p['title'] ?? '');
     $items = is_array($p['items'] ?? null) ? $p['items'] : [];
     ?>
@@ -2955,6 +3155,23 @@ function xr_block_image_pulse_cta(array $p, string $blockId = ''): void
 
 function xr_block_reveal_outro(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'block-5-11') {
+        ?>
+        <section class="xr-partner-final">
+            <div class="xr-partner-final__inner">
+                <div class="xr-partner-final__copy">
+                    <h2 class="xr-partner-final__title">the Right Partnership<br>Open New Doors</h2>
+                    <p class="xr-partner-final__sub">Great things happen when the right partners come together</p>
+                </div>
+                <a class="xr-partner-final__btn" href="#hubspot-demo">Let's&nbsp; make it happen!</a>
+            </div>
+        </section>
+        <?php
+        return;
+    }
+    if ($blockId === 'block-4-5') {
+        return;
+    }
     if ($blockId === 'i-3-27') {
         $title = trim((string) ($p['title'] ?? ''));
         if ($title === '' || strcasecmp($title, 'Let’s design your rollout') === 0) {
@@ -3746,6 +3963,183 @@ function xr_i310_render_card(array $card): void
 
 function xr_block_white_planks(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'block-5-7') {
+        $leftBase = [
+            [
+                'title' => 'Distributors',
+                'text' => 'Expand your portfolio with cutting-edge XR solutions. As a distributor, gain exclusive access to innovative products, priority support and a growing market demand.',
+                'icon' => '⚡',
+            ],
+            [
+                'title' => 'Investors',
+                'text' => 'Invest in XR Doctor - a scalable, world-changing solution with high returns. Enter a fast-growing market with massive revenue potential and a clear path to global impact.',
+                'icon' => '⚡',
+            ],
+        ];
+        $midBase = [
+            [
+                'title' => 'System Integrators',
+                'text' => 'Integrate XR technology into your solutions and gain a competitive edge. Partner with us to deliver immersive experiences, streamline workflows and enhance client engagement.',
+                'icon' => '◆',
+            ],
+            [
+                'title' => 'Telecom',
+                'text' => 'Our solutions are forward-thinking and rely on seamless connectivity across the world. Work with us to bring XR into real-world use, attract more users and increase your monetization.',
+                'icon' => '◉',
+            ],
+            [
+                'title' => 'Media',
+                'text' => 'Discover groundbreaking stories in XR and MedTech. Give your audience a front-row seat to the most transformative ideas, visionary technologies and the future being built today.',
+                'icon' => '◔',
+            ],
+        ];
+        $rightBase = [
+            [
+                'title' => 'High-Tech Companies',
+                'text' => 'Join forces to develop breakthrough solutions. Benefit from our XR expertise to co-create innovative products, expand market reach and drive industry advancements.',
+                'icon' => '⚡',
+            ],
+            [
+                'title' => 'XR Developers',
+                'text' => 'Accelerate your XR career by building world-impactful solutions with top experts. Gain access to next-gen tools and shape the future of XR.',
+                'icon' => '▭',
+            ],
+        ];
+        $allRaw = is_array($p['global_cards'] ?? null) ? $p['global_cards'] : [];
+        $allBase = array_merge($leftBase, $midBase, $rightBase);
+        $allCards = [];
+        for ($ci = 0; $ci < 7; $ci++) {
+            $row = is_array($allRaw[$ci] ?? null) ? $allRaw[$ci] : [];
+            $allCards[] = [
+                'title' => trim((string) ($row['title'] ?? $allBase[$ci]['title'])),
+                'text'  => trim((string) ($row['text'] ?? $allBase[$ci]['text'])),
+                'icon'  => trim((string) ($row['icon'] ?? $allBase[$ci]['icon'])),
+            ];
+        }
+        $leftCards = array_slice($allCards, 0, 2);
+        $midCards = array_slice($allCards, 2, 3);
+        $rightCards = array_slice($allCards, 5, 2);
+        $chartImage = trim((string) ($p['global_chart_image'] ?? ''));
+        ?>
+        <section class="xr-partner-global">
+            <div class="xr-partner-global__inner">
+                <h2 class="xr-partner-global__title">Powerful Partnership with XR Doctor for<br>Profitable Growth and Global Impact</h2>
+                <div class="xr-partner-global__layout">
+                    <div class="xr-partner-global__col xr-partner-global__col--left">
+                        <article class="xr-partner-global__card xr-partner-global__card--chart xr-reveal">
+                            <?php if ($chartImage !== ''): ?>
+                                <img class="xr-partner-global__chart-img" src="<?= h($chartImage) ?>" alt="" loading="lazy" decoding="async">
+                            <?php else: ?>
+                                <div class="xr-partner-global__chart-grid" aria-hidden="true"></div>
+                            <?php endif; ?>
+                            <h3><?= h($leftCards[0]['title']) ?></h3>
+                            <p><?= h($leftCards[0]['text']) ?></p>
+                        </article>
+                        <article class="xr-partner-global__card xr-reveal">
+                            <?php $ico = trim((string) ($leftCards[1]['icon'] ?? '')); $icoIsImg = $ico !== '' && (str_starts_with($ico, '/') || str_starts_with($ico, 'http')); ?>
+                            <div class="xr-partner-global__icon<?= $icoIsImg ? ' xr-partner-global__icon--has-image' : '' ?>" aria-hidden="true">
+                                <?php if ($icoIsImg): ?><img src="<?= h($ico) ?>" alt="" loading="lazy" decoding="async"><?php else: ?><?= h($ico) ?><?php endif; ?>
+                            </div>
+                            <h3><?= h($leftCards[1]['title']) ?></h3>
+                            <p><?= h($leftCards[1]['text']) ?></p>
+                        </article>
+                    </div>
+                    <div class="xr-partner-global__col xr-partner-global__col--mid">
+                        <?php foreach ($midCards as $card): ?>
+                            <article class="xr-partner-global__card xr-reveal">
+                                <?php $ico = trim((string) ($card['icon'] ?? '')); $icoIsImg = $ico !== '' && (str_starts_with($ico, '/') || str_starts_with($ico, 'http')); ?>
+                                <div class="xr-partner-global__icon<?= $icoIsImg ? ' xr-partner-global__icon--has-image' : '' ?>" aria-hidden="true"><?php if ($icoIsImg): ?><img src="<?= h($ico) ?>" alt="" loading="lazy" decoding="async"><?php else: ?><?= h($ico) ?><?php endif; ?></div>
+                                <h3><?= h($card['title']) ?></h3>
+                                <p><?= h($card['text']) ?></p>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-partner-global__col xr-partner-global__col--right">
+                        <?php foreach ($rightCards as $card): ?>
+                            <article class="xr-partner-global__card xr-reveal">
+                                <?php $ico = trim((string) ($card['icon'] ?? '')); $icoIsImg = $ico !== '' && (str_starts_with($ico, '/') || str_starts_with($ico, 'http')); ?>
+                                <div class="xr-partner-global__icon<?= $icoIsImg ? ' xr-partner-global__icon--has-image' : '' ?>" aria-hidden="true"><?php if ($icoIsImg): ?><img src="<?= h($ico) ?>" alt="" loading="lazy" decoding="async"><?php else: ?><?= h($ico) ?><?php endif; ?></div>
+                                <h3><?= h($card['title']) ?></h3>
+                                <p><?= h($card['text']) ?></p>
+                            </article>
+                        <?php endforeach; ?>
+                        <article class="xr-partner-global__card xr-partner-global__card--cta xr-reveal">
+                            <p>World - Class <span>Solution</span></p>
+                            <p>World - <span>Scale Product</span></p>
+                            <p>World - <span>Wide Connect</span></p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?php
+        return;
+    }
+    if ($blockId === 'block-5-3') {
+        $baseRows = [
+            [
+                'title' => 'Be a forward-thinking youth leader',
+                'text' => 'Enhance your learning with spatial holograms for deeper medical understanding, connect globally with experts, and advance your career',
+                'icon' => '🎓',
+            ],
+            [
+                'title' => 'Lead innovation among colleagues',
+                'text' => 'Enhance your learning with spatial holograms for deeper medical understanding, connect globally with experts, and advance your career',
+                'icon' => '🩺',
+            ],
+            [
+                'title' => 'Become a next-gen researcher',
+                'text' => 'Embrace innovative products, reinvent medical practice and training, create new treatment methods for profound impact',
+                'icon' => '⚛',
+            ],
+        ];
+        $rowsRaw = is_array($p['lead_cards'] ?? null) ? $p['lead_cards'] : [];
+        $rows = [];
+        for ($ri = 0; $ri < 3; $ri++) {
+            $row = is_array($rowsRaw[$ri] ?? null) ? $rowsRaw[$ri] : [];
+            $rows[] = [
+                'title' => trim((string) ($row['title'] ?? $baseRows[$ri]['title'])),
+                'text'  => trim((string) ($row['text'] ?? $baseRows[$ri]['text'])),
+                'icon'  => trim((string) ($row['icon'] ?? $baseRows[$ri]['icon'])),
+            ];
+        }
+        $visualImage = trim((string) ($p['lead_visual_image'] ?? ''));
+        ?>
+        <div class="xr-partner-lead">
+            <div class="xr-partner-lead__inner">
+                <h2 class="xr-partner-lead__title">XR Doctor Empowers You to Elevate Success,<br>Expand Influence and Stay Ahead</h2>
+                <div class="xr-partner-lead__layout">
+                    <div class="xr-partner-lead__cards">
+                        <?php foreach ($rows as $row): ?>
+                            <article class="xr-partner-lead__card xr-reveal">
+                                <div class="xr-partner-lead__icon" aria-hidden="true">
+                                    <?php $rowIcon = trim((string) ($row['icon'] ?? '')); ?>
+                                    <?php if ($rowIcon !== '' && (str_starts_with($rowIcon, '/') || str_starts_with($rowIcon, 'http'))): ?>
+                                        <img src="<?= h($rowIcon) ?>" alt="" loading="lazy" decoding="async">
+                                    <?php else: ?>
+                                        <?= h($rowIcon !== '' ? $rowIcon : '•') ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="xr-partner-lead__copy">
+                                    <h3><?= h($row['title']) ?></h3>
+                                    <p><?= h($row['text']) ?></p>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="xr-partner-lead__visual<?= $visualImage !== '' ? ' xr-partner-lead__visual--has-image' : '' ?>" aria-hidden="true">
+                        <div class="xr-partner-lead__ring"></div>
+                        <?php if ($visualImage !== ''): ?>
+                            <img class="xr-partner-lead__visual-img" src="<?= h($visualImage) ?>" alt="" loading="lazy" decoding="async">
+                        <?php endif; ?>
+                        <div class="xr-partner-lead__person"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        return;
+    }
     if ($blockId === 'i-3-10') {
         $columns = is_array($p['columns'] ?? null) ? $p['columns'] : [];
         $heading = trim((string) ($p['title'] ?? ''));
@@ -4572,9 +4966,39 @@ function xr_block_highlight_box_block(array $p, string $blockId = ''): void
 
 function xr_block_blog_hero(array $p, string $blockId = ''): void
 {
-    $img = (string) ($p['image'] ?? '');
-    $title = (string) ($p['title'] ?? '');
-    $sub = (string) ($p['subtitle'] ?? '');
+    $img = trim((string) ($p['image'] ?? ''));
+    $visualImage = trim((string) ($p['visual_image'] ?? ''));
+    $title = trim((string) ($p['title'] ?? ''));
+    $sub = trim((string) ($p['subtitle'] ?? ''));
+    if ($blockId === 'block-4-1') {
+        $title = "Stay on Top\nof XR-driven\nHealthcare";
+        $sub = "Discover a thriving space where experts, pioneers & visionaries come together to drive the latest trends & breakthroughs \nin Medical XR";
+        $lines = preg_split('/\r\n|\r|\n/', $title) ?: [];
+        $lines = array_values(array_filter(array_map('trim', $lines), static fn ($v) => $v !== ''));
+        if ($lines === []) {
+            $lines = [$title];
+        }
+        ?>
+        <div class="xr-blog-hero xr-blog-hero--news">
+            <div class="xr-blog-hero__grid">
+                <div class="xr-blog-hero__copy">
+                    <h1 class="xr-blog-hero__title xr-reveal">
+                        <?php foreach ($lines as $ln): ?>
+                            <span class="xr-blog-hero__title-line"><?= h($ln) ?></span>
+                        <?php endforeach; ?>
+                    </h1>
+                    <p class="xr-blog-hero__sub xr-reveal"><?= h($sub) ?></p>
+                </div>
+                <div class="xr-blog-hero__visual" aria-hidden="true">
+                    <?php if ($visualImage !== '' || $img !== ''): ?>
+                        <img class="xr-blog-hero__visual-image" src="<?= h($visualImage !== '' ? $visualImage : $img) ?>" alt="" loading="lazy" decoding="async">
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php
+        return;
+    }
     ?>
     <div class="xr-blog-hero">
         <div class="xr-blog-hero__media">
@@ -4595,6 +5019,81 @@ function xr_block_blog_masonry(array $p, string $blockId = ''): void
     $pinned = is_array($p['pinned'] ?? null) ? $p['pinned'] : [];
     $posts = is_array($p['posts'] ?? null) ? $p['posts'] : [];
     $anchor = (string) ($pinned['anchor'] ?? '#block-4-3');
+    if ($blockId === 'block-4-2-grid') {
+        $socialIcons = is_array($p['social_icons'] ?? null) ? $p['social_icons'] : [];
+        $items = [];
+        foreach ($posts as $post) {
+            if (!is_array($post)) {
+                continue;
+            }
+            $items[] = [
+                'title' => trim((string) ($post['title'] ?? '')),
+                'image' => trim((string) ($post['image'] ?? '')),
+            ];
+            if (count($items) >= 4) {
+                break;
+            }
+        }
+        ?>
+        <div class="xr-blog-showcase">
+            <div class="xr-blog-showcase__layout">
+                <div class="xr-blog-showcase__feed">
+                    <?php foreach ($items as $item): ?>
+                        <article class="xr-blog-showcase__card xr-reveal">
+                            <?php if ($item['image'] !== ''): ?>
+                                <img src="<?= h($item['image']) ?>" alt="" loading="lazy" decoding="async">
+                            <?php endif; ?>
+                            <div class="xr-blog-showcase__meta">
+                                <span>Articles</span>
+                                <span>XR Doctor</span>
+                            </div>
+                            <h3><?= h($item['title']) ?></h3>
+                            <div class="xr-blog-showcase__stats" aria-hidden="true">
+                                <span>◔</span><span>♡ 0</span><span>◦</span>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+                <aside class="xr-blog-showcase__aside">
+                    <h2 class="xr-blog-showcase__title xr-reveal">Share Your Insight<br>Like and Comment<br>Make Impact</h2>
+                    <p class="xr-blog-showcase__sub xr-reveal">Join the discussion inside XR Doctor community</p>
+                    <div class="xr-blog-showcase__panel xr-reveal">
+                        <h4>Search</h4>
+                        <input type="text" value="" placeholder="Search for something">
+                    </div>
+                    <div class="xr-blog-showcase__panel xr-reveal">
+                        <h4>Tags</h4>
+                        <div class="xr-blog-showcase__chips">
+                            <span>Medical education</span><span>Training</span><span>Teamwork</span>
+                            <span>Telemedicine</span><span>Telementoring</span><span>Diagnostic</span>
+                            <span>Surgery</span><span>Patient education</span>
+                        </div>
+                    </div>
+                    <div class="xr-blog-showcase__panel xr-reveal">
+                        <h4>Categories</h4>
+                        <div class="xr-blog-showcase__chips xr-blog-showcase__chips--compact"><span>Articles</span><span>XR Doctor</span></div>
+                    </div>
+                    <div class="xr-blog-showcase__panel xr-reveal">
+                        <h4>Social Links</h4>
+                        <div class="xr-blog-showcase__social">
+                            <?php for ($si = 0; $si < 5; $si++): ?>
+                                <?php $icon = trim((string) ($socialIcons[$si] ?? '')); ?>
+                                <span>
+                                    <?php if ($icon !== ''): ?>
+                                        <img src="<?= h($icon) ?>" alt="" loading="lazy" decoding="async">
+                                    <?php else: ?>
+                                        <?= h((string) ['in', 'ig', 'yt', 'x', 'p'][$si]) ?>
+                                    <?php endif; ?>
+                                </span>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        <?php
+        return;
+    }
     ?>
     <div class="xr-blog-masonry">
         <?php if ($heading !== ''): ?>
@@ -4633,6 +5132,17 @@ function xr_block_blog_masonry(array $p, string $blockId = ''): void
 
 function xr_block_blog_pinned_detail(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'block-4-3') {
+        ?>
+        <section class="xr-blog-community-banner">
+            <div class="xr-blog-community-banner__inner">
+                <h2 class="xr-blog-community-banner__title xr-reveal">XR Doctor Community<br>goes beyond insights</h2>
+                <p class="xr-blog-community-banner__sub xr-reveal">it's where medical professionals &amp; XR innovators exchange knowledge, collaborate on real-world applications and push the boundaries of XR in medicine</p>
+            </div>
+        </section>
+        <?php
+        return;
+    }
     ?>
     <article class="xr-blog-detail">
         <span class="xr-blog-detail__badge"><?= h((string) ($p['badge'] ?? 'Pinned')) ?></span>

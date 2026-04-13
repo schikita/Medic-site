@@ -2458,7 +2458,8 @@
                 "props": {
                     "image": "https:\/\/picsum.photos\/seed\/xrblog41\/1440\/720",
                     "title": "XR Doctor Blog",
-                    "subtitle": "Clinical notes, releases, and research — with headline reveal on load."
+                    "subtitle": "Clinical notes, releases, and research — with headline reveal on load.",
+                    "visual_image": "\/uploads\/2026\/04\/379b13f32d3f85bf4d5df326.png"
                 }
             },
             {
@@ -2487,28 +2488,35 @@
                         {
                             "title": "Release notes — spatial anchors",
                             "excerpt": "Faster room calibration in 2.x.",
-                            "image": "https:\/\/picsum.photos\/seed\/xrblog42a\/400\/260"
+                            "image": "\/uploads\/2026\/04\/90e1edb7c4ae352546685023.png"
                         },
                         {
                             "title": "Paper digest: AR telementoring",
                             "excerpt": "What the meta-analysis says.",
-                            "image": "https:\/\/picsum.photos\/seed\/xrblog42b\/400\/280"
+                            "image": "\/uploads\/2026\/04\/64890e2c1bd08d872a21c0fb.jpg"
                         },
                         {
                             "title": "Campus pilot checklist",
                             "excerpt": "IT + faculty readiness.",
-                            "image": "https:\/\/picsum.photos\/seed\/xrblog42c\/400\/300"
+                            "image": "\/uploads\/2026\/04\/626aa336cbac0b7d5127a942.png"
                         },
                         {
                             "title": "Security bulletin Q2",
                             "excerpt": "Logging and SSO updates.",
-                            "image": "https:\/\/picsum.photos\/seed\/xrblog42d\/400\/240"
+                            "image": "\/uploads\/2026\/04\/7e9d801452a012e291dcab1f.jpg"
                         },
                         {
                             "title": "Workshop recap: Barcelona",
                             "excerpt": "Hands-on with headsets.",
                             "image": "https:\/\/picsum.photos\/seed\/xrblog42e\/400\/270"
                         }
+                    ],
+                    "social_icons": [
+                        "\/uploads\/2026\/04\/19cf8198b9a068d51c76e87c.png",
+                        "\/uploads\/2026\/04\/2190e050a438f4a97345031b.png",
+                        "\/uploads\/2026\/04\/8406b1256b6cae3fd371368b.png",
+                        "\/uploads\/2026\/04\/58f6b8ae557efd60909f8cb2.png",
+                        "\/uploads\/2026\/04\/1b3a873abe602f9ec8763d17.png"
                     ]
                 }
             },
@@ -2581,7 +2589,7 @@
                 "type": "hero_twinkle",
                 "id": "block-5-1",
                 "props": {
-                    "image": "https:\/\/picsum.photos\/seed\/xrpart51\/1440\/900",
+                    "image": "\/uploads\/2026\/04\/4160807c97b070b891228d83.png",
                     "title": "Partner with XR Doctor",
                     "subtitle": "Block 5.1 — fullscreen hero with twinkle overlay (same pattern as Professionals §2.1)."
                 }
@@ -2613,6 +2621,18 @@
                         {
                             "title": "Clinical",
                             "text": "Joint studies, reference sites, and evidence generation."
+                        }
+                    ],
+                    "lead_visual_image": "\/uploads\/2026\/04\/2160ed040b0f218a3ade0cc1.png",
+                    "lead_cards": [
+                        {
+                            "icon": "\/uploads\/2026\/04\/975b47ad08fa26d3f2c26d90.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/ca9f62f13284b62baa86b210.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/e958c358604e74eae3dfd749.png"
                         }
                     ]
                 }
@@ -2656,6 +2676,18 @@
                             "dashicon": "f322",
                             "label": "Programs",
                             "text": "Pilot playbooks and expansion kits."
+                        }
+                    ],
+                    "profit_visual_image": "\/uploads\/2026\/04\/e675412a0204ed65ef1fefa4.png",
+                    "profit_cards": [
+                        {
+                            "icon": "\/uploads\/2026\/04\/6418817e56c9e6b150f47438.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/657510b069ecb412ffb23694.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/5bb1d4dda220727632a3eb71.png"
                         }
                     ]
                 }
@@ -2706,6 +2738,30 @@
                         {
                             "title": "Co-marketing",
                             "text": "Events, case studies, and press templates."
+                        }
+                    ],
+                    "global_chart_image": "\/uploads\/2026\/04\/7428005a8d8364816d7e5200.png",
+                    "global_cards": [
+                        {
+                            "icon": "\/uploads\/2026\/04\/7dc98b40a418c8a51faec057.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/d1b22961a32b0f80fe0f8dd4.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/1b68adaba23a120879812d1f.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/040cd05f54421b29e971ca2e.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/639fd0035f7a7a050cb9859a.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/519a078927278e8175410926.png"
+                        },
+                        {
+                            "icon": "\/uploads\/2026\/04\/c7685fb261c2f36d1dbc38be.png"
                         }
                     ]
                 }
@@ -2760,7 +2816,8 @@
                             "poster": "https:\/\/picsum.photos\/seed\/xrpart510c\/800\/480",
                             "mp4": "https:\/\/www.w3schools.com\/html\/mov_bbb.mp4"
                         }
-                    ]
+                    ],
+                    "foundation_stage_image": "\/uploads\/2026\/04\/3a09821ccd8278a31ccfdfbf.png"
                 }
             },
             {
