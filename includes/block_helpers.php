@@ -279,6 +279,7 @@ function xr_institutions_state(array $site): array
     $beforeAfter = xr_find_block_props_by_id($blocks, 'i-3-6');
     $discover    = xr_find_block_props_by_id($blocks, 'i-3-7');
     $orbitI38    = xr_find_block_props_by_id($blocks, 'i-3-8');
+    $orbitI311   = xr_find_block_props_by_id($blocks, 'i-3-11');
     $i310       = xr_find_block_props_by_id($blocks, 'i-3-10');
     $gallery  = xr_find_block_props_by_id($blocks, 'i-3-21-24');
     $careSlides = is_array($care['slides'] ?? null) ? $care['slides'] : [];
@@ -354,6 +355,10 @@ function xr_institutions_state(array $site): array
 
             return $out;
         })($orbitI38),
+        'orbit_adv_center_image'   => (string)($orbitI311['center_image'] ?? ''),
+        'orbit_adv_center_label'   => (string)($orbitI311['center_label'] ?? ''),
+        'orbit_adv_pill_label_icon' => (string)($orbitI311['pill_label_icon'] ?? ''),
+        'orbit_adv_outer_apex_image' => (string)($orbitI311['outer_apex_image'] ?? ''),
         'gallery_heading'  => (string)($gallery['heading'] ?? ''),
         'gallery_slides'   => xr_slides_state($gallery),
         'nx_title_l0'      => (string)($nxTitle[0] ?? 'Next-Gen'),

@@ -610,6 +610,24 @@ function merge_site_from_post(array $current): array
                     $p['stack_description'] = $sd;
                 }
             }
+            if ($id === 'i-3-11') {
+                $img = trim((string)($_POST['inst_orbit_adv_center_image'] ?? ''));
+                if ($img !== '') {
+                    $p['center_image'] = $img;
+                }
+                $t = trim((string)($_POST['inst_orbit_adv_center_label'] ?? ''));
+                if ($t !== '') {
+                    $p['center_label'] = $t;
+                }
+                $pillIcon = trim((string)($_POST['inst_orbit_adv_pill_label_icon'] ?? ''));
+                if ($pillIcon !== '') {
+                    $p['pill_label_icon'] = $pillIcon;
+                }
+                $outerApexImage = trim((string)($_POST['inst_orbit_adv_outer_apex_image'] ?? ''));
+                if ($outerApexImage !== '') {
+                    $p['outer_apex_image'] = $outerApexImage;
+                }
+            }
             if ($id === 'i-3-6') {
                 $ot = trim((string)($_POST['inst_ba_overlay_title'] ?? ''));
                 if ($ot !== '') $p['overlay_title'] = $ot;

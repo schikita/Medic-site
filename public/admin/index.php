@@ -1127,6 +1127,43 @@ $token = csrf_token();
                     </div>
                 </fieldset>
 
+                <fieldset class="admin-fieldset admin-fieldset--flat">
+                    <legend>Advantages — орбита (i-3-11)</legend>
+                    <p class="admin-hint">Тёмная секция с орбитой преимуществ. Центр и иконка меток задаются здесь; блок Orbit Assistant (i-3-8) — отдельная орбита выше по странице.</p>
+                    <label class="admin-label">Подпись внутри круга под фото</label>
+                    <input class="admin-input" name="inst_orbit_adv_center_label" value="<?= h((string)($instState['orbit_adv_center_label'] ?? '')) ?>">
+                    <label class="admin-label">Иконка слева от меток на орбите</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="inst_orbit_adv_pill_label_icon" value="<?= h((string)($instState['orbit_adv_pill_label_icon'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($instState['orbit_adv_pill_label_icon'] ?? '')) ?>" alt=""<?= ((string)($instState['orbit_adv_pill_label_icon'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <label class="admin-label">Фото в центре круга</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="inst_orbit_adv_center_image" value="<?= h((string)($instState['orbit_adv_center_image'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($instState['orbit_adv_center_image'] ?? '')) ?>" alt=""<?= ((string)($instState['orbit_adv_center_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                    <label class="admin-label">Картинка на вершине внешнего кольца</label>
+                    <div class="admin-img-wrap">
+                        <div class="admin-img-row">
+                            <input class="admin-input admin-img-url" name="inst_orbit_adv_outer_apex_image" value="<?= h((string)($instState['orbit_adv_outer_apex_image'] ?? '')) ?>" placeholder="/uploads/...">
+                            <button type="button" class="admin-btn admin-img-upload-btn" title="Загрузить">↑</button>
+                            <span class="admin-img-spin" hidden>…</span>
+                        </div>
+                        <input type="file" class="admin-img-file" accept="image/*" hidden>
+                        <img class="admin-img-preview" src="<?= h((string)($instState['orbit_adv_outer_apex_image'] ?? '')) ?>" alt=""<?= ((string)($instState['orbit_adv_outer_apex_image'] ?? '')) === '' ? ' hidden' : '' ?>>
+                    </div>
+                </fieldset>
+
             </div>
         </details>
     </section>

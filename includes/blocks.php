@@ -342,6 +342,61 @@ function xr_block_tabs_youtube_loop(array $p, string $blockId = ''): void
         <?php
         return;
     }
+    if ($blockId === 'i-3-20') {
+        $title = trim((string) ($p['impact_title'] ?? 'Eliminates Invisible Losses & Hidden Risks with XR Doctor'));
+        $rows = [
+            [
+                'label' => 'Errors during procedures',
+                'value' => '-50%',
+                'percent' => 50,
+                'note' => '*After XR-based surgical skill training Validated in GEARS trials',
+            ],
+            [
+                'label' => 'Time to reach competency',
+                'value' => '-45%',
+                'percent' => 45,
+                'note' => '*Compared to traditional instruction AI-VR controlled studies',
+            ],
+            [
+                'label' => 'Knowledge loss over time',
+                'value' => '-70%',
+                'percent' => 70,
+                'note' => '*Traditional: -70% after 1 week vs XR: 75% retained after 1 year Long-term retention results',
+            ],
+            [
+                'label' => 'Simulation infrastructure cost',
+                'value' => '-80%',
+                'percent' => 80,
+                'note' => '*Compared to physical mannequins and on-site sessions Cost-effectiveness evaluations',
+            ],
+            [
+                'label' => 'Repeated needle insertions',
+                'value' => '-74%',
+                'percent' => 74,
+                'note' => '*AR guidance reduced failed CT-interventions Interventional radiology study',
+            ],
+        ];
+        ?>
+        <div class="xr-losses">
+            <h2 class="xr-losses__title"><?= h($title) ?></h2>
+            <div class="xr-losses__card">
+                <?php foreach ($rows as $r): ?>
+                    <div class="xr-losses__row">
+                        <div class="xr-losses__row-head">
+                            <h3 class="xr-losses__label"><?= h($r['label']) ?></h3>
+                            <span class="xr-losses__value"><?= h($r['value']) ?></span>
+                        </div>
+                        <div class="xr-losses__track" role="img" aria-label="<?= h($r['label']) . ' ' . h($r['value']) ?>">
+                            <span class="xr-losses__fill" style="--w: <?= (int) $r['percent'] ?>%"></span>
+                        </div>
+                        <p class="xr-losses__note"><?= h($r['note']) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php
+        return;
+    }
 
     $heading = (string) ($p['heading'] ?? '');
     $subheading = trim((string) ($p['subheading'] ?? ''));
@@ -1363,6 +1418,75 @@ function xr_block_floating_plank(array $p, string $blockId = ''): void
 
 function xr_block_timeline_gradient(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-19') {
+        $tabGroup = 'impact-' . preg_replace('/[^a-z0-9]/i', '', $blockId);
+        $title = trim((string) ($p['impact_title'] ?? 'Your XR Doctor Training Impact'));
+        $tabA = trim((string) ($p['impact_tab_a'] ?? 'For Clinical Readiness'));
+        $tabB = trim((string) ($p['impact_tab_b'] ?? 'For Training Management'));
+        ?>
+        <div class="xr-impact">
+            <h2 class="xr-impact__title"><?= h($title) ?></h2>
+            <div class="xr-impact__tabs" role="tablist" aria-label="<?= h($title) ?>">
+                <button type="button" class="xr-impact__tab is-active" data-xr-tab="<?= h($tabGroup) ?>" data-index="0"><?= h($tabA) ?></button>
+                <button type="button" class="xr-impact__tab" data-xr-tab="<?= h($tabGroup) ?>" data-index="1"><?= h($tabB) ?></button>
+            </div>
+
+            <div class="xr-impact__panel is-active" data-xr-panel="<?= h($tabGroup) ?>" data-index="0">
+                <ol class="xr-impact__sections">
+                    <li>
+                        <h3>Deep Clinical Engagement & Skill Building</h3>
+                        <ul>
+                            <li><strong>Immersive perspective:</strong> see and complete surgical cases through the surgeon's eyes</li>
+                            <li><strong>Realistic practice:</strong> train surgical skills difficult to simulate in physical models</li>
+                            <li><strong>Core formation:</strong> build muscle memory, spatial perception and judgment in scenarios</li>
+                            <li><strong>Compressed learning:</strong> integrate diagnostics, planning, surgery into immersive training</li>
+                            <li><strong>Error awareness:</strong> explore, train, test & avoid typical mistakes before treating patients</li>
+                            <li><strong>Cognitive focus:</strong> strengthen clinical decision-making before real-world pressure</li>
+                            <li><strong>Visual memory:</strong> reinforce procedure recall through immersive repetition</li>
+                            <li><strong>Digest large information fast & All-in-One:</strong> full clinical context in one session</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>High-Complexity & Rare Case Preparation</h3>
+                        <ul>
+                            <li><strong>Advanced complexity:</strong> practice rare & complex procedures requiring high-level preparation</li>
+                            <li><strong>Future readiness:</strong> master new technologies before becoming clinical routine</li>
+                            <li><strong>Critical exposure:</strong> gain experience in surgeries not available in all hospitals</li>
+                            <li><strong>Scenario diversity:</strong> prepare for non-standard and emergency cases</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="xr-impact__panel" data-xr-panel="<?= h($tabGroup) ?>" data-index="1">
+                <ol class="xr-impact__sections">
+                    <li>
+                        <h3>Cost efficiency & program scalability</h3>
+                        <ul>
+                            <li><strong>Significant reduction in training costs:</strong> with increased instructional efficiency per learner</li>
+                            <li><strong>Scale real clinical cases training:</strong> to hundreds of learners across multiple locations</li>
+                            <li><strong>Increase surgery simulation frequency:</strong> without additional financial burden</li>
+                            <li><strong>Cut administrative overhead:</strong> by centralizing training infrastructure</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>Delivery flexibility & multi-format integration</h3>
+                        <ul>
+                            <li><strong>Individual and group training:</strong> adaptable to roles, skills, and environments</li>
+                            <li><strong>Collaborative training on-site or remotely:</strong> enabling presence across any distance</li>
+                            <li><strong>Remote access with presence effect:</strong> immersive team interaction at scale</li>
+                            <li><strong>Deliver quality content anywhere:</strong> raising education level regardless of geography</li>
+                            <li><strong>Hybrid use of training objects:</strong> with or without mannequins and simulation tools</li>
+                            <li><strong>Support diverse training scenarios:</strong> across locations, devices and time zones</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $heading = (string) ($p['heading'] ?? '');
     $steps = is_array($p['steps'] ?? null) ? $p['steps'] : [];
     ?>
@@ -1388,6 +1512,31 @@ function xr_block_timeline_gradient(array $p, string $blockId = ''): void
 
 function xr_block_gallery_three(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-21-24') {
+        $title = trim((string) ($p['growth_title'] ?? 'Builds Measurable Growth into Real Outcomes by amplfying Skills, Speed and ROI'));
+        $stats = [
+            ['value' => '+52%', 'title' => 'Faster onboarding of new clinicians', 'note' => '*Time-to-autonomy metrics'],
+            ['value' => '+96%', 'title' => 'Improvement of surgical skills', 'note' => '*Measured in simulation trials'],
+            ['value' => '+400%', 'title' => 'Higher training throughput', 'note' => '*More staff trained'],
+            ['value' => '+2560%', 'title' => 'ROI up to 2,560% with 20 sessions per year', 'note' => '*Confirmed in economic analysis'],
+        ];
+        ?>
+        <div class="xr-growth">
+            <h2 class="xr-growth__title"><?= h($title) ?></h2>
+            <div class="xr-growth__grid">
+                <?php foreach ($stats as $s): ?>
+                    <article class="xr-growth__item">
+                        <div class="xr-growth__value"><?= h($s['value']) ?></div>
+                        <h3 class="xr-growth__item-title"><?= h($s['title']) ?></h3>
+                        <p class="xr-growth__item-note"><?= h($s['note']) ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $heading = (string) ($p['heading'] ?? '');
     $slides = is_array($p['slides'] ?? null) ? $p['slides'] : [];
     $interval = (int) ($p['interval_ms'] ?? 4000);
@@ -1411,6 +1560,56 @@ function xr_block_gallery_three(array $p, string $blockId = ''): void
 
 function xr_block_starfield_cta(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-25') {
+        $title = trim((string) ($p['workflow_title'] ?? 'XR Doctor Training Workflow'));
+        $subtitle = trim((string) ($p['workflow_subtitle'] ?? 'Train Anywhere. Practice Deeper. Connect Globally.'));
+        $steps = [
+            [
+                'roman' => 'I.',
+                'title' => 'CHOOSE PLACE',
+                'text' => "Anywhere in the world - start in your room, clinic or class, the moment you're ready. Your space becomes a real training scene - no travel, no setup, just go.",
+                'image' => trim((string) ($p['workflow_image_1'] ?? 'https://picsum.photos/seed/xrflow1/900/520')),
+            ],
+            [
+                'roman' => 'II.',
+                'title' => 'DEPLOY INSTANTLY',
+                'text' => 'Just put the AR/VR Glasses on your head - the scene opens life-size, right where you are instantly ready to adjust and use. Move it, scale it, place it - live in seconds, no setup, ready to train.',
+                'image' => trim((string) ($p['workflow_image_2'] ?? 'https://picsum.photos/seed/xrflow2/900/520')),
+            ],
+            [
+                'roman' => 'III.',
+                'title' => 'CASE REVIEW',
+                'text' => "Step into a fully equipped, life-like AR environment. Explore what matters, pause when needed, dive into every detail. Everything feels real - only better: repeat, resize, revisit - at your own pace.",
+                'image' => trim((string) ($p['workflow_image_3'] ?? 'https://picsum.photos/seed/xrflow3/900/520')),
+            ],
+        ];
+        ?>
+        <div class="xr-workflow">
+            <h2 class="xr-workflow__title"><?= h($title) ?></h2>
+            <p class="xr-workflow__sub"><?= h($subtitle) ?></p>
+            <div class="xr-workflow__cards">
+                <?php foreach ($steps as $s): ?>
+                    <article class="xr-workflow__card">
+                        <div class="xr-workflow__media">
+                            <img src="<?= h($s['image']) ?>" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <h3 class="xr-workflow__step"><span><?= h($s['roman']) ?></span> <?= h($s['title']) ?></h3>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+            <div class="xr-workflow__line" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="xr-workflow__notes">
+                <?php foreach ($steps as $s): ?>
+                    <p class="xr-workflow__text"><?= h($s['text']) ?></p>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $title  = (string) ($p['title'] ?? '');
     $btn    = (string) ($p['button_label'] ?? '');
     $href   = (string) ($p['href'] ?? '#');
@@ -1429,6 +1628,54 @@ function xr_block_starfield_cta(array $p, string $blockId = ''): void
 
 function xr_block_text_reveal_simple(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-26') {
+        $steps = [
+            [
+                'roman' => 'IV.',
+                'title' => 'REAL-LIFE SIMULATION',
+                'text' => 'Practice on a full digital patient inside the body, switch layers, interact with every organ. Repeat endlessly, train solo or with your team - realistic, risk-free and repeatable.',
+                'image' => trim((string) ($p['workflow2_image_1'] ?? 'https://picsum.photos/seed/xrflow4/900/520')),
+            ],
+            [
+                'roman' => 'V.',
+                'title' => 'TEST & SKILLS',
+                'text' => 'Run tests & skill drills-from basics to advanced - using both Real & XR tools anytime, anywhere. Every action shows its impact inside the body - with clear feedback and measurable progress.',
+                'image' => trim((string) ($p['workflow2_image_2'] ?? 'https://picsum.photos/seed/xrflow5/900/520')),
+            ],
+            [
+                'roman' => 'VI.',
+                'title' => 'SHARE GLOBALLY',
+                'text' => 'Invite professionals worldwide, work as if in one room with shared cases instantly visible. Share training with other clinics & universities and co-earn, enabling effortless global collaboration and monetization.',
+                'image' => trim((string) ($p['workflow2_image_3'] ?? 'https://picsum.photos/seed/xrflow6/900/520')),
+            ],
+        ];
+        $footer = trim((string) ($p['workflow2_footer'] ?? 'Built for active learning. Ready to adapt to how you train today.'));
+        ?>
+        <div class="xr-workflow xr-workflow--second">
+            <div class="xr-workflow__cards">
+                <?php foreach ($steps as $s): ?>
+                    <article class="xr-workflow__card">
+                        <div class="xr-workflow__media">
+                            <img src="<?= h($s['image']) ?>" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <h3 class="xr-workflow__step"><span><?= h($s['roman']) ?></span> <?= h($s['title']) ?></h3>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+            <div class="xr-workflow__line" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="xr-workflow__notes">
+                <?php foreach ($steps as $s): ?>
+                    <p class="xr-workflow__text"><?= h($s['text']) ?></p>
+                <?php endforeach; ?>
+            </div>
+            <p class="xr-workflow__footer"><?= h($footer) ?></p>
+        </div>
+        <?php
+        return;
+    }
+
     $lines = is_array($p['lines'] ?? null) ? $p['lines'] : [];
     ?>
     <div class="xr-text-reveal">
@@ -2708,6 +2955,96 @@ function xr_block_image_pulse_cta(array $p, string $blockId = ''): void
 
 function xr_block_reveal_outro(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-27') {
+        $title = trim((string) ($p['title'] ?? ''));
+        if ($title === '' || strcasecmp($title, 'Let’s design your rollout') === 0) {
+            $title = "Every Training Becomes\na Globally Shared Digital Asset\nGenerating Self-Renewing Revenue";
+        }
+        $subtitle = trim((string) ($p['subtitle'] ?? ''));
+        if ($subtitle === '') {
+            $subtitle = 'Turn Your Medical Expertise into Long-Term Investment with XR Doctor';
+        }
+        $lines = preg_split('/\r\n|\r|\n/', $title) ?: [];
+        $lines = array_values(array_filter(array_map('trim', $lines), static fn ($v) => $v !== ''));
+        ?>
+        <div class="xr-impact-banner xr-impact-banner--followup">
+            <div class="xr-impact-banner__glow" aria-hidden="true"></div>
+            <h2 class="xr-impact-banner__title">
+                <?php foreach ($lines as $ln): ?>
+                    <span class="xr-impact-banner__line"><?= h($ln) ?></span>
+                <?php endforeach; ?>
+            </h2>
+            <p class="xr-impact-banner__sub"><?= h($subtitle) ?></p>
+        </div>
+        <div class="xr-resell">
+            <div class="xr-resell__chips" aria-hidden="true">
+                <span>XR Doctor</span>
+                <span>Earn Easy</span>
+            </div>
+            <h3 class="xr-resell__head">Invest Once - Resell Muliple Times<br>for Expontetial ROI</h3>
+            <div class="xr-resell__card">
+                <h4 class="xr-resell__title">A Scalable Model<br>to Generate Revenue</h4>
+                <div class="xr-resell__grid">
+                    <article class="xr-resell__metric">
+                        <div class="xr-resell__value">2-3</div>
+                        <div class="xr-resell__label">Surgeries or Students</div>
+                        <p class="xr-resell__text">Investment in One Training<br>Equals Just 2-3 Surgeries<br>or Annual Tuition of<br>2-3 Students</p>
+                    </article>
+                    <article class="xr-resell__metric">
+                        <div class="xr-resell__value">4-6</div>
+                        <div class="xr-resell__label">Training Resales</div>
+                        <p class="xr-resell__text">Your Training is Fully Paid<br>After Only 4-6 Resales,<br>Next Sale Becomes<br>Your Profit</p>
+                    </article>
+                </div>
+            </div>
+            <p class="xr-resell__cta">Start Earning Together with XR Doctor Right Now</p>
+        </div>
+        <div class="xr-coearn">
+            <h3 class="xr-coearn__title">Co-Create & Co-Earn Monetization Model<br>Generate Revenue with XR Doctor</h3>
+            <div class="xr-coearn__line" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="xr-coearn__grid">
+                <article><h4>I.Order</h4><p>Place an order for a personalized training scenario</p></article>
+                <article><h4>II.Co-Create</h4><p>Together with the XR Doctor create an AR scenario based on your medical protocols</p></article>
+                <article><h4>III.Implement</h4><p>Educate internal staff & students, reduce the learning curve by 4x, cutting overall training costs</p></article>
+                <article><h4>IV.Resell</h4><p>Both XR Doctor and your organization resells training across partner networks</p></article>
+                <article><h4>V.Co-Earn</h4><p>You gain a fixed share from each sale</p></article>
+                <article><h4>VI.Scale</h4><p>Create more training scenarios for new revenue streams</p></article>
+            </div>
+        </div>
+        <div class="xr-infinite">
+            <p class="xr-infinite__eyebrow">Build Your Next-GeN Training - and Let it Grow</p>
+            <h3 class="xr-infinite__title">Create Once - Earn Multiplying!</h3>
+            <h4 class="xr-infinite__hero">Your Infinite Growth<br>Starts Here</h4>
+        </div>
+        <div class="xr-infinity-image">
+            <div class="xr-infinity-image__stage">
+                <img src="/assets/img/figma/home/infinity.png" alt="Infinity" loading="lazy" decoding="async">
+                <span class="xr-infinity-image__tag xr-infinity-image__tag--i">I.ORDER</span>
+                <span class="xr-infinity-image__tag xr-infinity-image__tag--ii">II.CO-CREATE</span>
+                <span class="xr-infinity-image__tag xr-infinity-image__tag--iii">III.IMPLEMENT</span>
+                <span class="xr-infinity-image__tag xr-infinity-image__tag--iv">IV.RESALE</span>
+                <span class="xr-infinity-image__tag xr-infinity-image__tag--v">V.CO-EARN</span>
+                <span class="xr-infinity-image__tag xr-infinity-image__tag--vi">VI.SCALE</span>
+
+                <span class="xr-infinity-image__dot xr-infinity-image__dot--i" aria-hidden="true"></span>
+                <span class="xr-infinity-image__dot xr-infinity-image__dot--ii" aria-hidden="true"></span>
+                <span class="xr-infinity-image__dot xr-infinity-image__dot--iii" aria-hidden="true"></span>
+                <span class="xr-infinity-image__dot xr-infinity-image__dot--iv" aria-hidden="true"></span>
+                <span class="xr-infinity-image__dot xr-infinity-image__dot--v" aria-hidden="true"></span>
+                <span class="xr-infinity-image__dot xr-infinity-image__dot--vi" aria-hidden="true"></span>
+            </div>
+        </div>
+        <div class="xr-final-cta">
+            <h3 class="xr-final-cta__title">Redefine Everyday<br>Work & Education<br>Right Now</h3>
+            <p class="xr-final-cta__sub">Start Your Journey<br>Together with XR Doctor</p>
+            <a class="xr-final-cta__btn" href="#hubspot-demo">Start Now!</a>
+        </div>
+        <?php
+        return;
+    }
+
     $image = trim((string)($p['image'] ?? ''));
     $text = trim((string)($p['text'] ?? ''));
     if ($text === '') {
@@ -2993,6 +3330,7 @@ function xr_block_orbit_cards(array $p, string $blockId = ''): void
     $centerImage = trim((string) ($p['center_image'] ?? ''));
     $centerLabel = trim((string) ($p['center_label'] ?? ''));
     $pillLabelIcon = trim((string) ($p['pill_label_icon'] ?? ''));
+    $outerApexImage = trim((string) ($p['outer_apex_image'] ?? ''));
     $legacyTitle = trim((string) ($p['title'] ?? ''));
     $stackDescription = trim((string) ($p['stack_description'] ?? ''));
     $centerPillsRaw = is_array($p['center_pills'] ?? null) ? $p['center_pills'] : [];
@@ -3043,6 +3381,22 @@ function xr_block_orbit_cards(array $p, string $blockId = ''): void
             continue;
         }
         $orbitItems[] = ['label' => $lab, 'sub' => $sub];
+    }
+    if ($blockId === 'i-3-11') {
+        $forcedAdvantageLabels = [
+            0 => 'Up - Level Professionals',
+            1 => 'Unmatched Industry Edge',
+            2 => 'Smart and Efficient Learning',
+            3 => 'Time and Money Saving',
+            4 => 'Ground - Breaking Research',
+            5 => 'More Satisfied Patients',
+        ];
+        foreach ($forcedAdvantageLabels as $idx => $labelText) {
+            if (!isset($orbitItems[$idx])) {
+                continue;
+            }
+            $orbitItems[$idx]['label'] = $labelText;
+        }
     }
     $nOrbit = max(1, count($orbitItems));
 
@@ -3195,6 +3549,11 @@ function xr_block_orbit_cards(array $p, string $blockId = ''): void
                                         </svg>
                                     <?php endif; ?>
                                 </div>
+                                <?php if ($blockId === 'i-3-11' && $outerApexImage !== ''): ?>
+                                    <div class="xr-orbit__outer-apex" aria-hidden="true">
+                                        <img class="xr-orbit__outer-apex-img" src="<?= h($outerApexImage) ?>" alt="" loading="lazy" decoding="async">
+                                    </div>
+                                <?php endif; ?>
                                 <?php foreach ($orbitItems as $i => $c): ?>
                                     <?php
                                     $gid = 'xr-os-' . $orbitSid . '-' . (int) $i;
@@ -3946,6 +4305,77 @@ function xr_block_nextgen_hands_training(array $p, string $blockId = ''): void
     }
 
     $gStroke = 'nxhStroke_' . preg_replace('/[^a-z0-9]/i', '', $blockId !== '' ? $blockId : 'x');
+    $tabGroup = 'nxh-' . preg_replace('/[^a-z0-9]/i', '', $blockId !== '' ? $blockId : 'x');
+    $masterySlides = [
+        [
+            'title' => trim((string) ($p['mastery_title_1'] ?? 'Your Next Mastery Level Starts Here')),
+            'cards' => [
+                [
+                    'title' => 'Train Anywhere',
+                    'text' => 'Work from hospital, home, university - any worldwide',
+                    'image' => (string) ($modules[0]['image'] ?? ''),
+                ],
+                [
+                    'title' => 'Solo or Teamwork',
+                    'text' => 'Practice individually or in groups - on-site & remote',
+                    'image' => (string) ($modules[1]['image'] ?? ''),
+                ],
+                [
+                    'title' => 'Self-Guided Practice',
+                    'text' => 'Train anytime - no instructor needed, repeat until ready',
+                    'image' => (string) ($modules[2]['image'] ?? ''),
+                ],
+                [
+                    'title' => 'Full-Body or Part',
+                    'text' => 'Train with full-body digital patient, layered target area',
+                    'image' => (string) ($modules[3]['image'] ?? ''),
+                ],
+            ],
+            'interval' => 7000,
+        ],
+        [
+            'title' => trim((string) ($p['mastery_title_2'] ?? 'Your True Skills Speed Up & Unlock Inside')),
+            'cards' => [
+                [
+                    'title' => 'Any type of Tests & Skills',
+                    'text' => 'Use pre-set modules and create your own scenarios',
+                    'image' => (string) ($modules[0]['image'] ?? ''),
+                ],
+                [
+                    'title' => 'Unlimited Time & Place',
+                    'text' => 'Practice individually or in groups - on-site & remote',
+                    'image' => (string) ($modules[1]['image'] ?? ''),
+                ],
+                [
+                    'title' => 'Any Tools - Real & XR',
+                    'text' => 'Practice with real & hologram tools without risk for patient',
+                    'image' => (string) ($modules[2]['image'] ?? ''),
+                ],
+                [
+                    'title' => 'Inside-Body Test View',
+                    'text' => 'See every action\'s impact shown inside a patient body',
+                    'image' => (string) ($modules[3]['image'] ?? ''),
+                ],
+            ],
+            'interval' => 8000,
+        ],
+    ];
+    $videoSlides = [
+        [
+            'title' => trim((string) ($p['skills_title_1'] ?? 'See XR Doctor Training Case Simulation')),
+            'note' => trim((string) ($p['skills_note_1'] ?? "Видео\nАвтоплей")),
+            'poster' => trim((string) ($p['skills_video_poster_1'] ?? ($modules[3]['image'] ?? ''))),
+            'mp4' => trim((string) ($p['skills_video_mp4_1'] ?? '')),
+            'interval' => 9000,
+        ],
+        [
+            'title' => trim((string) ($p['skills_title_2'] ?? 'See XR Doctor Training Test & Masterskills')),
+            'note' => trim((string) ($p['skills_note_2'] ?? "Видео\nАвтоплей")),
+            'poster' => trim((string) ($p['skills_video_poster_2'] ?? ($modules[2]['image'] ?? ''))),
+            'mp4' => trim((string) ($p['skills_video_mp4_2'] ?? '')),
+            'interval' => 9000,
+        ],
+    ];
     ?>
     <div class="xr-nxhands">
         <div class="xr-nxhands__layout">
@@ -3957,62 +4387,124 @@ function xr_block_nextgen_hands_training(array $p, string $blockId = ''): void
                 </h2>
                 <ul class="xr-nxhands__nav">
                     <?php foreach ($navItems as $ni => $nv): ?>
-                        <li class="xr-nxhands__nav-item<?= $ni === 0 ? ' xr-nxhands__nav-item--ruled' : '' ?>"><?= h($nv) ?></li>
+                        <li class="xr-nxhands__nav-item xr-nxhands__nav-item--ruled<?= $ni === 0 ? ' is-active' : '' ?>">
+                            <button
+                                type="button"
+                                class="xr-nxhands__nav-btn<?= $ni === 0 ? ' is-active' : '' ?>"
+                                data-xr-tab="<?= h($tabGroup) ?>"
+                                data-index="<?= (int) $ni ?>"
+                            ><?= h($nv) ?></button>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             </aside>
-            <div class="xr-nxhands__card">
-                <?php if ($cardHeading !== ''): ?>
-                    <p class="xr-nxhands__card-heading"><?= h($cardHeading) ?></p>
-                <?php endif; ?>
-                <div class="xr-nxhands__stage">
-                    <div class="xr-nxhands__ribbons" aria-hidden="true">
-                        <svg class="xr-nxhands__ribbons-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
-                            <defs>
-                                <linearGradient id="<?= h($gStroke) ?>" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
-                                    <stop offset="48%" stop-color="#c084fc" stop-opacity="0.5"/>
-                                    <stop offset="100%" stop-color="#f472b6" stop-opacity="0.55"/>
-                                </linearGradient>
-                            </defs>
-                            <path class="xr-nxhands__ribbon-path" d="M200,200 C165,165 110,95 48,52" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
-                            <path class="xr-nxhands__ribbon-path" d="M200,200 C235,165 290,95 352,52" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
-                            <path class="xr-nxhands__ribbon-path" d="M200,200 C165,235 110,305 48,348" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
-                            <path class="xr-nxhands__ribbon-path" d="M200,200 C235,235 290,305 352,348" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
-                            <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q155,175 95,185" fill="none" stroke="rgba(244, 114, 182, 0.32)" stroke-width="2"/>
-                            <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q245,175 305,185" fill="none" stroke="rgba(244, 114, 182, 0.32)" stroke-width="2"/>
-                            <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q200,245 200,305" fill="none" stroke="rgba(167, 139, 250, 0.32)" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <div class="xr-nxhands__quadrants">
-                        <?php foreach ($modules as $qx): ?>
-                            <div class="xr-nxhands__cell">
-                                <div class="xr-nxhands__cell-media">
-                                    <?php if ($qx['image'] !== ''): ?>
-                                        <img src="<?= h($qx['image']) ?>" alt="" loading="lazy" decoding="async">
+            <div class="xr-nxhands__slider">
+                <div class="xr-nxhands__panel is-active" data-xr-panel="<?= h($tabGroup) ?>" data-index="0">
+                    <div class="xr-nxhands__card">
+                        <?php if ($cardHeading !== ''): ?>
+                            <p class="xr-nxhands__card-heading"><?= h($cardHeading) ?></p>
+                        <?php endif; ?>
+                        <div class="xr-nxhands__stage">
+                            <div class="xr-nxhands__ribbons" aria-hidden="true">
+                                <svg class="xr-nxhands__ribbons-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                                    <defs>
+                                        <linearGradient id="<?= h($gStroke) ?>" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+                                            <stop offset="48%" stop-color="#c084fc" stop-opacity="0.5"/>
+                                            <stop offset="100%" stop-color="#f472b6" stop-opacity="0.55"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="xr-nxhands__ribbon-path" d="M200,200 C165,165 110,95 48,52" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                                    <path class="xr-nxhands__ribbon-path" d="M200,200 C235,165 290,95 352,52" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                                    <path class="xr-nxhands__ribbon-path" d="M200,200 C165,235 110,305 48,348" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                                    <path class="xr-nxhands__ribbon-path" d="M200,200 C235,235 290,305 352,348" fill="none" stroke="url(#<?= h($gStroke) ?>)" stroke-width="3.2"/>
+                                    <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q155,175 95,185" fill="none" stroke="rgba(244, 114, 182, 0.32)" stroke-width="2"/>
+                                    <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q245,175 305,185" fill="none" stroke="rgba(244, 114, 182, 0.32)" stroke-width="2"/>
+                                    <path class="xr-nxhands__ribbon-path xr-nxhands__ribbon-path--soft" d="M200,200 Q200,245 200,305" fill="none" stroke="rgba(167, 139, 250, 0.32)" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <div class="xr-nxhands__quadrants">
+                                <?php foreach ($modules as $qx): ?>
+                                    <div class="xr-nxhands__cell">
+                                        <div class="xr-nxhands__cell-media">
+                                            <?php if ($qx['image'] !== ''): ?>
+                                                <img src="<?= h($qx['image']) ?>" alt="" loading="lazy" decoding="async">
+                                            <?php else: ?>
+                                                <div class="xr-nxhands__cell-ph"></div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <p class="xr-nxhands__cell-label"><?= h($qx['label']) ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="xr-nxhands__hub">
+                                <div class="xr-nxhands__hub-inner">
+                                    <div class="xr-nxhands__hub-glow" aria-hidden="true"></div>
+                                    <?php if ($centerImage !== ''): ?>
+                                        <img class="xr-nxhands__hub-img" src="<?= h($centerImage) ?>" alt="" loading="lazy" decoding="async">
                                     <?php else: ?>
-                                        <div class="xr-nxhands__cell-ph"></div>
+                                        <div class="xr-nxhands__hub-ph" aria-hidden="true"></div>
+                                    <?php endif; ?>
+                                    <?php if ($centerBrand !== ''): ?>
+                                        <span class="xr-nxhands__hub-brand"><?= h($centerBrand) ?></span>
+                                    <?php endif; ?>
+                                    <?php if ($centerLabel !== ''): ?>
+                                        <span class="xr-nxhands__hub-label"><?= h($centerLabel) ?></span>
                                     <?php endif; ?>
                                 </div>
-                                <p class="xr-nxhands__cell-label"><?= h($qx['label']) ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="xr-nxhands__panel" data-xr-panel="<?= h($tabGroup) ?>" data-index="1">
+                    <div class="xr-nxhands__inner-carousel" data-inner-carousel>
+                        <?php foreach ($masterySlides as $si => $slide): ?>
+                            <div class="xr-nxhands__inner-slide<?= $si === 0 ? ' is-active' : '' ?>" data-inner-slide data-interval="<?= (int) ($slide['interval'] ?? 7000) ?>">
+                                <div class="xr-nxhands__slide-card">
+                                    <h3 class="xr-nxhands__slide-title"><?= h((string) ($slide['title'] ?? '')) ?></h3>
+                                    <div class="xr-nxhands__feature-grid">
+                                        <?php foreach ((array) ($slide['cards'] ?? []) as $mc): ?>
+                                            <article class="xr-nxhands__feature-item">
+                                                <div class="xr-nxhands__feature-top">
+                                                    <span class="xr-nxhands__feature-thumb">
+                                                        <?php if ((string) ($mc['image'] ?? '') !== ''): ?>
+                                                            <img src="<?= h((string) ($mc['image'] ?? '')) ?>" alt="" loading="lazy" decoding="async">
+                                                        <?php endif; ?>
+                                                    </span>
+                                                    <h4 class="xr-nxhands__feature-title"><?= h((string) ($mc['title'] ?? '')) ?></h4>
+                                                </div>
+                                                <p class="xr-nxhands__feature-text"><?= h((string) ($mc['text'] ?? '')) ?></p>
+                                            </article>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="xr-nxhands__hub">
-                        <div class="xr-nxhands__hub-inner">
-                            <div class="xr-nxhands__hub-glow" aria-hidden="true"></div>
-                            <?php if ($centerImage !== ''): ?>
-                                <img class="xr-nxhands__hub-img" src="<?= h($centerImage) ?>" alt="" loading="lazy" decoding="async">
-                            <?php else: ?>
-                                <div class="xr-nxhands__hub-ph" aria-hidden="true"></div>
-                            <?php endif; ?>
-                            <?php if ($centerBrand !== ''): ?>
-                                <span class="xr-nxhands__hub-brand"><?= h($centerBrand) ?></span>
-                            <?php endif; ?>
-                            <?php if ($centerLabel !== ''): ?>
-                                <span class="xr-nxhands__hub-label"><?= h($centerLabel) ?></span>
-                            <?php endif; ?>
-                        </div>
+                </div>
+
+                <div class="xr-nxhands__panel" data-xr-panel="<?= h($tabGroup) ?>" data-index="2">
+                    <div class="xr-nxhands__inner-carousel" data-inner-carousel>
+                        <?php foreach ($videoSlides as $vi => $slide): ?>
+                            <div class="xr-nxhands__inner-slide<?= $vi === 0 ? ' is-active' : '' ?>" data-inner-slide data-interval="<?= (int) ($slide['interval'] ?? 9000) ?>">
+                                <div class="xr-nxhands__slide-card xr-nxhands__slide-card--video">
+                                    <h3 class="xr-nxhands__slide-title"><?= h((string) ($slide['title'] ?? '')) ?></h3>
+                                    <div class="xr-nxhands__video-row">
+                                        <div class="xr-nxhands__video-note"><?= nl2br(h((string) ($slide['note'] ?? '')), false) ?></div>
+                                        <div class="xr-nxhands__video-box">
+                                            <?php if ((string) ($slide['mp4'] ?? '') !== ''): ?>
+                                                <video muted playsinline preload="metadata" data-slide-video>
+                                                    <source src="<?= h((string) ($slide['mp4'] ?? '')) ?>" type="video/mp4">
+                                                </video>
+                                            <?php elseif ((string) ($slide['poster'] ?? '') !== ''): ?>
+                                                <img src="<?= h((string) ($slide['poster'] ?? '')) ?>" alt="" loading="lazy" decoding="async">
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -4045,6 +4537,29 @@ function xr_block_progress_bars_block(array $p, string $blockId = ''): void
 
 function xr_block_highlight_box_block(array $p, string $blockId = ''): void
 {
+    if ($blockId === 'i-3-22') {
+        $title = trim((string) ($p['title'] ?? ''));
+        if ($title === '' || strcasecmp($title, 'Highlight box') === 0) {
+            $title = "Big Impact Comes with Simple Steps.\nSee how XR Doctor Makes It\nREAL. CLEAR. POWERFUL.";
+        }
+        $lines = preg_split('/\r\n|\r|\n/', $title) ?: [];
+        $lines = array_values(array_filter(array_map('trim', $lines), static fn ($v) => $v !== ''));
+        if ($lines === []) {
+            $lines = [$title];
+        }
+        ?>
+        <div class="xr-impact-banner">
+            <div class="xr-impact-banner__glow" aria-hidden="true"></div>
+            <h2 class="xr-impact-banner__title">
+                <?php foreach ($lines as $ln): ?>
+                    <span class="xr-impact-banner__line"><?= h($ln) ?></span>
+                <?php endforeach; ?>
+            </h2>
+        </div>
+        <?php
+        return;
+    }
+
     ?>
     <div class="xr-hlbox">
         <div class="xr-hlbox__inner">

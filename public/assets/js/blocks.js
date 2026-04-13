@@ -14,8 +14,13 @@
                 var idx = btn.getAttribute("data-index");
                 var scope = btn.closest(".xr-block") || btn.closest("main") || document;
                 qsa('[data-xr-tab="' + group + '"]', scope).forEach(function (b) {
-                    b.classList.toggle("is-active", b === btn);
-                    b.setAttribute("aria-selected", b === btn ? "true" : "false");
+                    var on = b === btn;
+                    b.classList.toggle("is-active", on);
+                    b.setAttribute("aria-selected", on ? "true" : "false");
+                    var navLi = b.closest(".xr-nxhands__nav-item");
+                    if (navLi) {
+                        navLi.classList.toggle("is-active", on);
+                    }
                 });
                 qsa('[data-xr-panel="' + group + '"]', scope).forEach(function (p) {
                     p.classList.toggle("is-active", p.getAttribute("data-index") === idx);
@@ -88,6 +93,10 @@
             function scheduleNext() {
                 var active = slides[cur];
                 var ms = parseInt(active.getAttribute("data-interval"), 10) || 5000;
+                var activeVideo = active.querySelector("[data-slide-video]");
+                if (activeVideo && isFinite(activeVideo.duration) && activeVideo.duration > 0) {
+                    ms = Math.max(2500, Math.round(activeVideo.duration * 1000));
+                }
                 root._xrIct = setTimeout(function () {
                     show(cur + 1);
                     scheduleNext();
