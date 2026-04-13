@@ -517,8 +517,9 @@
 .xr-tele-banner {
     position: relative;
     overflow: hidden;
-    max-width: 1279px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     padding: 64px 24px 82px;
     text-align: center;
     background: radial-gradient(ellipse 80% 120% at 50% 50%, #4a2fb9 0%, #7c2cc5 35%, #cc49d4 68%, #e85adb 100%);
@@ -536,7 +537,12 @@
     mix-blend-mode: soft-light;
 }
 
-.xr-tele-banner__inner { position: relative; z-index: 1; }
+.xr-tele-banner__inner {
+    position: relative;
+    z-index: 1;
+    width: min(1240px, 100%);
+    margin: 0 auto;
+}
 
 .xr-tele-banner__eyebrow {
     margin: 0 0 18px;
@@ -5137,14 +5143,22 @@
 }
 
 .xr-allin-one-banner {
-    max-width: 1279px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     text-align: center;
     padding: 74px 24px 82px;
     color: #fff;
     background:
         radial-gradient(ellipse 58% 46% at 50% 44%, rgba(105, 74, 214, .82) 0%, rgba(72, 78, 210, .55) 33%, rgba(25, 201, 235, .34) 67%, rgba(25, 201, 235, .2) 100%),
         linear-gradient(180deg, #2ad6eb 0%, #1f7ad3 50%, #26cfe7 100%);
+}
+
+.xr-allin-one-banner > .xr-allin-one-banner__title,
+.xr-allin-one-banner > .xr-allin-one-banner__line {
+    width: min(1240px, 100%);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .xr-allin-one-banner__title {
@@ -6353,6 +6367,9 @@
     background: #fff;
     color: #1a1d22;
     padding: 72px 24px;
+    width: 100%;
+    max-width: none;
+    margin: 0;
 }
 
 .xr-white-section__inner {
@@ -6376,8 +6393,9 @@
 .xr-white-section--hero {
     position: relative;
     overflow: hidden;
-    max-width: 1279px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     text-align: center;
     padding: clamp(44px, 5.5vw, 68px) 24px clamp(92px, 11vw, 118px);
 }
@@ -6385,7 +6403,7 @@
 .xr-white-section__hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 960px;
+    max-width: 1240px;
     margin: 0 auto;
 }
 
@@ -6466,8 +6484,9 @@
 .xr-change-banner {
     position: relative;
     overflow: hidden;
-    max-width: 1279px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     background: #fff;
     text-align: center;
     padding: 54px 24px 112px;
@@ -6476,6 +6495,8 @@
 .xr-change-banner__inner {
     position: relative;
     z-index: 1;
+    width: min(1240px, 100%);
+    margin: 0 auto;
 }
 
 .xr-change-banner__title {
@@ -6637,8 +6658,9 @@
 .xr-discover-banner {
     position: relative;
     overflow: hidden;
-    max-width: 1279px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     padding: 64px 24px 82px;
     text-align: center;
     background: radial-gradient(
@@ -6665,6 +6687,8 @@
 .xr-discover-banner__inner {
     position: relative;
     z-index: 1;
+    width: min(1240px, 100%);
+    margin: 0 auto;
 }
 
 .xr-discover-banner__title {
@@ -10179,13 +10203,7 @@ video,
 }
 
 .xr-premier-programs__wave {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    z-index: 1;
-    height: 58px;
-    pointer-events: none;
+    display: none;
 }
 
 .xr-premier-programs__wave svg {
