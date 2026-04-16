@@ -1,3 +1,5 @@
+<?php require __DIR__ . '/site_footer.php'; ?>
+
 <div class="xr-hubspot-modal" id="xr-hubspot-modal" hidden data-hubspot-modal>
     <div class="xr-hubspot-modal__backdrop" data-hubspot-close></div>
     <div class="xr-hubspot-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="xr-hubspot-title">

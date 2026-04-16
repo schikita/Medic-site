@@ -59,11 +59,13 @@ body {
     background: var(--bg-dark);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
 }
 
 .xr-site {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    overflow-x: clip;
 }
 
 html.xr-nav-open {
@@ -617,44 +619,196 @@ a.btn {
     color: transparent;
 }
 
-.site-footer {
+/* Site footer (matches design screenshot) */
+.xr-footer {
+    background: #ffffff;
+    color: #111827;
     position: relative;
-    padding: 28px max(32px, env(safe-area-inset-right, 0px)) max(28px, env(safe-area-inset-bottom, 0px))
-        max(32px, env(safe-area-inset-left, 0px));
-    text-align: center;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.45);
-    background: var(--bg-dark);
+    overflow: hidden;
 }
 
-.site-footer::before {
+.xr-footer::before {
     content: "";
-    display: block;
-    height: 1px;
-    margin-bottom: 28px;
-    background: linear-gradient(90deg, transparent, rgba(152, 127, 252, 0.35) 30%, rgba(242, 79, 201, 0.35) 70%, transparent);
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% 20%, rgba(56, 189, 248, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 75% 18%, rgba(236, 72, 153, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 82% 78%, rgba(168, 85, 247, 0.08) 0%, transparent 55%),
+        radial-gradient(circle, rgba(17, 24, 39, 0.07) 1px, transparent 1px);
+    background-size: auto, auto, auto, 22px 22px;
+    background-position: center, center, center, 0 0;
+    opacity: 0.9;
+    pointer-events: none;
 }
 
-.site-footer p {
-    margin: 0;
+.xr-footer__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: clamp(36px, 4.5vw, 56px) clamp(16px, 3vw, 28px) clamp(26px, 3.5vw, 40px);
+}
+
+.xr-footer__top {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 4px 12px;
-    line-height: 1.6;
-    letter-spacing: 0.01em;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    text-align: left;
+    padding-bottom: 18px;
 }
 
-.site-footer a {
-    color: rgba(152, 127, 252, 0.9);
+.xr-footer__top-left {
+    min-width: 0;
+}
+
+.xr-footer__top-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-top: 6px;
+    margin-right: 56px;
+}
+
+.xr-footer__logo {
+    width: 102px;
+    height: 78px;
+    display: block;
+    opacity: 0.95;
+}
+
+.xr-footer__headline {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.4vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
+
+.xr-footer__headline-grad {
+    background: linear-gradient(90deg, #38bdf8 0%, #a855f7 52%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.xr-footer__sub {
+    margin: 0;
+    color: rgba(17, 24, 39, 0.62);
+    font-size: clamp(13px, 1.35vw, 16px);
+    font-weight: 500;
+}
+
+.xr-footer__grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(260px, 1.2fr);
+    gap: 26px clamp(18px, 2.4vw, 36px);
+    align-items: start;
+}
+
+.xr-footer__col-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(17, 24, 39, 0.78);
+}
+
+.xr-footer__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.xr-footer__links a {
+    color: rgba(17, 24, 39, 0.55);
+    font-size: 13px;
     text-decoration: none;
-    padding: 4px 2px;
     transition: color 0.18s ease;
 }
 
-.site-footer a:hover {
-    color: var(--pink);
+.xr-footer__links a:hover,
+.xr-footer__links a:focus-visible {
+    color: rgba(17, 24, 39, 0.9);
+}
+
+.xr-footer__aside {
+    justify-self: end;
+    text-align: right;
+}
+
+.xr-footer__aside-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 16px;
+    color: rgba(17, 24, 39, 0.65);
+}
+
+.xr-footer__aside-body {
+    margin: 10px 0 10px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.28;
+    font-size: clamp(15px, 1.55vw, 20px);
+    background: linear-gradient(90deg, #38bdf8 0%, #a855f7 55%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.xr-footer__email {
+    margin: 10px 0 10px;
+    color: rgba(17, 24, 39, 0.55);
+    font-size: 12px;
+}
+
+.xr-footer__social {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.xr-footer__social-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(17, 24, 39, 0.14);
+    background: rgba(255, 255, 255, 0.7);
+    color: rgba(17, 24, 39, 0.7);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.xr-footer__social-btn:hover,
+.xr-footer__social-btn:focus-visible {
+    transform: translateY(-1px);
+    border-color: rgba(17, 24, 39, 0.28);
+    color: rgba(17, 24, 39, 0.92);
+    background: #fff;
+}
+
+.xr-footer__bottom {
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17, 24, 39, 0.10);
+    text-align: center;
+}
+
+.xr-footer__copyright {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(17, 24, 39, 0.5);
 }
 
 /* Back to top */
@@ -694,6 +848,36 @@ a.btn {
 .site-footer .site-footer__sep {
     color: rgba(255, 255, 255, 0.2);
     user-select: none;
+}
+
+@media (max-width: 980px) {
+    .xr-footer__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .xr-footer__aside {
+        grid-column: 1 / -1;
+        justify-self: start;
+        text-align: left;
+        margin-top: 6px;
+    }
+    .xr-footer__social {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 520px) {
+    .xr-footer__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .xr-footer__top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .xr-footer__top-right {
+        padding-top: 0;
+    }
 }
 
 /* Mobile / бургер */

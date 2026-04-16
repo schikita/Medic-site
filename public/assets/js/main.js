@@ -15,6 +15,8 @@
     }
 
     function setNavOpen(open) {
+        var wasOpen = nav.classList.contains("is-open");
+        if (wasOpen === open) return;
         if (open) {
             savedScroll = window.scrollY || window.pageYOffset;
             positionNav();
@@ -27,7 +29,9 @@
             body.style.top = "";
             body.style.left = "";
             body.style.right = "";
-            window.scrollTo(0, savedScroll);
+            if (wasOpen) {
+                window.scrollTo(0, savedScroll);
+            }
         }
         nav.classList.toggle("is-open", open);
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
@@ -55,7 +59,7 @@
         "resize",
         function () {
             /* Порог как в main.css: --nav-burger-max + 1px */
-            if (window.matchMedia("(min-width: 1311px)").matches) {
+            if (window.matchMedia("(min-width: 1311px)").matches && nav.classList.contains("is-open")) {
                 setNavOpen(false);
             }
         },
@@ -69,8 +73,16 @@
 
     btn.removeAttribute("hidden");
 
-    window.addEventListener("scroll", function () {
+    var ticking = false;
+    function updateVisibility() {
         btn.classList.toggle("is-visible", window.scrollY > 400);
+        ticking = false;
+    }
+
+    window.addEventListener("scroll", function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateVisibility);
     }, { passive: true });
 
     btn.addEventListener("click", function () {
@@ -88,6 +100,7 @@
     if (!isFinite(interval) || interval < 1200) interval = 3500;
 
     var idx = 0;
+    var timer = null;
     function show(i) {
         slides.forEach(function (s, si) {
             s.classList.toggle("is-active", si === i);
@@ -95,9 +108,28 @@
         idx = i;
     }
 
-    window.setInterval(function () {
-        show((idx + 1) % slides.length);
-    }, interval);
+    function start() {
+        if (timer !== null) return;
+        timer = window.setInterval(function () {
+            show((idx + 1) % slides.length);
+        }, interval);
+    }
+
+    function stop() {
+        if (timer === null) return;
+        window.clearInterval(timer);
+        timer = null;
+    }
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            stop();
+        } else {
+            start();
+        }
+    });
+
+    start();
 })();
 
 (function () {
@@ -127,7 +159,7 @@
             ifr.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
             ifr.setAttribute("allowfullscreen", "");
             ifr.setAttribute("title", "Video");
-            ifr.setAttribute("loading", "eager");
+            ifr.setAttribute("loading", "lazy");
             box.appendChild(ifr);
         } else if (mp4) {
             var v = document.createElement("video");
@@ -211,41 +243,6 @@
 
     tabs.forEach(function (tab, i) {
         tab.addEventListener("click", function () { activate(i); });
-    });
-})();
-
-(function () {
-    var roots = Array.prototype.slice.call(document.querySelectorAll("[data-carousel]"));
-    if (!roots.length) return;
-
-    roots.forEach(function (root) {
-        var slides = Array.prototype.slice.call(root.querySelectorAll("[data-carousel-slide]"));
-        var dots = Array.prototype.slice.call(root.querySelectorAll("[data-carousel-dot]"));
-        if (!slides.length) return;
-
-        var interval = parseInt(root.getAttribute("data-interval") || "4500", 10);
-        if (!isFinite(interval) || interval < 1200) interval = 4500;
-
-        var idx = 0;
-        function show(i) {
-            slides.forEach(function (s, si) {
-                s.classList.toggle("is-active", si === i);
-            });
-            dots.forEach(function (d, di) {
-                d.classList.toggle("is-active", di === i);
-            });
-            idx = i;
-        }
-
-        dots.forEach(function (d, i) {
-            d.addEventListener("click", function () { show(i); });
-        });
-
-        if (slides.length > 1) {
-            window.setInterval(function () {
-                show((idx + 1) % slides.length);
-            }, interval);
-        }
     });
 })();
 

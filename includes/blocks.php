@@ -175,20 +175,8 @@ function xr_block_wave_slider(array $p, string $blockId = ''): void
     ?>
     <div class="xr-wave-slider" data-carousel data-interval="<?= (int) $interval ?>">
         <div class="xr-wave-slider__wave" aria-hidden="true">
-            <svg class="xr-wave-slider__wave-svg xr-wave-slider__wave-svg--glow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="23%"  stop-color="rgb(103,205,249)"/>
-                        <stop offset="48%"  stop-color="rgb(211,128,228)"/>
-                        <stop offset="67%"  stop-color="rgb(248,96,215)"/>
-                        <stop offset="82%"  stop-color="rgb(233,86,231)"/>
-                        <stop offset="97%"  stop-color="rgb(186,76,250)"/>
-                    </linearGradient>
-                </defs>
-                <path d="M0,10 C240,100 480,100 720,52 C960,4 1200,4 1440,72 L1440,0 L0,0 Z" fill="url(#waveGrad)" opacity="0.55"/>
-            </svg>
-            <svg class="xr-wave-slider__wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
-                <path d="M0,0 C240,80 480,80 720,40 C960,0 1200,0 1440,60 L1440,0 L0,0 Z" fill="#ffffff"/>
+            <svg class="xr-wave-slider__wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <path d="M0,10 C240,100 480,100 720,52 C960,4 1200,4 1440,72 L1440,0 L0,0 Z" fill="#000000" opacity="1"/>
             </svg>
         </div>
         <div class="xr-wave-slider__viewport">
@@ -5076,16 +5064,13 @@ function xr_block_blog_masonry(array $p, string $blockId = ''): void
                     <div class="xr-blog-showcase__panel xr-reveal">
                         <h4>Social Links</h4>
                         <div class="xr-blog-showcase__social">
-                            <?php for ($si = 0; $si < 5; $si++): ?>
-                                <?php $icon = trim((string) ($socialIcons[$si] ?? '')); ?>
-                                <span>
-                                    <?php if ($icon !== ''): ?>
-                                        <img src="<?= h($icon) ?>" alt="" loading="lazy" decoding="async">
-                                    <?php else: ?>
-                                        <?= h((string) ['in', 'ig', 'yt', 'x', 'p'][$si]) ?>
-                                    <?php endif; ?>
-                                </span>
-                            <?php endfor; ?>
+                            <div class="xr-footer__social" aria-label="Social links">
+                                <a class="xr-footer__social-btn" href="#" aria-label="LinkedIn" rel="nofollow noopener">in</a>
+                                <a class="xr-footer__social-btn" href="#" aria-label="Instagram" rel="nofollow noopener">ig</a>
+                                <a class="xr-footer__social-btn" href="#" aria-label="YouTube" rel="nofollow noopener">yt</a>
+                                <a class="xr-footer__social-btn" href="#" aria-label="X" rel="nofollow noopener">x</a>
+                                <a class="xr-footer__social-btn" href="#" aria-label="Pinterest" rel="nofollow noopener">p</a>
+                            </div>
                         </div>
                     </div>
                 </aside>

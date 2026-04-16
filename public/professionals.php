@@ -48,8 +48,4 @@ require dirname(__DIR__) . '/includes/views/chrome_header.php';
     <?php xr_render_blocks($proBlocks); ?>
 </main>
 
-<footer class="site-footer">
-    <p>© <?= date('Y') ?> <?= h((string) ($site['professionals']['meta']['title'] ?? '')) ?> · <a href="/">Home</a> · <a href="/institutions.php">Institutions</a> · <a href="/blog.php">Blog</a> · <a href="/partners.php">Partners</a> · <a href="/admin/">Admin</a></p>
-</footer>
-
 <?php require dirname(__DIR__) . '/includes/views/footer.php'; ?>

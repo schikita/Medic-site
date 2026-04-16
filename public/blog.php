@@ -17,8 +17,4 @@ require dirname(__DIR__) . '/includes/views/chrome_header.php';
     <?php xr_render_blocks($site['blog']['blocks']); ?>
 </main>
 
-<footer class="site-footer">
-    <p>© <?= date('Y') ?> <?= h((string) ($site['blog']['meta']['title'] ?? '')) ?> · <a href="/">Home</a> · <a href="/professionals.php">Professionals</a> · <a href="/institutions.php">Institutions</a> · <a href="/partners.php">Partners</a> · <a href="/admin/">Admin</a></p>
-</footer>
-
 <?php require dirname(__DIR__) . '/includes/views/footer.php'; ?>
